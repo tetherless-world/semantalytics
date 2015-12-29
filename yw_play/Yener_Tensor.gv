@@ -1,0 +1,151 @@
+
+/* Start of top-level graph */
+digraph Workflow {
+rankdir=TB
+
+/* Title for graph */
+fontname=Courier; fontsize=18; labelloc=t
+label=Yener_Tensor
+
+/* Start of double cluster for drawing box around nodes in workflow */
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; color=white
+
+/* Style for nodes representing atomic programs in workflow */
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+
+/* Nodes representing atomic programs in workflow */
+Load_Dataset [shape=record rankdir=LR label="{<f0> Load_Dataset |<f1> Load ANTHA dataset}"];
+Adjust_APGAR [shape=record rankdir=LR label="{<f0> Adjust_APGAR |<f1> Adjust APGAR Scores\: Ensure they are between 0-10}"];
+Choose_Subjects [shape=record rankdir=LR label="{<f0> Choose_Subjects |<f1> Choose only subjects with all five time points}"];
+Start_Missing_Values [shape=record rankdir=LR label="{<f0> Start_Missing_Values |<f1> Impute or remove missing values based on how many are missing}"];
+Count_Missing [shape=record rankdir=LR label="{<f0> Count_Missing |<f1> Count missing heights, BMIs and weights}"];
+Impute_One_Missing [shape=record rankdir=LR label="{<f0> Impute_One_Missing |<f1> Use regression model to impute for one missing time point}"];
+Impute_Two_Missing [shape=record rankdir=LR label="{<f0> Impute_Two_Missing |<f1> Use linear fit to impute for two missing_time_points}"];
+Remove_More_Than_Two_Missing [shape=record rankdir=LR label="{<f0> Remove_More_Than_Two_Missing |<f1> Remove subjects with more than two missing time points}"];
+Write_final
+Loading_data_for_tensor
+Getting_characteristics
+Fixing_feeding_n
+Fill_in_average_values
+Going_through_all_the_columns
+Does_column_have_missing_values
+Determine_missing_values
+Creating_Gates_Tensor
+
+/* Style for nodes representing non-parameter data channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes for non-parameter data channels in workflow */
+num_0
+num_1
+subj
+final_0
+ib_0
+ib_1
+heights
+bmis
+weights
+times
+where
+final_1
+final_2
+final_3
+test_spreadsheet_final [shape=record rankdir=LR label="{<f0> test_spreadsheet_final |<f1> file\:ANTHAyenerfinalmine.xlsx}"];
+num_2
+chara
+chara_1
+chara_2
+chara_3
+chara_4
+C
+
+/* Style for nodes representing parameter channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing parameter channels in workflow */
+
+/* Edges representing connections between programs and channels */
+Load_Dataset -> num_0
+ANTHA_spreadsheet -> Load_Dataset
+Adjust_APGAR -> num_1
+num_0 -> Adjust_APGAR
+Choose_Subjects -> subj
+Choose_Subjects -> ib_0
+Choose_Subjects -> final_0
+num_1 -> Choose_Subjects
+Start_Missing_Values -> ib_1
+subj -> Start_Missing_Values
+final_0 -> Start_Missing_Values
+ib_0 -> Start_Missing_Values
+Count_Missing -> heights
+Count_Missing -> bmis
+Count_Missing -> weights
+Count_Missing -> times
+Count_Missing -> where
+final_0 -> Count_Missing
+ib_1 -> Count_Missing
+Impute_One_Missing -> final_1
+heights -> Impute_One_Missing
+bmis -> Impute_One_Missing
+weights -> Impute_One_Missing
+times -> Impute_One_Missing
+where -> Impute_One_Missing
+final_0 -> Impute_One_Missing
+ib_1 -> Impute_One_Missing
+Impute_Two_Missing -> final_2
+heights -> Impute_Two_Missing
+bmis -> Impute_Two_Missing
+weights -> Impute_Two_Missing
+times -> Impute_Two_Missing
+where -> Impute_Two_Missing
+final_0 -> Impute_Two_Missing
+ib_1 -> Impute_Two_Missing
+Remove_More_Than_Two_Missing -> final_3
+final_0 -> Remove_More_Than_Two_Missing
+ib_1 -> Remove_More_Than_Two_Missing
+Write_final -> test_spreadsheet_final
+final_1 -> Write_final
+final_2 -> Write_final
+final_3 -> Write_final
+Loading_data_for_tensor -> num_2
+test_spreadsheet_final -> Loading_data_for_tensor
+Getting_characteristics -> chara
+num_2 -> Getting_characteristics
+Fixing_feeding_n -> chara_1
+chara -> Fixing_feeding_n
+Fill_in_average_values -> chara_2
+chara_1 -> Fill_in_average_values
+Going_through_all_the_columns -> chara_3
+chara_2 -> Going_through_all_the_columns
+Does_column_have_missing_values -> chara_4
+Does_column_have_missing_values -> C
+chara_3 -> Does_column_have_missing_values
+Determine_missing_values -> gender
+Determine_missing_values -> weights_1
+Determine_missing_values -> heights_1
+chara_4 -> Determine_missing_values
+C -> Determine_missing_values
+Creating_Gates_Tensor -> gates_tensor
+num_2 -> Creating_Gates_Tensor
+chara_4 -> Creating_Gates_Tensor
+
+/* End of double cluster for drawing box around nodes in workflow */
+}}
+
+/* Hidden double-cluster for grouping workflow output ports */
+subgraph cluster_output_ports_group_outer { label=""; color=white
+subgraph cluster_output_ports_group_inner { label=""; color=white
+
+/* Style for nodes representing workflow output ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow output ports */
+
+/* End of double-cluster for grouping workflow output ports */
+}}
+
+/* Edges from channels to output ports */
+
+/* End of top-level graph */
+}

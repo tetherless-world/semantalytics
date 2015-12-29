@@ -1,0 +1,368 @@
+
+% FACT: program(program_id, program_name, qualified_program_name, begin_annotation_id, end_annotation_id).
+program(1, 'Yener_Tensor', 'Yener_Tensor', 1, 146).
+program(2, 'Load_Dataset', 'Yener_Tensor.Load_Dataset', 3, 9).
+program(3, 'Adjust_APGAR', 'Yener_Tensor.Adjust_APGAR', 10, 16).
+program(4, 'Choose_Subjects', 'Yener_Tensor.Choose_Subjects', 17, 26).
+program(5, 'Start_Missing_Values', 'Yener_Tensor.Start_Missing_Values', 27, 36).
+program(6, 'Count_Missing', 'Yener_Tensor.Count_Missing', 37, 48).
+program(7, 'Impute_One_Missing', 'Yener_Tensor.Impute_One_Missing', 49, 62).
+program(8, 'Impute_Two_Missing', 'Yener_Tensor.Impute_Two_Missing', 63, 76).
+program(9, 'Remove_More_Than_Two_Missing', 'Yener_Tensor.Remove_More_Than_Two_Missing', 77, 85).
+program(10, 'Write_final', 'Yener_Tensor.Write_final', 86, 95).
+program(11, 'Loading_data_for_tensor', 'Yener_Tensor.Loading_data_for_tensor', 96, 101).
+program(12, 'Getting_characteristics', 'Yener_Tensor.Getting_characteristics', 102, 106).
+program(13, 'Fixing_feeding_n', 'Yener_Tensor.Fixing_feeding_n', 107, 111).
+program(14, 'Fill_in_average_values', 'Yener_Tensor.Fill_in_average_values', 112, 117).
+program(15, 'Going_through_all_the_columns', 'Yener_Tensor.Going_through_all_the_columns', 118, 123).
+program(16, 'Does_column_have_missing_values', 'Yener_Tensor.Does_column_have_missing_values', 124, 130).
+program(17, 'Determine_missing_values', 'Yener_Tensor.Determine_missing_values', 131, 138).
+program(18, 'Creating_Gates_Tensor', 'Yener_Tensor.Creating_Gates_Tensor', 139, 145).
+
+% FACT: workflow(program_id).
+workflow(1).
+
+% FACT: function(program_id).
+
+% FACT: has_subprogram(program_id, subprogram_id).
+has_subprogram(1, 2).
+has_subprogram(1, 3).
+has_subprogram(1, 4).
+has_subprogram(1, 5).
+has_subprogram(1, 6).
+has_subprogram(1, 7).
+has_subprogram(1, 8).
+has_subprogram(1, 9).
+has_subprogram(1, 10).
+has_subprogram(1, 11).
+has_subprogram(1, 12).
+has_subprogram(1, 13).
+has_subprogram(1, 14).
+has_subprogram(1, 15).
+has_subprogram(1, 16).
+has_subprogram(1, 17).
+has_subprogram(1, 18).
+
+% FACT: port(port_id, port_type, port_name, qualified_port_name, port_annotation_id, data_id).
+port(1, 'out', 'Gates_Tensor', 'Yener_Tensor->Gates_Tensor', 2, 1).
+port(2, 'in', 'ANTHA_spreadsheet', 'Yener_Tensor.Load_Dataset<-ANTHA_spreadsheet', 5, 2).
+port(3, 'out', 'num', 'Yener_Tensor.Load_Dataset->num', 7, 3).
+port(4, 'in', 'num', 'Yener_Tensor.Adjust_APGAR<-num', 12, 3).
+port(5, 'out', 'num', 'Yener_Tensor.Adjust_APGAR->num', 14, 4).
+port(6, 'in', 'num', 'Yener_Tensor.Choose_Subjects<-num', 19, 4).
+port(7, 'out', 'subj', 'Yener_Tensor.Choose_Subjects->subj', 21, 5).
+port(8, 'out', 'ib', 'Yener_Tensor.Choose_Subjects->ib', 22, 6).
+port(9, 'out', 'final', 'Yener_Tensor.Choose_Subjects->final', 24, 7).
+port(10, 'in', 'subj', 'Yener_Tensor.Start_Missing_Values<-subj', 29, 5).
+port(11, 'in', 'final', 'Yener_Tensor.Start_Missing_Values<-final', 30, 7).
+port(12, 'in', 'ib', 'Yener_Tensor.Start_Missing_Values<-ib', 32, 6).
+port(13, 'out', 'ib', 'Yener_Tensor.Start_Missing_Values->ib', 34, 8).
+port(14, 'in', 'final', 'Yener_Tensor.Count_Missing<-final', 39, 7).
+port(15, 'in', 'ib', 'Yener_Tensor.Count_Missing<-ib', 41, 8).
+port(16, 'out', 'heights', 'Yener_Tensor.Count_Missing->heights', 43, 9).
+port(17, 'out', 'bmis', 'Yener_Tensor.Count_Missing->bmis', 44, 10).
+port(18, 'out', 'weights', 'Yener_Tensor.Count_Missing->weights', 45, 11).
+port(19, 'out', 'times', 'Yener_Tensor.Count_Missing->times', 46, 12).
+port(20, 'out', 'where', 'Yener_Tensor.Count_Missing->where', 47, 13).
+port(21, 'in', 'heights', 'Yener_Tensor.Impute_One_Missing<-heights', 51, 9).
+port(22, 'in', 'bmis', 'Yener_Tensor.Impute_One_Missing<-bmis', 52, 10).
+port(23, 'in', 'weights', 'Yener_Tensor.Impute_One_Missing<-weights', 53, 11).
+port(24, 'in', 'times', 'Yener_Tensor.Impute_One_Missing<-times', 54, 12).
+port(25, 'in', 'where', 'Yener_Tensor.Impute_One_Missing<-where', 55, 13).
+port(26, 'in', 'final', 'Yener_Tensor.Impute_One_Missing<-final', 56, 7).
+port(27, 'in', 'ib', 'Yener_Tensor.Impute_One_Missing<-ib', 58, 8).
+port(28, 'out', 'final', 'Yener_Tensor.Impute_One_Missing->final', 60, 14).
+port(29, 'in', 'heights', 'Yener_Tensor.Impute_Two_Missing<-heights', 65, 9).
+port(30, 'in', 'bmis', 'Yener_Tensor.Impute_Two_Missing<-bmis', 66, 10).
+port(31, 'in', 'weights', 'Yener_Tensor.Impute_Two_Missing<-weights', 67, 11).
+port(32, 'in', 'times', 'Yener_Tensor.Impute_Two_Missing<-times', 68, 12).
+port(33, 'in', 'where', 'Yener_Tensor.Impute_Two_Missing<-where', 69, 13).
+port(34, 'in', 'final', 'Yener_Tensor.Impute_Two_Missing<-final', 70, 7).
+port(35, 'in', 'ib', 'Yener_Tensor.Impute_Two_Missing<-ib', 72, 8).
+port(36, 'out', 'final', 'Yener_Tensor.Impute_Two_Missing->final', 74, 15).
+port(37, 'in', 'final', 'Yener_Tensor.Remove_More_Than_Two_Missing<-final', 79, 7).
+port(38, 'in', 'ib', 'Yener_Tensor.Remove_More_Than_Two_Missing<-ib', 81, 8).
+port(39, 'out', 'final', 'Yener_Tensor.Remove_More_Than_Two_Missing->final', 83, 16).
+port(40, 'in', 'final', 'Yener_Tensor.Write_final<-final', 87, 14).
+port(41, 'in', 'final', 'Yener_Tensor.Write_final<-final', 89, 15).
+port(42, 'in', 'final', 'Yener_Tensor.Write_final<-final', 91, 16).
+port(43, 'out', 'test_spreadsheet_final', 'Yener_Tensor.Write_final->test_spreadsheet_final', 93, 17).
+port(44, 'in', 'test_spreadsheet_final', 'Yener_Tensor.Loading_data_for_tensor<-test_spreadsheet_final', 97, 17).
+port(45, 'out', 'num', 'Yener_Tensor.Loading_data_for_tensor->num', 99, 18).
+port(46, 'in', 'num', 'Yener_Tensor.Getting_characteristics<-num', 103, 18).
+port(47, 'out', 'chara', 'Yener_Tensor.Getting_characteristics->chara', 105, 19).
+port(48, 'in', 'chara', 'Yener_Tensor.Fixing_feeding_n<-chara', 108, 19).
+port(49, 'out', 'chara', 'Yener_Tensor.Fixing_feeding_n->chara', 109, 20).
+port(50, 'in', 'chara', 'Yener_Tensor.Fill_in_average_values<-chara', 113, 20).
+port(51, 'out', 'chara', 'Yener_Tensor.Fill_in_average_values->chara', 115, 21).
+port(52, 'in', 'chara', 'Yener_Tensor.Going_through_all_the_columns<-chara', 119, 21).
+port(53, 'out', 'chara', 'Yener_Tensor.Going_through_all_the_columns->chara', 121, 22).
+port(54, 'in', 'chara', 'Yener_Tensor.Does_column_have_missing_values<-chara', 125, 22).
+port(55, 'out', 'chara', 'Yener_Tensor.Does_column_have_missing_values->chara', 127, 23).
+port(56, 'out', 'C', 'Yener_Tensor.Does_column_have_missing_values->C', 129, 24).
+port(57, 'in', 'chara', 'Yener_Tensor.Determine_missing_values<-chara', 132, 23).
+port(58, 'in', 'C', 'Yener_Tensor.Determine_missing_values<-C', 134, 24).
+port(59, 'out', 'gender', 'Yener_Tensor.Determine_missing_values->gender', 135, 25).
+port(60, 'out', 'weights_1', 'Yener_Tensor.Determine_missing_values->weights_1', 136, 26).
+port(61, 'out', 'heights_1', 'Yener_Tensor.Determine_missing_values->heights_1', 137, 27).
+port(62, 'in', 'num', 'Yener_Tensor.Creating_Gates_Tensor<-num', 140, 18).
+port(63, 'in', 'chara', 'Yener_Tensor.Creating_Gates_Tensor<-chara', 142, 23).
+port(64, 'out', 'gates_tensor', 'Yener_Tensor.Creating_Gates_Tensor->gates_tensor', 144, 28).
+
+% FACT: port_alias(port_id, alias).
+port_alias(3, 'num_0').
+port_alias(4, 'num_0').
+port_alias(5, 'num_1').
+port_alias(6, 'num_1').
+port_alias(8, 'ib_0').
+port_alias(9, 'final_0').
+port_alias(11, 'final_0').
+port_alias(12, 'ib_0').
+port_alias(13, 'ib_1').
+port_alias(14, 'final_0').
+port_alias(15, 'ib_1').
+port_alias(26, 'final_0').
+port_alias(27, 'ib_1').
+port_alias(28, 'final_1').
+port_alias(34, 'final_0').
+port_alias(35, 'ib_1').
+port_alias(36, 'final_2').
+port_alias(37, 'final_0').
+port_alias(38, 'ib_1').
+port_alias(39, 'final_3').
+port_alias(40, 'final_1').
+port_alias(41, 'final_2').
+port_alias(42, 'final_3').
+port_alias(45, 'num_2').
+port_alias(46, 'num_2').
+port_alias(49, 'chara_1').
+port_alias(50, 'chara_1').
+port_alias(51, 'chara_2').
+port_alias(52, 'chara_2').
+port_alias(53, 'chara_3').
+port_alias(54, 'chara_3').
+port_alias(55, 'chara_4').
+port_alias(57, 'chara_4').
+port_alias(62, 'num_2').
+port_alias(63, 'chara_4').
+
+% FACT: port_uri_template(port_id, uri).
+port_uri_template(2, 'file:ANTHAyener.xlsx').
+port_uri_template(43, 'file:ANTHAyenerfinalmine.xlsx').
+port_uri_template(44, 'file:ANTHAyenerfinalmine.xlsx').
+
+% FACT: has_in_port(block_id, port_id).
+has_in_port(2, 2).
+has_in_port(3, 4).
+has_in_port(4, 6).
+has_in_port(5, 10).
+has_in_port(5, 11).
+has_in_port(5, 12).
+has_in_port(6, 14).
+has_in_port(6, 15).
+has_in_port(7, 21).
+has_in_port(7, 22).
+has_in_port(7, 23).
+has_in_port(7, 24).
+has_in_port(7, 25).
+has_in_port(7, 26).
+has_in_port(7, 27).
+has_in_port(8, 29).
+has_in_port(8, 30).
+has_in_port(8, 31).
+has_in_port(8, 32).
+has_in_port(8, 33).
+has_in_port(8, 34).
+has_in_port(8, 35).
+has_in_port(9, 37).
+has_in_port(9, 38).
+has_in_port(10, 40).
+has_in_port(10, 41).
+has_in_port(10, 42).
+has_in_port(11, 44).
+has_in_port(12, 46).
+has_in_port(13, 48).
+has_in_port(14, 50).
+has_in_port(15, 52).
+has_in_port(16, 54).
+has_in_port(17, 57).
+has_in_port(17, 58).
+has_in_port(18, 62).
+has_in_port(18, 63).
+
+% FACT: has_out_port(block_id, port_id).
+has_out_port(1, 1).
+has_out_port(2, 3).
+has_out_port(3, 5).
+has_out_port(4, 7).
+has_out_port(4, 8).
+has_out_port(4, 9).
+has_out_port(5, 13).
+has_out_port(6, 16).
+has_out_port(6, 17).
+has_out_port(6, 18).
+has_out_port(6, 19).
+has_out_port(6, 20).
+has_out_port(7, 28).
+has_out_port(8, 36).
+has_out_port(9, 39).
+has_out_port(10, 43).
+has_out_port(11, 45).
+has_out_port(12, 47).
+has_out_port(13, 49).
+has_out_port(14, 51).
+has_out_port(15, 53).
+has_out_port(16, 55).
+has_out_port(16, 56).
+has_out_port(17, 59).
+has_out_port(17, 60).
+has_out_port(17, 61).
+has_out_port(18, 64).
+
+% FACT: data(data_id, data_name, qualified_data_name).
+data(1, 'Gates_Tensor', '[Gates_Tensor]').
+data(2, 'ANTHA_spreadsheet', 'Yener_Tensor[ANTHA_spreadsheet]').
+data(3, 'num_0', 'Yener_Tensor[num_0]').
+data(4, 'num_1', 'Yener_Tensor[num_1]').
+data(5, 'subj', 'Yener_Tensor[subj]').
+data(6, 'ib_0', 'Yener_Tensor[ib_0]').
+data(7, 'final_0', 'Yener_Tensor[final_0]').
+data(8, 'ib_1', 'Yener_Tensor[ib_1]').
+data(9, 'heights', 'Yener_Tensor[heights]').
+data(10, 'bmis', 'Yener_Tensor[bmis]').
+data(11, 'weights', 'Yener_Tensor[weights]').
+data(12, 'times', 'Yener_Tensor[times]').
+data(13, 'where', 'Yener_Tensor[where]').
+data(14, 'final_1', 'Yener_Tensor[final_1]').
+data(15, 'final_2', 'Yener_Tensor[final_2]').
+data(16, 'final_3', 'Yener_Tensor[final_3]').
+data(17, 'test_spreadsheet_final', 'Yener_Tensor[test_spreadsheet_final]').
+data(18, 'num_2', 'Yener_Tensor[num_2]').
+data(19, 'chara', 'Yener_Tensor[chara]').
+data(20, 'chara_1', 'Yener_Tensor[chara_1]').
+data(21, 'chara_2', 'Yener_Tensor[chara_2]').
+data(22, 'chara_3', 'Yener_Tensor[chara_3]').
+data(23, 'chara_4', 'Yener_Tensor[chara_4]').
+data(24, 'C', 'Yener_Tensor[C]').
+data(25, 'gender', 'Yener_Tensor[gender]').
+data(26, 'weights_1', 'Yener_Tensor[weights_1]').
+data(27, 'heights_1', 'Yener_Tensor[heights_1]').
+data(28, 'gates_tensor', 'Yener_Tensor[gates_tensor]').
+
+% FACT: channel(channel_id, data_id).
+channel(1, 3).
+channel(2, 4).
+channel(3, 5).
+channel(4, 7).
+channel(5, 7).
+channel(6, 7).
+channel(7, 7).
+channel(8, 7).
+channel(9, 6).
+channel(10, 8).
+channel(11, 8).
+channel(12, 8).
+channel(13, 8).
+channel(14, 9).
+channel(15, 9).
+channel(16, 10).
+channel(17, 10).
+channel(18, 11).
+channel(19, 11).
+channel(20, 12).
+channel(21, 12).
+channel(22, 13).
+channel(23, 13).
+channel(24, 14).
+channel(25, 15).
+channel(26, 16).
+channel(27, 17).
+channel(28, 18).
+channel(29, 18).
+channel(30, 19).
+channel(31, 20).
+channel(32, 21).
+channel(33, 22).
+channel(34, 23).
+channel(35, 23).
+channel(36, 24).
+
+% FACT: port_connects_to_channel(port_id, channel_id).
+port_connects_to_channel(3, 1).
+port_connects_to_channel(4, 1).
+port_connects_to_channel(5, 2).
+port_connects_to_channel(6, 2).
+port_connects_to_channel(7, 3).
+port_connects_to_channel(10, 3).
+port_connects_to_channel(9, 4).
+port_connects_to_channel(11, 4).
+port_connects_to_channel(9, 5).
+port_connects_to_channel(14, 5).
+port_connects_to_channel(9, 6).
+port_connects_to_channel(26, 6).
+port_connects_to_channel(9, 7).
+port_connects_to_channel(34, 7).
+port_connects_to_channel(9, 8).
+port_connects_to_channel(37, 8).
+port_connects_to_channel(8, 9).
+port_connects_to_channel(12, 9).
+port_connects_to_channel(13, 10).
+port_connects_to_channel(15, 10).
+port_connects_to_channel(13, 11).
+port_connects_to_channel(27, 11).
+port_connects_to_channel(13, 12).
+port_connects_to_channel(35, 12).
+port_connects_to_channel(13, 13).
+port_connects_to_channel(38, 13).
+port_connects_to_channel(16, 14).
+port_connects_to_channel(21, 14).
+port_connects_to_channel(16, 15).
+port_connects_to_channel(29, 15).
+port_connects_to_channel(17, 16).
+port_connects_to_channel(22, 16).
+port_connects_to_channel(17, 17).
+port_connects_to_channel(30, 17).
+port_connects_to_channel(18, 18).
+port_connects_to_channel(23, 18).
+port_connects_to_channel(18, 19).
+port_connects_to_channel(31, 19).
+port_connects_to_channel(19, 20).
+port_connects_to_channel(24, 20).
+port_connects_to_channel(19, 21).
+port_connects_to_channel(32, 21).
+port_connects_to_channel(20, 22).
+port_connects_to_channel(25, 22).
+port_connects_to_channel(20, 23).
+port_connects_to_channel(33, 23).
+port_connects_to_channel(28, 24).
+port_connects_to_channel(40, 24).
+port_connects_to_channel(36, 25).
+port_connects_to_channel(41, 25).
+port_connects_to_channel(39, 26).
+port_connects_to_channel(42, 26).
+port_connects_to_channel(43, 27).
+port_connects_to_channel(44, 27).
+port_connects_to_channel(45, 28).
+port_connects_to_channel(46, 28).
+port_connects_to_channel(45, 29).
+port_connects_to_channel(62, 29).
+port_connects_to_channel(47, 30).
+port_connects_to_channel(48, 30).
+port_connects_to_channel(49, 31).
+port_connects_to_channel(50, 31).
+port_connects_to_channel(51, 32).
+port_connects_to_channel(52, 32).
+port_connects_to_channel(53, 33).
+port_connects_to_channel(54, 33).
+port_connects_to_channel(55, 34).
+port_connects_to_channel(57, 34).
+port_connects_to_channel(55, 35).
+port_connects_to_channel(63, 35).
+port_connects_to_channel(56, 36).
+port_connects_to_channel(58, 36).
+
+% FACT: inflow_connects_to_channel(port_id, channel_id).
+
+% FACT: outflow_connects_to_channel(port_id, channel_id).
+
+% FACT: uri_variable(uri_variable_id, variable_name, port_id).

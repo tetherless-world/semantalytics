@@ -1,0 +1,199 @@
+
+% FACT: extract_source(source_id, source_path).
+extract_source(1, 'YenerTensor.m').
+
+% FACT: annotation(annotation_id, source_id, line_number, tag, keyword, value).
+annotation(1, 1, 1, 'begin', '@begin', 'Yener_Tensor').
+annotation(2, 1, 2, 'out', '@out', 'Gates_Tensor').
+annotation(3, 1, 8, 'begin', '@begin', 'Load_Dataset').
+annotation(4, 1, 9, 'desc', '@desc', 'Load ANTHA dataset').
+annotation(5, 1, 10, 'in', '@in', 'ANTHA_spreadsheet').
+annotation(6, 1, 10, 'uri', '@uri', 'file:ANTHAyener.xlsx').
+annotation(7, 1, 11, 'out', '@out', 'num').
+annotation(8, 1, 11, 'as', '@as', 'num_0').
+annotation(9, 1, 13, 'end', '@end', 'Load_Dataset').
+annotation(10, 1, 15, 'begin', '@begin', 'Adjust_APGAR').
+annotation(11, 1, 16, 'desc', '@desc', 'Adjust APGAR Scores: Ensure they are between 0-10').
+annotation(12, 1, 17, 'in', '@in', 'num').
+annotation(13, 1, 17, 'as', '@as', 'num_0').
+annotation(14, 1, 18, 'out', '@out', 'num').
+annotation(15, 1, 18, 'as', '@as', 'num_1').
+annotation(16, 1, 27, 'end', '@end', 'Adjust_APGAR').
+annotation(17, 1, 29, 'begin', '@begin', 'Choose_Subjects').
+annotation(18, 1, 30, 'desc', '@desc', 'Choose only subjects with all five time points').
+annotation(19, 1, 31, 'in', '@in', 'num').
+annotation(20, 1, 31, 'as', '@as', 'num_1').
+annotation(21, 1, 32, 'out', '@out', 'subj').
+annotation(22, 1, 33, 'out', '@out', 'ib').
+annotation(23, 1, 33, 'as', '@as', 'ib_0').
+annotation(24, 1, 34, 'out', '@out', 'final').
+annotation(25, 1, 34, 'as', '@as', 'final_0').
+annotation(26, 1, 42, 'end', '@end', 'Choose_Subjects').
+annotation(27, 1, 44, 'begin', '@begin', 'Start_Missing_Values').
+annotation(28, 1, 45, 'desc', '@desc', 'Impute or remove missing values based on how many are missing').
+annotation(29, 1, 46, 'in', '@in', 'subj').
+annotation(30, 1, 47, 'in', '@in', 'final').
+annotation(31, 1, 47, 'as', '@as', 'final_0').
+annotation(32, 1, 48, 'in', '@in', 'ib').
+annotation(33, 1, 48, 'as', '@as', 'ib_0').
+annotation(34, 1, 49, 'out', '@out', 'ib').
+annotation(35, 1, 49, 'as', '@as', 'ib_1').
+annotation(36, 1, 53, 'end', '@end', 'Start:_Missing_Values').
+annotation(37, 1, 55, 'begin', '@begin', 'Count_Missing').
+annotation(38, 1, 56, 'desc', '@desc', 'Count missing heights, BMIs and weights').
+annotation(39, 1, 57, 'in', '@in', 'final').
+annotation(40, 1, 57, 'as', '@as', 'final_0').
+annotation(41, 1, 58, 'in', '@in', 'ib').
+annotation(42, 1, 58, 'as', '@as', 'ib_1').
+annotation(43, 1, 59, 'out', '@out', 'heights').
+annotation(44, 1, 60, 'out', '@out', 'bmis').
+annotation(45, 1, 61, 'out', '@out', 'weights').
+annotation(46, 1, 62, 'out', '@out', 'times').
+annotation(47, 1, 63, 'out', '@out', 'where').
+annotation(48, 1, 71, 'end', '@end', 'Count_Missing').
+annotation(49, 1, 73, 'begin', '@begin', 'Impute_One_Missing').
+annotation(50, 1, 74, 'desc', '@desc', 'Use regression model to impute for one missing time point').
+annotation(51, 1, 75, 'in', '@in', 'heights').
+annotation(52, 1, 76, 'in', '@in', 'bmis').
+annotation(53, 1, 77, 'in', '@in', 'weights').
+annotation(54, 1, 78, 'in', '@in', 'times').
+annotation(55, 1, 79, 'in', '@in', 'where').
+annotation(56, 1, 80, 'in', '@in', 'final').
+annotation(57, 1, 80, 'as', '@as', 'final_0').
+annotation(58, 1, 81, 'in', '@in', 'ib').
+annotation(59, 1, 81, 'as', '@as', 'ib_1').
+annotation(60, 1, 82, 'out', '@out', 'final').
+annotation(61, 1, 82, 'as', '@as', 'final_1').
+annotation(62, 1, 102, 'end', '@end', 'Impute_One_Missing').
+annotation(63, 1, 104, 'begin', '@begin', 'Impute_Two_Missing').
+annotation(64, 1, 105, 'desc', '@desc', 'Use linear fit to impute for two missing_time_points').
+annotation(65, 1, 106, 'in', '@in', 'heights').
+annotation(66, 1, 107, 'in', '@in', 'bmis').
+annotation(67, 1, 108, 'in', '@in', 'weights').
+annotation(68, 1, 109, 'in', '@in', 'times').
+annotation(69, 1, 110, 'in', '@in', 'where').
+annotation(70, 1, 111, 'in', '@in', 'final').
+annotation(71, 1, 111, 'as', '@as', 'final_0').
+annotation(72, 1, 112, 'in', '@in', 'ib').
+annotation(73, 1, 112, 'as', '@as', 'ib_1').
+annotation(74, 1, 113, 'out', '@out', 'final').
+annotation(75, 1, 113, 'as', '@as', 'final_2').
+annotation(76, 1, 125, 'end', '@end', 'Impute_Two_Missing').
+annotation(77, 1, 127, 'begin', '@begin', 'Remove_More_Than_Two_Missing').
+annotation(78, 1, 128, 'desc', '@desc', 'Remove subjects with more than two missing time points').
+annotation(79, 1, 129, 'in', '@in', 'final').
+annotation(80, 1, 129, 'as', '@as', 'final_0').
+annotation(81, 1, 130, 'in', '@in', 'ib').
+annotation(82, 1, 130, 'as', '@as', 'ib_1').
+annotation(83, 1, 131, 'out', '@out', 'final').
+annotation(84, 1, 131, 'as', '@as', 'final_3').
+annotation(85, 1, 135, 'end', '@end', 'Remove_More_Than_Two_Missing').
+annotation(86, 1, 138, 'begin', '@begin', 'Write_final').
+annotation(87, 1, 139, 'in', '@in', 'final').
+annotation(88, 1, 139, 'as', '@as', 'final_1').
+annotation(89, 1, 140, 'in', '@in', 'final').
+annotation(90, 1, 140, 'as', '@as', 'final_2').
+annotation(91, 1, 141, 'in', '@in', 'final').
+annotation(92, 1, 141, 'as', '@as', 'final_3').
+annotation(93, 1, 142, 'out', '@out', 'test_spreadsheet_final').
+annotation(94, 1, 142, 'uri', '@uri', 'file:ANTHAyenerfinalmine.xlsx').
+annotation(95, 1, 143, 'end', '@end', 'Write_final').
+annotation(96, 1, 145, 'begin', '@begin', 'Loading_data_for_tensor').
+annotation(97, 1, 146, 'in', '@in', 'test_spreadsheet_final').
+annotation(98, 1, 146, 'uri', '@uri', 'file:ANTHAyenerfinalmine.xlsx').
+annotation(99, 1, 147, 'out', '@out', 'num').
+annotation(100, 1, 147, 'as', '@as', 'num_2').
+annotation(101, 1, 149, 'end', '@end', 'Loading_data_for_tensor').
+annotation(102, 1, 151, 'begin', '@begin', 'Getting_characteristics').
+annotation(103, 1, 152, 'in', '@in', 'num').
+annotation(104, 1, 152, 'as', '@as', 'num_2').
+annotation(105, 1, 153, 'out', '@out', 'chara').
+annotation(106, 1, 156, 'end', '@end', 'Getting_characteristics').
+annotation(107, 1, 158, 'begin', '@begin', 'Fixing_feeding_n').
+annotation(108, 1, 159, 'in', '@in', 'chara').
+annotation(109, 1, 160, 'out', '@out', 'chara').
+annotation(110, 1, 160, 'as', '@as', 'chara_1').
+annotation(111, 1, 162, 'end', '@end', 'Fixing_feeding_n').
+annotation(112, 1, 164, 'begin', '@begin', 'Fill_in_average_values').
+annotation(113, 1, 165, 'in', '@in', 'chara').
+annotation(114, 1, 165, 'as', '@as', 'chara_1').
+annotation(115, 1, 166, 'out', '@out', 'chara').
+annotation(116, 1, 166, 'as', '@as', 'chara_2').
+annotation(117, 1, 168, 'end', '@end', 'Fill_in_average_values').
+annotation(118, 1, 170, 'begin', '@begin', 'Going_through_all_the_columns').
+annotation(119, 1, 171, 'in', '@in', 'chara').
+annotation(120, 1, 171, 'as', '@as', 'chara_2').
+annotation(121, 1, 172, 'out', '@out', 'chara').
+annotation(122, 1, 172, 'as', '@as', 'chara_3').
+annotation(123, 1, 174, 'end', '@end', 'Going_through_all_the_columns').
+annotation(124, 1, 176, 'begin', '@begin', 'Does_column_have_missing_values').
+annotation(125, 1, 177, 'in', '@in', 'chara').
+annotation(126, 1, 177, 'as', '@as', 'chara_3').
+annotation(127, 1, 178, 'out', '@out', 'chara').
+annotation(128, 1, 178, 'as', '@as', 'chara_4').
+annotation(129, 1, 179, 'out', '@out', 'C').
+annotation(130, 1, 182, 'end', '@end', 'Does_column_have_missing_values').
+annotation(131, 1, 184, 'begin', '@begin', 'Determine_missing_values').
+annotation(132, 1, 185, 'in', '@in', 'chara').
+annotation(133, 1, 185, 'as', '@as', 'chara_4').
+annotation(134, 1, 186, 'in', '@in', 'C').
+annotation(135, 1, 187, 'out', '@out', 'gender').
+annotation(136, 1, 188, 'out', '@out', 'weights_1').
+annotation(137, 1, 189, 'out', '@out', 'heights_1').
+annotation(138, 1, 210, 'end', '@end', 'Determine_missing_values').
+annotation(139, 1, 215, 'begin', '@begin', 'Creating_Gates_Tensor').
+annotation(140, 1, 216, 'in', '@in', 'num').
+annotation(141, 1, 216, 'as', '@as', 'num_2').
+annotation(142, 1, 217, 'in', '@in', 'chara').
+annotation(143, 1, 217, 'as', '@as', 'chara_4').
+annotation(144, 1, 218, 'out', '@out', 'gates_tensor').
+annotation(145, 1, 227, 'end', '@end', 'Creating_Gates_Tensor').
+annotation(146, 1, 228, 'end', '@end', 'Yener_Tensor').
+
+% FACT: annotation_qualifies(qualifying_annotation_id, primary_annotation_id).
+annotation_qualifies(4, 3).
+annotation_qualifies(6, 5).
+annotation_qualifies(8, 7).
+annotation_qualifies(11, 10).
+annotation_qualifies(13, 12).
+annotation_qualifies(15, 14).
+annotation_qualifies(18, 17).
+annotation_qualifies(20, 19).
+annotation_qualifies(23, 22).
+annotation_qualifies(25, 24).
+annotation_qualifies(28, 27).
+annotation_qualifies(31, 30).
+annotation_qualifies(33, 32).
+annotation_qualifies(35, 34).
+annotation_qualifies(38, 37).
+annotation_qualifies(40, 39).
+annotation_qualifies(42, 41).
+annotation_qualifies(50, 49).
+annotation_qualifies(57, 56).
+annotation_qualifies(59, 58).
+annotation_qualifies(61, 60).
+annotation_qualifies(64, 63).
+annotation_qualifies(71, 70).
+annotation_qualifies(73, 72).
+annotation_qualifies(75, 74).
+annotation_qualifies(78, 77).
+annotation_qualifies(80, 79).
+annotation_qualifies(82, 81).
+annotation_qualifies(84, 83).
+annotation_qualifies(88, 87).
+annotation_qualifies(90, 89).
+annotation_qualifies(92, 91).
+annotation_qualifies(94, 93).
+annotation_qualifies(98, 97).
+annotation_qualifies(100, 99).
+annotation_qualifies(104, 103).
+annotation_qualifies(110, 109).
+annotation_qualifies(114, 113).
+annotation_qualifies(116, 115).
+annotation_qualifies(120, 119).
+annotation_qualifies(122, 121).
+annotation_qualifies(126, 125).
+annotation_qualifies(128, 127).
+annotation_qualifies(133, 132).
+annotation_qualifies(141, 140).
+annotation_qualifies(143, 142).
