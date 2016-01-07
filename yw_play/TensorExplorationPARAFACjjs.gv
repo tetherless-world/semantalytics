@@ -1,0 +1,98 @@
+
+/* Start of top-level graph */
+digraph Workflow {
+rankdir=TB
+
+/* Title for graph */
+fontname=Courier; fontsize=18; labelloc=t
+label=TensorExplorationPARAFAC
+
+/* Start of double cluster for drawing box around nodes in workflow */
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; color=white
+
+/* Style for nodes representing atomic programs in workflow */
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+
+/* Nodes representing atomic programs in workflow */
+LoadDataSet [shape=record rankdir=LR label="{<f0> LoadDataSet |<f1> Load ANTHA dataset}"];
+Fixing_APGAR [shape=record rankdir=LR label="{<f0> Fixing_APGAR |<f1> Fixing APGAR\: Some APGAR scores were way above the average (in the 20s)}"];
+CreatingMatrix [shape=record rankdir=LR label="{<f0> CreatingMatrix |<f1> Creating a matrix of characteristics}"];
+CreatingTensor [shape=record rankdir=LR label="{<f0> CreatingTensor |<f1> Creating a tensor}"];
+NormalizingMotherCharacteristics [shape=record rankdir=LR label="{<f0> NormalizingMotherCharacteristics |<f1> normalizing mother characteristics by column}"];
+NormalizingGrowthCharacteristics [shape=record rankdir=LR label="{<f0> NormalizingGrowthCharacteristics |<f1> Normalizing Growth Characteristics by Subject}"];
+GatesTensor [shape=record rankdir=LR label="{<f0> GatesTensor |<f1> Gates Tensor}"];
+Normalization [shape=record rankdir=LR label="{<f0> Normalization |<f1> Normalizing Characteristics}"];
+UnfoldingTensor [shape=record rankdir=LR label="{<f0> UnfoldingTensor |<f1> Unfolding tensor}"];
+choosingPARAFAC [shape=record rankdir=LR label="{<f0> choosingPARAFAC |<f1> Choosing the amount of PARAFAC components}"];
+CreatePARAFACModel [shape=record rankdir=LR label="{<f0> CreatePARAFACModel |<f1> create parafac model}"];
+ComparingOriginalToPARAFACModel [shape=record rankdir=LR label="{<f0> ComparingOriginalToPARAFACModel |<f1> Comparing Original to PARAFAC modeling}"];
+CreateGradient [shape=record rankdir=LR label="{<f0> CreateGradient |<f1> Creating a Gradient for Characteristics}"];
+FuzzyCMeansClustering [shape=record rankdir=LR label="{<f0> FuzzyCMeansClustering |<f1> Fuzzy C-Means Clustering}"];
+TabulateBinaryVariables [shape=record rankdir=LR label="{<f0> TabulateBinaryVariables |<f1> Tabulate Binary Variables}"];
+CreateIQModel [shape=record rankdir=LR label="{<f0> CreateIQModel |<f1> Creating a model for IQ based on PARAFAC modeling}"];
+
+/* Style for nodes representing non-parameter data channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes for non-parameter data channels in workflow */
+input_data_file [shape=record rankdir=LR label="{<f0> input_data_file |<f1> file\:ANTHAyener.xlsx}"];
+
+/* Style for nodes representing parameter channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing parameter channels in workflow */
+
+/* Edges representing connections between programs and channels */
+LoadDataSet -> Fixing_APGAR
+input_data_file -> LoadDataSet
+Fixing_APGAR -> CreatingMatrix
+CreatingMatrix -> CreatingTensor
+CreatingTensor -> NormalizingMotherCharacteristics
+NormalizingMotherCharacteristics -> NormalizingGrowthCharacteristics
+NormalizingGrowthCharacteristics -> GatesTensor
+GatesTensor -> Normalization
+Normalization -> UnfoldingTensor
+UnfoldingTensor -> choosingPARAFAC
+choosingPARAFAC -> CreatePARAFACModel
+CreatePARAFACModel -> ComparingOriginalToPARAFACModel
+ComparingOriginalToPARAFACModel -> CreateGradient
+CreateGradient -> FuzzyCMeansClustering
+FuzzyCMeansClustering -> TabulateBinaryVariables
+TabulateBinaryVariables -> CreateIQModel
+
+/* End of double cluster for drawing box around nodes in workflow */
+}}
+
+/* Hidden double-cluster for grouping workflow input ports */
+subgraph cluster_input_ports_group_outer { label=""; color=white
+subgraph cluster_input_ports_group_inner { label=""; color=white
+
+/* Style for nodes representing workflow input ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow input ports */
+input_data_file_input_port [label=""]
+
+/* End of double-cluster for grouping workflow input ports */
+}}
+
+/* Hidden double-cluster for grouping workflow output ports */
+subgraph cluster_output_ports_group_outer { label=""; color=white
+subgraph cluster_output_ports_group_inner { label=""; color=white
+
+/* Style for nodes representing workflow output ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow output ports */
+
+/* End of double-cluster for grouping workflow output ports */
+}}
+
+/* Edges from input ports to channels */
+input_data_file_input_port -> input_data_file
+
+/* Edges from channels to output ports */
+
+/* End of top-level graph */
+}
