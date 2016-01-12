@@ -9,12 +9,11 @@ close all;
 %% @PARAM db_pth
 %% @PARAM fmodel
 %% @IN input_data_file  @URI file:ANTHAyener.xlsx
-%% @OUT result_NEE_pdf  @URI file:result_NEE.pdf
 
 %% @begin LoadDataSet
 %% @desc Load ANTHA dataset
 %% @IN g  @AS input_data_file  @URI file:{db_pth}/Copy of ANTHAyener.xlsx
-%% @OUT mask  @AS Fixing_APGAR
+%% @out num @as num
 
 %% [num,txt,raw] = xlsread('Copy of ANTHAfinal.xlsx');
 
@@ -46,7 +45,10 @@ num(num(:,30) == 50,30) = 3;
 
 %% @begin Fixing_APGAR
 %% @desc Fixing APGAR: Some APGAR scores were way above the average (in the 20s)
+%% @in num @as num
+%% @out CreatingMatrix
 %%                   , so this is to fix that
+%%
 
 for k = 1:size(num,1) %%going through subjects
    if num(k,19) >= 20 %%if apgar1 >= 20
@@ -57,7 +59,7 @@ for k = 1:size(num,1) %%going through subjects
    end
       
 end
-%% @OUT mask  @AS CreatingMatrix
+
 %% @end Fixing_APGAR
 
 %% SGA kids
@@ -97,7 +99,7 @@ columns, in order: (copy of antha)
  - 20 - diabp
  - 21 - SGA
 %%}
-%% @OUT mask  @AS CreatingTensor
+%% @out SGA @as SGA
 %% @end CreatingMatrix
 
 %% copy of antha
@@ -112,6 +114,8 @@ U = unique(num(:,2)); %% unique subjects
 count = histc(num(:,2),U); %% counts for subjects (# of time points)
 %% @begin CreatingTensor
 %% @desc Creating a tensor
+%% @in SGA
+%% @out tensor
 
 gates_tensor = NaN(38508,20,5);
 %% subject features time
@@ -122,10 +126,13 @@ gates_tensor = NaN(38508,20,5);
 time_pt = size(gates_tensor,3); %% number of time points
 
 %% normum = num(:,4:6);
-%% @OUT mask  @AS NormalizingMotherCharacteristics
 %% @end CreatingTensor
 
 %% @begin NormalizingMotherCharacteristics
+%% @in tensor
+%% @out avg_mother
+%% @out stdev_mother
+%% @out normum_mother
 %% normalizing growth characteristics by column
 normum = zeros(size(num,1),3);
 for k = 1:3
@@ -154,10 +161,15 @@ for k = [1 123 366 1462 2558]
 %%     gates_tensor(any(isnan(gates_tensor(:,1:6,t))),:,:) =[];
     t = t + 1; %% increment time counter
 end
-%% @OUT mask  @AS NormalizingGrowthCharacteristics
 %% @end NormalizingMotherCharacteristics
 
 %% @begin NormalizingGrowthCharacteristics
+%% @in avg_mother
+%% @in stdev_mother
+%% @in normum_mother
+%% @out avg_growth
+%% @out stdev_growth
+%% @out normum_growth
 %% @desc Normalizing Growth Characteristics by Subject
 for k = 1:size(gates_tensor,1)
     for p = 1:3
@@ -167,11 +179,14 @@ for k = 1:size(gates_tensor,1)
         gates_tensor(k,p,:) = norma;
     end
 end
-%% @OUT mask  @AS GatesTensor
 %% @end NormalizingGrowthCharacteristics
 
 %% @begin GatesTensor
-%% @desc Gates Tensor 
+%% @desc Gates Tensor
+%% @in avg_growth
+%% @in stdev_growth
+%% @in normum_growth
+%% @out gates_tensor
 
 gates_tensor(C,:,:) = [];
 %% gates_tensor(count~=5,:,:)=[]; %% only include those with all time
@@ -236,11 +251,12 @@ end
 gates_keep = gates_tensor; %% storing the original tensor
 gates_tensor = gates_tensor(:,[2:7 9:20],1:5); %% not including iq, bp & subj id & whz
 
-%% @OUT mask  @AS Normalization
 %% @end GatesTensor
 
 %% @begin Normalization
 %% @desc Normalizing Characteristics
+%% @in gates_tensor
+%% @out gates_tensor_norm
 
 %% normalization
 %%{
@@ -262,12 +278,12 @@ end
 %%}
 time_pt = size(gates_tensor,3); %% amount of time points
 chara = gates_keep(:,:,1); %% characteristics at the first time point
-
-%% @OUT mask  @AS UnfoldingTensor
 %% @end Normalization
 
 %% @begin UnfoldingTensor
 %% @desc Unfolding tensor
+%% @in gates_tensor_norm
+%% @out SGA_Kids
 
 %% load yenerscores.mat
 %% [yscores] =xlsread('Childloadings.xlsx');
@@ -290,11 +306,12 @@ chara = [chara SGA(:,2)]; %% add that characteristic
 
 round2 = 0;
 
-%% @OUT mask  @AS choosingPARAFAC
 %% @end UnfoldingTensor
 
 %% @begin choosingPARAFAC
 %% @desc Choosing the amount of PARAFAC components
+%% @in SGA_Kids
+%% @out consistency_plot
 
 %% let's try centering?
 [gates_tensornew,means,scales]=nprocess(gates_tensor,[0 0 0],[0 0 0]);
@@ -324,13 +341,14 @@ xlabel('Number of Components');
 ylabel('CONCORDIA');
 %% displays that 2 is best
 
-%% @OUT mask  @AS CreatePARAFACModel
 %% @end choosingPARAFAC
 
 %% PARAFAC
 
 %% @begin CreatePARAFACModel
 %% @desc create parafac model
+%% @in consistency_plot
+%% @out PARAFAC
 [factors,it,err,corcondia,output] = parafac(tensoring,2,[0 0 0 0 10 0]);
 %% if options(3) = 2, MATLAB runs out of memory at the 3rd plot :(
 [A,B,C] = fac2let(factors); %% get loadings
@@ -351,11 +369,11 @@ set(gca,'XTick',0:5:69)
 title('Variance Explained for Data')
 %%}
 
-%% @OUT mask  @AS ComparingOriginalToPARAFACModel
 %% @end CreatePARAFACModel
 
 %% @begin ComparingOriginalToPARAFACModel
 %% @desc Comparing Original to PARAFAC modeling
+%% @in PARAFAC
 
 time_points = [1 123 366 1462 2558];
 
@@ -529,7 +547,7 @@ xlabel('Component 1')
 ylabel('Component 2')
 
 %% Imagesc
-%% heat maps of each mode
+%% @out heat_maps_of_each_mode
 
 figure
 subplot(2,2,1),imagesc(A),colorbar
@@ -560,7 +578,7 @@ analyze = gates_mtx(:,47);
 [VC,UF,~,G,idx] = FuzzyCMeans(analyze,(1:38508)',nC);
 %% idx = kmeans(analyze,nC,'replicates',10)
 
-%% Silhouette Plot
+%% @out Silhouette_Plot
 
 %% visualizing fuzzy c-means
 %% silhouette graph
@@ -573,7 +591,7 @@ ylabel('Cluster')
 
 %% PCA (colored clusters)
 
-%% cluster colored PCA plot
+%% @out cluster_colored_PCA_plot
 figure
 hold on
 grid off
@@ -635,7 +653,7 @@ end
 %%}
 
 %% IQ Distributions
-%% histograms for the iqs of each cluster
+%% @out histograms_for_the_iqs_of_each_cluster
 
 %%{
 %% normal
@@ -809,7 +827,7 @@ xlabel('First Component')
 
 %% @begin CreateIQModel
 %% @desc Creating a model for IQ based on PARAFAC modeling
-
+%% @out IQ_Model
 %%normal
 %%{
 model = [A(:,1) chara(:,18) chara(:,end)];
