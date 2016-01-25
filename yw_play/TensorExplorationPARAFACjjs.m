@@ -326,6 +326,7 @@ for k = 1:3
 end
 
 %% scree-plot
+%% @out scree-plot
 figure
 plot(1:3,err);
 title('Scree-Plot for PARAFAC model');
@@ -334,6 +335,7 @@ ylabel('SSE');
 %% 2 is best
 
 %% core consistency plot
+%% @out core_Consistency_Plot
 figure
 plot(1:3,consistency);
 title('Core Consistency Plot');
@@ -388,6 +390,7 @@ end
 suptitle('Original Data');
 
 %% estimate model
+%% @out estimate_model
 [gates_model] = nmodel(factors,[],0);
 figure %% plot model
 for k = 1:time_pt %% for each of the time points
@@ -402,6 +405,7 @@ suptitle('Modeled Data');
 res = tensoring - gates_model;
 
 figure %% plot residuals
+%% @out plot_residuals
 for k = 1:time_pt %%for each of the time points
     subplot(3,2,k),mesh(res(:,:,k));
     title(sprintf('Time Point %g',time_points(k)));
@@ -411,6 +415,7 @@ end
 suptitle('Residuals');
 
 %% Components/Loadings
+%% @out component_matrices
 
 figure
 plotfac(factors);
@@ -833,7 +838,8 @@ xlabel('First Component')
 model = [A(:,1) chara(:,18) chara(:,end)];
 model(isnan(model(:,2)),:) = []; %% taking out nan values
 
-p = polyfit(model(:,1),model(:,2),1); %% calculating linear model
+%% @begin CalculateLinearModel
+p = polyfit(model(:,1),model(:,2),1); %% @desc calculating linear model
 yfit = polyval(p,model(:,1));
 yresid = model(:,2) - yfit;
 SSresid = sum(yresid.^2);
@@ -851,11 +857,11 @@ yresid = model(:,2) - yfit;
 SSresid = sum(yresid.^2);
 SStotal = (length(model(:,2))-1) * var(model(:,2));
 rsq = 1 - SSresid/SStotal;
-
+%% @end CalculateLinearModel
 
 %% Cretaing a 3D Gscatter Plot
 %% for a three component model
-
+%% @begin Create3DGscatter Plot
 if size(analyze,2) == 3
     figure
     hold on
@@ -872,6 +878,7 @@ if size(analyze,2) == 3
     zlabel('Score 3')
 end
 break
+%% @end Create3DGscatter
 
 %% Classification
 %%{
