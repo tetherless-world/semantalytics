@@ -11,7 +11,7 @@ close all;
 
 %% @begin Load_Dataset
 %% @desc Test Dataset (Tensor)
-%% @in ANTHA_spreadsheet @uri file:ANTHAyener.xlsx
+%% ANTHA_spreadsheet @uri file:ANTHAyener.xlsx
 %% @out Data_Processing
 [num,txt,raw] = xlsread('ANTHAyener.xlsx');
 %% @end Load_Dataset
@@ -240,7 +240,7 @@ close all;
 
 %% @begin LoadANTHADataSet
 %% @desc Load ANTHA dataset
-%% @IN g  @AS input_data_file  @URI file:{db_pth}/Copy of ANTHAyener.xlsx
+%% @in Creating_Gates_Tensor
 %% @out num @as num
 
 %% [num,txt,raw] = xlsread('Copy of ANTHAfinal.xlsx');
@@ -482,7 +482,7 @@ gates_tensor = gates_tensor(:,[2:7 9:20],1:5); %% not including iq, bp & subj id
 
 %% @begin Normalization
 %% @desc Normalizing Characteristics
-%% @in gates_tensor
+%% @in GatesTensor
 %% @out gates_tensor_norm
 
 %% normalization
@@ -538,7 +538,8 @@ round2 = 0;
 %% @begin choosingPARAFAC
 %% @desc Choosing the amount of PARAFAC components
 %% @in SGA_Kids
-%% @out consistency_plot
+%% @out CreatePARAFACModel
+%% @end choosingPARAFAC
 
 %% let's try centering?
 [gates_tensornew,means,scales]=nprocess(gates_tensor,[0 0 0],[0 0 0]);
@@ -551,26 +552,6 @@ for k = 1:3
     consistency(k) = corcond(tensoring,factors);
     
 end
-
-%% scree-plot
-%% @out scree-plot
-figure
-plot(1:3,err);
-title('Scree-Plot for PARAFAC model');
-xlabel('Number of Components');
-ylabel('SSE');
-%% 2 is best
-
-%% core consistency plot
-%% @out core_Consistency_Plot
-figure
-plot(1:3,consistency);
-title('Core Consistency Plot');
-xlabel('Number of Components');
-ylabel('CONCORDIA');
-%% displays that 2 is best
-
-%% @end choosingPARAFAC
 
 %% PARAFAC
 
@@ -603,6 +584,7 @@ title('Variance Explained for Data')
 %% @begin ComparingOriginalToPARAFACModel
 %% @desc Comparing Original to PARAFAC modeling
 %% @in PARAFAC
+%% @out EstimateModel
 
 time_points = [1 123 366 1462 2558];
 
@@ -616,8 +598,12 @@ for k = 1:time_pt %% for each of the time points
 end
 suptitle('Original Data');
 
+%% @end ComparingOriginalToPARAFACModel
+
+%% @begin EstimateModel
+%% @desc Estimate Model
 %% estimate model
-%% @out estimate_model
+%% @out ExploratoryAnalysis
 [gates_model] = nmodel(factors,[],0);
 figure %% plot model
 for k = 1:time_pt %% for each of the time points
@@ -630,9 +616,50 @@ suptitle('Modeled Data');
 
 %% error in model: residual
 res = tensoring - gates_model;
+%% @end EstimateModel
+
+%% @begin ExploratoryAnalysis
+%% @desc Exploratory Analysis
+%% @in EstimateModel
+%% @out PlotResiduals
+%% @out ScreenPlot
+%% @out CoreConsistencyPlot
+%% @out HeatMap
+%% @end ExploratoryAnalysis
+
+%% @begin ScreenPlot
+%% @desc Create a plot that shows the characteristics of the PARAFAC model
+%% @in ExploratoryAnalysis
+
+%% scree-plot
+figure
+plot(1:3,err);
+title('Scree-Plot for PARAFAC model');
+xlabel('Number of Components');
+ylabel('SSE');
+%% 2 is best
+%% @end ScreenPlot
+
+%% @begin CoreConsistencyPlot
+%% @desc Create a Core Consistency Plot
+%% @in ExploratoryAnalysis
+
+%% core consistency plot
+
+figure
+plot(1:3,consistency);
+title('Core Consistency Plot');
+xlabel('Number of Components');
+ylabel('CONCORDIA');
+%% displays that 2 is best
+%% @end CoreConsistencyPlot
+
+%% @begin PlotResiduals
+%% @desc Plot Residuals
+%% @in ExploratoryAnalysis
+
 
 figure %% plot residuals
-%% @out plot_residuals
 for k = 1:time_pt %%for each of the time points
     subplot(3,2,k),mesh(res(:,:,k));
     title(sprintf('Time Point %g',time_points(k)));
@@ -640,9 +667,12 @@ for k = 1:time_pt %%for each of the time points
     xlabel('Feature');
 end
 suptitle('Residuals');
+%% @end PlotResiduals
 
+%% @begin ComponentLoadings
+%% @desc Loadings/Scores
+%% @in ExploratoryAnalysis
 %% Components/Loadings
-%% @out component_matrices
 
 figure
 plotfac(factors);
@@ -686,12 +716,11 @@ ylabel('Score 2')
 for i = 1:size(C,1)
     cc = text(C(i,1),C(i,2),mode3_labels{i});
 end
-
-%% @OUT mask  @AS CreateGradient
-%% @end CreatePARAFACModel
+%% @end ComponentLoadings
 
 %% @begin CreateGradient
 %% @desc Creating a Gradient for Characteristics
+%% @in ExploratoryAnalysis
 
 %% original tensor
 %%{
@@ -765,6 +794,7 @@ ylabel('Second Component')
 xlabel('First Component')
 end
 %%}     
+%% @end CreateGradient
 
 %% Looking at where SGA kids fall
 %% on the scatter plot model
@@ -778,8 +808,10 @@ title('Components Colored by SGA')
 xlabel('Component 1')
 ylabel('Component 2')
 
+%% @begin HeatMap
+%% @desc Create a heat map for each mode 
+%% @in ExploratoryAnalysis
 %% Imagesc
-%% @out heat_maps_of_each_mode
 
 figure
 subplot(2,2,1),imagesc(A),colorbar
@@ -796,9 +828,18 @@ subplot(2,2,3),imagesc(C),colorbar
 title('Mode 3')
 ylabel('Time Points')
 xlabel('Components')
+%% @end HeatMap
 
-%% @OUT mask  @AS FuzzyCMeansClustering
-%% @end CreateGradient
+%% @begin Clustering
+%% @desc Clustering
+%% @in ScreenPlot
+%% @in CoreConsistencyPlot
+%% @in PlotResiduals
+%% @in ComponentLoadings
+%% @in CreateGradient
+%% @in HeatMap
+%% @out FuzzyCMeansClustering
+%% @end Clustering
 
 %% @begin FuzzyCMeansClustering
 %% @desc Fuzzy C-Means Clustering
@@ -809,10 +850,18 @@ analyze = gates_mtx(:,47);
 %% analyze = yener_scores;
 [VC,UF,~,G,idx] = FuzzyCMeans(analyze,(1:38508)',nC);
 %% idx = kmeans(analyze,nC,'replicates',10)
+%% @end FuzzyCMeansClustering
 
-%% @out Silhouette_Plot
-
+%% @begin VisualizingFuzzyCMeansClustering
+%% @desc Visualizing Fuzzy C-Means
+%% @in FuzzyCMeansClustering
+%% @out SilhouetteGraph
 %% visualizing fuzzy c-means
+%% @end VisualizingFuzzyCMeansClustering
+
+%% @begin SilhouetteGraph
+%% @desc Silhouette Graph
+%% @in VisualizingFuzzyCMeansClustering
 %% silhouette graph
 figure
 silhouette(analyze,idx);
@@ -823,7 +872,6 @@ ylabel('Cluster')
 
 %% PCA (colored clusters)
 
-%% @out cluster_colored_PCA_plot
 figure
 hold on
 grid off
@@ -832,8 +880,11 @@ title('Scores Scatter Plot with Colored Clusters (Fuzzy C-means)');
 xlabel('Component 1');
 ylabel('Component 2');
 hold off
+%% @end SilhouetteGraph
 
-%% Determining Characteristics of Clusters
+%% @begin DeterminingCharacteristics
+%% @desc Determining Characteristics of Clusters
+%% @in SilhouetteGraph
 %% finding the averages for each characteristic
 
 avg_char = zeros(nC,size(chara,2)); %% preallocating
@@ -862,13 +913,12 @@ end
 
 tests(:,1:2) = combo;
 pval(:,1:2) = combo;
-
-%% @OUT mask  @AS TabulateBinaryVariables
-%% @end FuzzyCMeansClustering
+%% @end DeterminingCharacteristics
 
 %% @begin TabulateBinaryVariables
 %% @desc Tabulate Binary Variables
-
+%% @in DeterminingCharacteristics
+%% @out CreateIQModel
 %% counting binary variables
 
 %%{
@@ -884,8 +934,13 @@ for k = 1:nC
 end
 %%}
 
+%% @end TabulateBinaryVariables
+
+%% @begin CreateIQModel
+%% @desc Creating a model for IQ based on PARAFAC modeling
+%% @in TabulateBinaryVariables
+
 %% IQ Distributions
-%% @out histograms_for_the_iqs_of_each_cluster
 
 %%{
 %% normal
@@ -1054,19 +1109,12 @@ ylabel('IQ')
 xlabel('First Component')
 %%}
 
-%% @OUT mask  @AS CreateIQModel
-%% @end TabulateBinaryVariables
-
-%% @begin CreateIQModel
-%% @desc Creating a model for IQ based on PARAFAC modeling
-%% @out IQ_Model
-%% @out LoadANTHADataSet
 %%normal
 %%{
 model = [A(:,1) chara(:,18) chara(:,end)];
 model(isnan(model(:,2)),:) = []; %% taking out nan values
 
-%% @begin CalculateLinearModel
+
 p = polyfit(model(:,1),model(:,2),1); %% @desc calculating linear model
 yfit = polyval(p,model(:,1));
 yresid = model(:,2) - yfit;
@@ -1085,11 +1133,11 @@ yresid = model(:,2) - yfit;
 SSresid = sum(yresid.^2);
 SStotal = (length(model(:,2))-1) * var(model(:,2));
 rsq = 1 - SSresid/SStotal;
-%% @end CalculateLinearModel
+%% @end CreateIQModel
 
 %% Cretaing a 3D Gscatter Plot
 %% for a three component model
-%% @begin Create3DGscatter Plot
+
 if size(analyze,2) == 3
     figure
     hold on
@@ -1106,14 +1154,11 @@ if size(analyze,2) == 3
     zlabel('Score 3')
 end
 break
-%% @end Create3DGscatter
 
 %% Classification
 %%{
 %% Random Permutations
 seed = rng;
-
-%% @end CreateIQModel
 
 %% DOESN'T INCLUDE WHZ
 tot = [chara(:,1) A(:,1) chara(:,18) A(:,2) SGA(:,2)]; %% subject id, then iqs, then scores
