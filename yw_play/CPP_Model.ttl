@@ -1,0 +1,114 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix provone: <http://purl.org/provone> .
+@prefix wfms:    <http://www.wfms.org/registry.xsd> .
+@prefix rdf:  	 <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix p1:   	 <http://dataone.org/ns/provone#> .
+@prefix yw:   	 <http://yesworkflow.org/ns/yesworkflow#> .
+
+:process_cpp 
+ 
+     a provone:Process;
+   dcterms:identifier "CPP_Data"^^xsd:string;
+      dcterms:title "CPP_Data"^^xsd:string;   
+  .
+
+#####################################################################################################################################
+#      cpp_model                                                                                                                    #
+#####################################################################################################################################
+<cpp_model>
+    rdf:type            p1:Workflow ;
+    rdfs:label          "cpp_model" ;
+    rdfs:comment        "Workflow for CPP Data" ;
+    p1:hasInPort        <cpp_model#test_dataset_tensor> ;                 
+    p1:hasOutPort       <cpp_model#iq_model> .
+    
+<cpp_model#test_dataset_tensor>
+    rdf:type                    p1:Port ;
+    rdfs:label                  "test_dataset" ;
+    rdfs:comment                "Test Dataset (TENSOR)" ;
+    p1:connectsToChannel        <cpp_model#adjust_apgar_scores> .
+<cpp_model#adjust_apgar_scores>
+    rdf:type                    p1:Port ;
+    rdfs:label                  "adjust_apgar_scores" ;
+    rdfs:comment                "Adjust APGAR Scores: ensure they are between 0-10" ;
+    p1:connectsToChannel        <cpp_model#growth_data> .
+<cpp_model#growth_data>
+    rdf:type                    p1:Port ;
+    rdfs:label                  "growth_data" ;
+    rdfs:comment                "Growth Data?" ;
+    p1:connectsToChannel        <cpp_model#sga_kids> .
+<cpp_model#sga_kids>
+    rdf:type                    p1:Port ;
+    rdfs:label                  "sga_kids" ;
+    rdfs:comment                "Add column and flag SGA kids (same as IQ)" ;
+    p1:connectsToChannel        <cpp_model#generate_parafac_model> .
+<cpp_model#generate_parafac_model>
+    rdf:type                    p1:Port ;
+    rdfs:label                  "generate_parafac_model" ;
+    p1:connectsToChannel        <cpp_model#generate_plots> .
+<cpp_model#generate_plots>
+    rdf:type                    p1:Port ;
+    rdfs:label                  "generate_plots" ;
+    p1:connectsToChannel        <cpp_model#fuzzy_c_means_clustering> .
+<cpp_model#fuzzy_c_means_clustering>
+    rdf:type                    p1:Port ;
+    rdfs:label                  "fuzzy_c_means_clustering" ;
+    p1:connectsToChannel        <cpp_model#collection_log_channel> .
+<cpp_model#create_iq_histogram>
+    rdf:type                    p1:Port ;
+    rdfs:label                  "create_iq_histogram" ;
+    p1:connectsToChannel        <cpp_model#clustering> .
+    
+#####################################################################################################################################
+#   cpp_model                                                                                                                       #
+#       initialize_run                                                                                                              #
+#####################################################################################################################################
+<cpp_model/initialize_run>
+    rdf:type            p1:Program ;
+    rdfs:label          "initialize_run" ;
+    rdfs:comment        "Input Test Dataset (TENSOR)" ;
+    p1:hasOutPort       <cpp_model/initialize_run#test_dataset_tensor> .
+
+#####################################################################################################################################
+#   cpp_model                                                                                                                       #
+#       data_gathering                                                                                                              #
+#####################################################################################################################################
+<cpp_model/data_gathering> 
+    rdf:type            p1:Program ;
+    rdfs:label          "data_gathering" .
+
+#####################################################################################################################################
+#   cpp_model                                                                                                                       #
+#       data_processing                                                                                                             #
+#####################################################################################################################################
+<cpp_model/data_processing>
+    rdf:type            p1:Program ;
+    rdfs:label          "data_processing" .
+
+#####################################################################################################################################
+#   cpp_model                                                                                                                       #
+#       creating_parafac_model                                                                                                      #
+#####################################################################################################################################
+<cpp_model/creating_parafac_model>
+    rdf:type            p1:Program ;
+    rdfs:label          "creating_parafac_model" .
+
+#####################################################################################################################################
+#   exploratory_analysis                                                                                                            #
+#####################################################################################################################################
+<exploratory_analysis>
+    rdf:type            p1:Program ;
+    rdf:type            yw:Function ;
+    rdfs:label          "exploratory_analysis" .
+
+#####################################################################################################################################
+#   clustering                                                                                                                      #
+#####################################################################################################################################
+<clustering>
+    rdf:type            p1:Program ;
+    rdf:type            yw:Function ;
+    rdfs:label          "clustering" .

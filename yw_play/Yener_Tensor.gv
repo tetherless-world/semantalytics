@@ -15,7 +15,7 @@ subgraph cluster_workflow_box_inner { label=""; color=white
 node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
 
 /* Nodes representing atomic programs in workflow */
-Load_Dataset [shape=record rankdir=LR label="{<f0> Load_Dataset |<f1> Load ANTHA dataset}"];
+Load_Dataset [shape=record rankdir=LR label="{<f0> Load_Dataset |<f1> Load ANTHA dataset (Tensor)}"];
 Adjust_APGAR [shape=record rankdir=LR label="{<f0> Adjust_APGAR |<f1> Adjust APGAR Scores\: Ensure they are between 0-10}"];
 Choose_Subjects [shape=record rankdir=LR label="{<f0> Choose_Subjects |<f1> Choose only subjects with all five time points}"];
 Start_Missing_Values [shape=record rankdir=LR label="{<f0> Start_Missing_Values |<f1> Impute or remove missing values based on how many are missing}"];
@@ -32,6 +32,22 @@ Going_through_all_the_columns
 Does_column_have_missing_values
 Determine_missing_values
 Creating_Gates_Tensor
+LoadDataSet [shape=record rankdir=LR label="{<f0> LoadDataSet |<f1> Load ANTHA dataset}"];
+Fixing_APGAR [shape=record rankdir=LR label="{<f0> Fixing_APGAR |<f1> Fixing APGAR\: Some APGAR scores were way above the average (in the 20s)}"];
+CreatingMatrix [shape=record rankdir=LR label="{<f0> CreatingMatrix |<f1> Creating a matrix of characteristics}"];
+CreatingTensor [shape=record rankdir=LR label="{<f0> CreatingTensor |<f1> Creating a tensor}"];
+NormalizingMotherCharacteristics
+NormalizingGrowthCharacteristics
+GatesTensor [shape=record rankdir=LR label="{<f0> GatesTensor |<f1> Gates Tensor}"];
+Normalization [shape=record rankdir=LR label="{<f0> Normalization |<f1> Normalizing Characteristics}"];
+UnfoldingTensor [shape=record rankdir=LR label="{<f0> UnfoldingTensor |<f1> Unfolding tensor}"];
+choosingPARAFAC [shape=record rankdir=LR label="{<f0> choosingPARAFAC |<f1> Choosing the amount of PARAFAC components}"];
+CreatePARAFACModel [shape=record rankdir=LR label="{<f0> CreatePARAFACModel |<f1> create parafac model}"];
+ComparingOriginalToPARAFACModel [shape=record rankdir=LR label="{<f0> ComparingOriginalToPARAFACModel |<f1> Comparing Original to PARAFAC modeling}"];
+CreateGradient [shape=record rankdir=LR label="{<f0> CreateGradient |<f1> Creating a Gradient for Characteristics}"];
+FuzzyCMeansClustering [shape=record rankdir=LR label="{<f0> FuzzyCMeansClustering |<f1> Fuzzy C-Means Clustering}"];
+TabulateBinaryVariables [shape=record rankdir=LR label="{<f0> TabulateBinaryVariables |<f1> Tabulate Binary Variables}"];
+CreateIQModel [shape=record rankdir=LR label="{<f0> CreateIQModel |<f1> Creating a model for IQ based on PARAFAC modeling}"];
 
 /* Style for nodes representing non-parameter data channels in workflow */
 node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
@@ -59,6 +75,21 @@ chara_2
 chara_3
 chara_4
 C
+input_data_file [shape=record rankdir=LR label="{<f0> input_data_file |<f1> file\:ANTHAyener.xlsx}"];
+num
+SGA
+tensor
+avg_mother
+stdev_mother
+normum_mother
+avg_growth
+stdev_growth
+normum_growth
+gates_tensor
+gates_tensor_norm
+SGA_Kids
+consistency_plot
+PARAFAC
 
 /* Style for nodes representing parameter channels in workflow */
 node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
@@ -129,8 +160,64 @@ C -> Determine_missing_values
 Creating_Gates_Tensor -> gates_tensor
 num_2 -> Creating_Gates_Tensor
 chara_4 -> Creating_Gates_Tensor
+LoadDataSet -> num
+input_data_file -> LoadDataSet
+Fixing_APGAR -> CreatingMatrix
+num -> Fixing_APGAR
+CreatingMatrix -> SGA
+CreatingTensor -> tensor
+SGA -> CreatingTensor
+NormalizingMotherCharacteristics -> avg_mother
+NormalizingMotherCharacteristics -> stdev_mother
+NormalizingMotherCharacteristics -> normum_mother
+tensor -> NormalizingMotherCharacteristics
+NormalizingGrowthCharacteristics -> avg_growth
+NormalizingGrowthCharacteristics -> stdev_growth
+NormalizingGrowthCharacteristics -> normum_growth
+avg_mother -> NormalizingGrowthCharacteristics
+stdev_mother -> NormalizingGrowthCharacteristics
+normum_mother -> NormalizingGrowthCharacteristics
+avg_growth -> GatesTensor
+stdev_growth -> GatesTensor
+normum_growth -> GatesTensor
+Normalization -> gates_tensor_norm
+gates_tensor -> Normalization
+UnfoldingTensor -> SGA_Kids
+gates_tensor_norm -> UnfoldingTensor
+choosingPARAFAC -> consistency_plot
+choosingPARAFAC -> "scree-plot"
+choosingPARAFAC -> core_Consistency_Plot
+SGA_Kids -> choosingPARAFAC
+CreatePARAFACModel -> PARAFAC
+consistency_plot -> CreatePARAFACModel
+ComparingOriginalToPARAFACModel -> estimate_model
+ComparingOriginalToPARAFACModel -> plot_residuals
+ComparingOriginalToPARAFACModel -> component_matrices
+ComparingOriginalToPARAFACModel -> CreateGradient
+PARAFAC -> ComparingOriginalToPARAFACModel
+CreateGradient -> heat_maps_of_each_mode
+CreateGradient -> FuzzyCMeansClustering
+FuzzyCMeansClustering -> Silhouette_Plot
+FuzzyCMeansClustering -> cluster_colored_PCA_plot
+FuzzyCMeansClustering -> TabulateBinaryVariables
+TabulateBinaryVariables -> histograms_for_the_iqs_of_each_cluster
+TabulateBinaryVariables -> CreateIQModel
+CreateIQModel -> IQ_Model
 
 /* End of double cluster for drawing box around nodes in workflow */
+}}
+
+/* Hidden double-cluster for grouping workflow input ports */
+subgraph cluster_input_ports_group_outer { label=""; color=white
+subgraph cluster_input_ports_group_inner { label=""; color=white
+
+/* Style for nodes representing workflow input ports */
+node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontname=Helvetica width=0.2]
+
+/* Nodes representing workflow input ports */
+input_data_file_input_port [label=""]
+
+/* End of double-cluster for grouping workflow input ports */
 }}
 
 /* Hidden double-cluster for grouping workflow output ports */
@@ -144,6 +231,9 @@ node[shape=circle style="rounded,filled" fillcolor="#FFFFFF" peripheries=1 fontn
 
 /* End of double-cluster for grouping workflow output ports */
 }}
+
+/* Edges from input ports to channels */
+input_data_file_input_port -> input_data_file
 
 /* Edges from channels to output ports */
 
