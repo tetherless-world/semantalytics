@@ -6,79 +6,184 @@
 @prefix provone: <http://purl.org/provone> .
 @prefix wfms:    <http://www.wfms.org/registry.xsd> .
 @prefix rdf:  	 <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix p1:   	 <http://dataone.org/ns/provone#> .
+@prefix provone:   	 <http://dataone.org/ns/provone#> .
 @prefix yw:   	 <http://yesworkflow.org/ns/yesworkflow#> .
 
-:process_cpp 
- 
-     a provone:Process;
-   dcterms:identifier "CPP_Data"^^xsd:string;
-      dcterms:title "CPP_Data"^^xsd:string;   
-  .
+:program_cpp
 
+	a provone:Program;
+	dcterms:identifier "CPP_Data"^^xsd:string;
+	dcterms:title "CPP_Data"^^xsd:string;   
+	.	
+
+:process_cpp 
+
+	a provone:Process;
+	dcterms:identifier "CPP_Data"^^xsd:string;
+	dcterms:title "CPP_Data"^^xsd:string;   
+	.
+
+:workflow_cpp 
+	a provone:Workflow;
+	dcterms:identifier "CPP_Workflow"^^xsd:string;
+	dcterms:title "CPP_Workflow"^^xsd:string;    
+	.
+ 
+:test_dataset 
+	a provone:Port;
+	dcterms:identifier "test_dataset"^^xsd:string;
+	dcterms:title "Test Dataset (TENSOR)"^^xsd:string;
+	provone:hasOutPort :adjust_apgar_scores;
+	.
+	
+:adjust_apgar_scores 
+	a provone:Port;
+	dcterms:identifier "test_dataset"^^xsd:string;
+	dcterms:title "Test Dataset (TENSOR)"^^xsd:string;
+	provone:hasInPort :test_dataset;
+	provone:hasOutPort :growth_data;
+	.
+ 
+:channel_test_dataset_adjust_apgar_scores
+	a provone:Channel;
+	dcterms:identifier "channel_test_dataset_adjust_apgar_scores"^^xsd:string;
+	.
+ 
+:growth_data 
+	a provone:Port;
+	dcterms:identifier "growth_data"^^xsd:string;
+	dcterms:title "Growth Data"^^xsd:string;
+	provone:hasInPort :adjust_apgar_scores_dataset;
+	provone:hasOutPort :sga_kids;
+	.
+	
+:channel_adjust_apgar_scores_sga_kids
+	a provone:Channel;
+	dcterms:identifier "adjust_apgar_scores_sga_kids"^^xsd:string;
+	.
+ 
+:sga_kids
+	a provone:Port;
+	dcterms:identifier "sga_kids"^^xsd:string;
+	dcterms:title "SGA Kids"^^xsd:string;
+	provone:hasInPort :adjust_apgar_scores_dataset;
+	provone:hasOutPort :generate_parafac_model;
+	.
+	
+:channel_sga_kids_generate_parafac_model
+	a provone:Channel;
+	dcterms:identifier "sga_kids_generate_parafac_model"^^xsd:string;
+	.
+ 
+:generate_parafac_model
+	a provone:Port;
+	dcterms:identifier "generate_parafac_model"^^xsd:string;
+	dcterms:title "Generate PARAFAC Model"^^xsd:string;
+	provone:hasInPort :sga_kids;
+	provone:hasOutPort :generate_plots;
+	.
+
+:channel_generate_parafac_model_generate_plots
+	a provone:Channel;
+	dcterms:identifier "generate_parafac_model_generate_plots"^^xsd:string;
+	.
+ 
+:generate_plots
+	a provone:Port;
+	dcterms:identifier "generate_plots"^^xsd:string;
+	dcterms:title "Generate Plots"^^xsd:string;
+	provone:hasInPort :generate_parafac_model;
+	provone:hasOutPort :fuzzy_c_means_clustering;
+	.	
+
+:channel_generate_plots_fuzzy_c_means_clustering
+	a provone:Channel;
+	dcterms:identifier "generate_plots_fuzzy_c_means_clustering"^^xsd:string;
+	.
+ 
+:fuzzy_c_means_clustering
+	a provone:Port;
+	dcterms:identifier "fuzzy_c_means_clustering"^^xsd:string;
+	dcterms:title "Fuzzy C Means Clustering"^^xsd:string;
+	provone:hasInPort :generate_plots;
+	provone:hasOutPort :create_iq_histogram;
+	.	
+	
+:channel_fuzzy_c_means_clustering_generate_plots
+	a provone:Channel;
+	dcterms:identifier "fuzzy_c_means_clustering_generate_plots"^^xsd:string;
+	.
+ 
+:create_iq_histogramg
+	a provone:Port;
+	dcterms:identifier "create_iq_histogram"^^xsd:string;
+	dcterms:title "Create IQ Histogram"^^xsd:string;
+	provone:hasInPort :fuzzy_c_means_clustering;
+	.	
+	
 #####################################################################################################################################
 #      cpp_model                                                                                                                    #
 #####################################################################################################################################
 <cpp_model>
-    rdf:type            p1:Workflow ;
-    rdfs:label          "cpp_model" ;
-    rdfs:comment        "Workflow for CPP Data" ;
-    p1:hasInPort        <cpp_model#test_dataset_tensor> ;                 
-    p1:hasOutPort       <cpp_model#iq_model> .
+    rdf:type            			provone:Workflow ;
+    rdfs:label          			"cpp_model" ;
+    rdfs:comment        			"Workflow for CPP Data" ;
+    provone:hasInPort   			<cpp_model#test_dataset_tensor> ;                 
+    provone:hasOutPort  			<cpp_model#iq_model> .
     
 <cpp_model#test_dataset_tensor>
-    rdf:type                    p1:Port ;
-    rdfs:label                  "test_dataset" ;
-    rdfs:comment                "Test Dataset (TENSOR)" ;
-    p1:connectsToChannel        <cpp_model#adjust_apgar_scores> .
+    rdf:type                    	provone:Port ;
+    rdfs:label                  	"test_dataset" ;
+    rdfs:comment                	"Test Dataset (TENSOR)" ;
+    provone:connectsToChannel    	<cpp_model#adjust_apgar_scores> .
 <cpp_model#adjust_apgar_scores>
-    rdf:type                    p1:Port ;
-    rdfs:label                  "adjust_apgar_scores" ;
-    rdfs:comment                "Adjust APGAR Scores: ensure they are between 0-10" ;
-    p1:connectsToChannel        <cpp_model#growth_data> .
+    rdf:type                    	provone:Port ;
+    rdfs:label                  	"adjust_apgar_scores" ;
+    rdfs:comment                	"Adjust APGAR Scores: ensure they are between 0-10" ;
+    provone:connectsToChannel   	<cpp_model#growth_data> .
 <cpp_model#growth_data>
-    rdf:type                    p1:Port ;
-    rdfs:label                  "growth_data" ;
-    rdfs:comment                "Growth Data?" ;
-    p1:connectsToChannel        <cpp_model#sga_kids> .
+    rdf:type                    	provone:Port ;
+    rdfs:label                  	"growth_data" ;
+    rdfs:comment                	"Growth Data?" ;
+    provone:connectsToChannel   	<cpp_model#sga_kids> .
 <cpp_model#sga_kids>
-    rdf:type                    p1:Port ;
-    rdfs:label                  "sga_kids" ;
-    rdfs:comment                "Add column and flag SGA kids (same as IQ)" ;
-    p1:connectsToChannel        <cpp_model#generate_parafac_model> .
+    rdf:type                    	provone:Port ;
+    rdfs:label                  	"sga_kids" ;
+    rdfs:comment                	"Add column and flag SGA kids (same as IQ)" ;
+    provone:connectsToChannel   	<cpp_model#generate_parafac_model> .
 <cpp_model#generate_parafac_model>
-    rdf:type                    p1:Port ;
-    rdfs:label                  "generate_parafac_model" ;
-    p1:connectsToChannel        <cpp_model#generate_plots> .
+    rdf:type                    	provone:Port ;
+    rdfs:label                  	"generate_parafac_model" ;
+    provone:connectsToChannel   	<cpp_model#generate_plots> .
 <cpp_model#generate_plots>
-    rdf:type                    p1:Port ;
-    rdfs:label                  "generate_plots" ;
-    p1:connectsToChannel        <cpp_model#fuzzy_c_means_clustering> .
+    rdf:type                    	provone:Port ;
+    rdfs:label                  	"generate_plots" ;
+    provone:connectsToChannel   	<cpp_model#fuzzy_c_means_clustering> .
 <cpp_model#fuzzy_c_means_clustering>
-    rdf:type                    p1:Port ;
-    rdfs:label                  "fuzzy_c_means_clustering" ;
-    p1:connectsToChannel        <cpp_model#collection_log_channel> .
+    rdf:type                    	provone:Port ;
+    rdfs:label                  	"fuzzy_c_means_clustering" ;
+    provone:connectsToChannel   	<cpp_model#collection_log_channel> .
 <cpp_model#create_iq_histogram>
-    rdf:type                    p1:Port ;
-    rdfs:label                  "create_iq_histogram" ;
-    p1:connectsToChannel        <cpp_model#clustering> .
+    rdf:type                    	provone:Port ;
+    rdfs:label                  	"create_iq_histogram" ;
+    provone:connectsToChannel   	<cpp_model#clustering> .
     
 #####################################################################################################################################
 #   cpp_model                                                                                                                       #
 #       initialize_run                                                                                                              #
 #####################################################################################################################################
 <cpp_model/initialize_run>
-    rdf:type            p1:Program ;
+    rdf:type            provone:Process;
     rdfs:label          "initialize_run" ;
     rdfs:comment        "Input Test Dataset (TENSOR)" ;
-    p1:hasOutPort       <cpp_model/initialize_run#test_dataset_tensor> .
+    provone:hasOutPort  <cpp_model/initialize_run#test_dataset_tensor> .
 
 #####################################################################################################################################
 #   cpp_model                                                                                                                       #
 #       data_gathering                                                                                                              #
 #####################################################################################################################################
 <cpp_model/data_gathering> 
-    rdf:type            p1:Program ;
+    rdf:type            provone:Process;
     rdfs:label          "data_gathering" .
 
 #####################################################################################################################################
@@ -86,7 +191,7 @@
 #       data_processing                                                                                                             #
 #####################################################################################################################################
 <cpp_model/data_processing>
-    rdf:type            p1:Program ;
+    rdf:type            provone:Process;
     rdfs:label          "data_processing" .
 
 #####################################################################################################################################
@@ -94,14 +199,14 @@
 #       creating_parafac_model                                                                                                      #
 #####################################################################################################################################
 <cpp_model/creating_parafac_model>
-    rdf:type            p1:Program ;
+    rdf:type            provone:Process;
     rdfs:label          "creating_parafac_model" .
 
 #####################################################################################################################################
 #   exploratory_analysis                                                                                                            #
 #####################################################################################################################################
 <exploratory_analysis>
-    rdf:type            p1:Program ;
+    rdf:type            provone:Process;
     rdf:type            yw:Function ;
     rdfs:label          "exploratory_analysis" .
 
@@ -109,6 +214,6 @@
 #   clustering                                                                                                                      #
 #####################################################################################################################################
 <clustering>
-    rdf:type            p1:Program ;
+    rdf:type            provone:Process;
     rdf:type            yw:Function ;
     rdfs:label          "clustering" .
