@@ -13,7 +13,9 @@
 
 cwf:workflow_cpp 
 	a provone:Workflow;
-	rdfs:label "CPP_Workflow"^^xsd:string    
+	rdfs:label "CPP_Workflow"^^xsd:string ;   
+	rdfs:coment "CPP Wokflow: Top level" ;
+        provone:hasSubProgram cwf:program_cpp
 	.
 
 cwf:program_cpp
@@ -28,13 +30,11 @@ cwf:program_cpp provone:hasSubProgram cwf:data_gathering ;
              provone:hasSubProgram cwf:clustering .
 
 cwf:data_gathering
-
 	a provone:Program;
-	rdfs:label "Data Gathering"^^xsd:string   
+	rdfs:label "Data Gathering"^^xsd:string   ;
+	provone:hasSubProgram cwf:test_dataset .
 	.	
 
-cwf:data_gathering provone:hasSubProgram cwf:test_dataset .
-	
 cwf:test_dataset 
 	a provone:Program;
 	rdfs:label "Test Dataset (TENSOR)"^^xsd:string;
@@ -43,14 +43,14 @@ cwf:test_dataset
 
 cwf:data_processing
 	a provone:Program;
-	rdfs:label "Data Processing"^^xsd:string   
+	rdfs:label "Data Processing"^^xsd:string   ;
+	provone:hasSubProgram cwf:adjust_apgar_scores .
 	.	
 
-cwf:data_processing provone:hasSubProgram cwf:adjust_apgar_scores .
-	
 cwf:adjust_apgar_scores 
 	a provone:Program;
-	rdfs:label "Adjust APGAR Scores: ensure they are between 0-10"^^xsd:string;
+	rdfs:label "Adjust APGAR Scores"^^xsd:string;
+	rdfs:comment "Ensure APGAR scores are between 0-10"^^xsd:string;
 	provone:hasInProgram cwf:test_dataset;
 	provone:hasOutProgram cwf:growth_data
 	.
