@@ -14,7 +14,7 @@
 cwf:workflow_cpp 
 	a provone:Workflow;
 	rdfs:label "CPP_Workflow"^^xsd:string ;   
-	rdfs:coment "CPP Wokflow: Top level" ;
+	rdfs:coment "CPP Workflow: Top level" ;
         provone:hasSubProgram cwf:program_cpp
 	.
 
@@ -27,7 +27,8 @@ cwf:program_cpp provone:hasSubProgram cwf:data_gathering ;
              provone:hasSubProgram cwf:data_processing ;
              provone:hasSubProgram cwf:creating_parafac_model ;
              provone:hasSubProgram cwf:exploratory_analysis ;
-             provone:hasSubProgram cwf:clustering .
+             provone:hasSubProgram cwf:clustering 
+             .
 
 cwf:data_gathering
 	a provone:Program;
@@ -117,13 +118,11 @@ cwf:generate_plots
 
 cwf:clustering
 	a provone:Program;
-	dcterms:identifier "cwf:clustering"^^dcterms:URI;
-	rdfs:label "Clustering"^^xsd:string   
+	rdfs:label "Clustering";
+	provone:hasSubProgram cwf:fuzzy_c_means_clustering ;
+	provone:hasSubProgram cwf:create_iq_histogram
 	.	
 
-cwf:clustering provone:hasSubProgram cwf:fuzzy_c_means_clustering .	
-cwf:clustering provone:hasSubProgram cwf:create_iq_histogram .	
-	
 cwf:channel_generate_plots_fuzzy_c_means_clustering
 	a provone:Channel
 	.
