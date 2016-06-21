@@ -77,6 +77,8 @@ cwf:channel_adjust_apgar_scores_sga_kids
 cwf:sga_kids
 	a provone:Program;
 	rdfs:label "SGA Kids";
+	rdfs:comments "Identifying subjects that are small for gestational age (SGA)" ;
+	dcterms:conformsTo <https://en.wikipedia.org/wiki/Small_for_gestational_age> ;
 	provone:hasInProgram cwf:adjust_apgar_scores_dataset;
 	provone:hasOutProgram cwf:generate_parafac_model;
 	.
