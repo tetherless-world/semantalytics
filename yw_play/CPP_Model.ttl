@@ -52,6 +52,7 @@ cwf:adjust_apgar_scores
 	a provone:Program;
 	rdfs:label "Adjust APGAR Scores";
 	rdfs:comment "Ensure APGAR scores are between 0-10";
+	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
 	provone:hasInProgram cwf:test_dataset;
 	provone:hasOutProgram cwf:growth_data
 	.
@@ -88,6 +89,7 @@ cwf:creating_parafac_model
 	a provone:Program;
 	rdfs:label "Creating PARAFAC Model" ;
 	rdfs:comment "Workflow Phase 2" ;
+	dcterms:conformsTo <http://en.wikipedia.org/wiki/Tensor_rank_decomposition> ;
         provone:hasSubProgram cwf:generate_parafac_model 
         .	
 	
