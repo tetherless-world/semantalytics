@@ -44,7 +44,7 @@ cwf:test_dataset
 cwf:data_processing
 	a provone:Program;
 	rdfs:label "Data Processing"^^xsd:string   ;
-	provone:hasSubProgram cwf:adjust_apgar_scores .
+	provone:hasSubProgram cwf:adjust_apgar_scores 
 	.	
 
 cwf:adjust_apgar_scores 
