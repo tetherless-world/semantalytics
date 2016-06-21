@@ -31,6 +31,7 @@ cwf:program_cpp
 cwf:data_gathering
 	a provone:Program;
 	rdfs:label "Data Gathering"   ;
+	rdfs:comment "Workflow Phase 0" ;
 	provone:hasSubProgram cwf:test_dataset
 	.	
 
@@ -43,6 +44,7 @@ cwf:test_dataset
 cwf:data_processing
 	a provone:Program;
 	rdfs:label "Data Processing"   ;
+	rdfs:comment "Workflow Phase 1" ;
 	provone:hasSubProgram cwf:adjust_apgar_scores 
 	.	
 
@@ -84,7 +86,8 @@ cwf:channel_sga_kids_generate_parafac_model
 
 cwf:creating_parafac_model
 	a provone:Program;
-	rdfs:label "Data Processing" ;
+	rdfs:label "Creating PARAFAC Model" ;
+	rdfs:comment "Workflow Phase 2" ;
         provone:hasSubProgram cwf:generate_parafac_model 
         .	
 	
@@ -93,6 +96,7 @@ cwf:generate_parafac_model
 	rdfs:label "Generate PARAFAC Model";
 	provone:hasInProgram cwf:sga_kids;
 	provone:hasOutProgram cwf:generate_plots;
+	provone:hasOutProgram cwf:fuzzy_c_means_clustering
 	.
 
 cwf:channel_generate_parafac_model_generate_plots
@@ -102,6 +106,7 @@ cwf:channel_generate_parafac_model_generate_plots
 cwf:exploratory_analysis
 	a provone:Program;
 	rdfs:label "Exploratory Analysis" ;
+	rdfs:comment "Workflow Phase 3" ;
         provone:hasSubProgram cwf:generate_plots
 	. 
 	
@@ -109,12 +114,12 @@ cwf:generate_plots
 	a provone:Program;
 	rdfs:label "Generate Plots";
 	provone:hasInProgram cwf:generate_parafac_model;
-	provone:hasOutProgram cwf:fuzzy_c_means_clustering
 	.	
 
 cwf:clustering
 	a provone:Program;
 	rdfs:label "Clustering";
+	rdfs:comment "Workflow Phase 4" ;
 	provone:hasSubProgram cwf:fuzzy_c_means_clustering ;
 	provone:hasSubProgram cwf:create_iq_histogram
 	.	
