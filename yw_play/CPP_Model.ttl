@@ -11,164 +11,139 @@
 @prefix cwfo:    <http://cwf.tw.rpi.edu/vocab#> . 
 @prefix cwf:     <http://cwf.tw.rpi.edu/data#> .
 
-:workflow_cpp 
+cwf:workflow_cpp 
 	a provone:Workflow;
-	dcterms:identifier "cwf:test_dataset"^^dcterms:URI;
-	dcterms:title "CPP_Workflow"^^xsd:string;    
+	rdfs:label "CPP_Workflow"^^xsd:string    
 	.
 
-:program_cpp
-
+cwf:program_cpp
 	a provone:Program;
 	dcterms:identifier "cwf:test_dataset"^^dcterms:URI;
 	dcterms:identifier "CPP_Data"^^xsd:string;
-	dcterms:title "CPP_Data"^^xsd:string;   
+	rdfs:label "CPP_Data"^^xsd:string   
 	.	
 
-:program_cpp provone:hasSubProgram :data_gathering .
-:program_cpp provone:hasSubProgram :data_processing .
-:program_cpp provone:hasSubProgram :creating_parafac_model .
-:program_cpp provone:hasSubProgram :exploratory_analysis .
-:program_cpp provone:hasSubProgram :clustering .
+cwf:program_cpp provone:hasSubProgram cwf:data_gathering ;
+             provone:hasSubProgram cwf:data_processing ;
+             provone:hasSubProgram cwf:creating_parafac_model ;
+             provone:hasSubProgram cwf:exploratory_analysis ;
+             provone:hasSubProgram cwf:clustering .
 
-:data_gathering
+cwf:data_gathering
 
 	a provone:Program;
-	dcterms:identifier "cwf:data_gathering"^^dcterms:URI;
-	dcterms:title "Data Gathering"^^xsd:string;   
+	rdfs:label "Data Gathering"^^xsd:string   
 	.	
 
-:data_gathering provone:hasSubProgram :test_dataset .
+cwf:data_gathering provone:hasSubProgram cwf:test_dataset .
 	
-:test_dataset 
+cwf:test_dataset 
 	a provone:Program;
-	dcterms:identifier "cwf:test_dataset"^^dcterms:URI;
-	dcterms:title "Test Dataset (TENSOR)"^^xsd:string;
-	provone:hasOutProgram :adjust_apgar_scores;
+	rdfs:label "Test Dataset (TENSOR)"^^xsd:string;
+	provone:hasOutProgram cwf:adjust_apgar_scores
 	.
 
-:data_processing
-
+cwf:data_processing
 	a provone:Program;
-	dcterms:identifier "cwf:data_processing"^^dcterms:URI;
-	dcterms:title "Data Processing"^^xsd:string;   
+	rdfs:label "Data Processing"^^xsd:string   
 	.	
 
-:data_processing provone:hasSubProgram :adjust_apgar_scores .
+cwf:data_processing provone:hasSubProgram cwf:adjust_apgar_scores .
 	
-:adjust_apgar_scores 
+cwf:adjust_apgar_scores 
 	a provone:Program;
-	dcterms:identifier "cwf:adjust_apgar_scores"^^dcterms:URI;
-	dcterms:title "Adjust APGAR Scores: ensure they are between 0-10"^^xsd:string;
-	provone:hasInProgram :test_dataset;
-	provone:hasOutProgram :growth_data;
+	rdfs:label "Adjust APGAR Scores: ensure they are between 0-10"^^xsd:string;
+	provone:hasInProgram cwf:test_dataset;
+	provone:hasOutProgram cwf:growth_data
 	.
  
-:channel_test_dataset_adjust_apgar_scores
-	a provone:Channel;
-	dcterms:identifier "cwf:test_dataset"^^dcterms:URI;
-	dcterms:identifier "channel_test_dataset_adjust_apgar_scores"^^xsd:string;
+cwf:channel_test_dataset_adjust_apgar_scores
+	a provone:Channel
 	.
  
-:growth_data 
+cwf:growth_data 
 	a provone:Program;
-	dcterms:identifier "cwf:growth_data"^^dcterms:URI;
-	dcterms:title "Growth Data"^^xsd:string;
-	provone:hasInProgram :adjust_apgar_scores_dataset;
-	dcterms:conformsTo http://purl.obolibrary.org/obo/STATO_0000237;
-	dcterms:conformsTo http://purl.obolibrary.org/obo/OBI_0000679;
-	provone:hasOutProgram :sga_kids;
+	rdfs:label "Growth Data"^^xsd:string;
+	provone:hasInProgram cwf:adjust_apgar_scores_dataset;
+	dcterms:conformsTo <http://purl.obolibrary.org/obo/STATO_0000237>;
+	dcterms:conformsTo <http://purl.obolibrary.org/obo/OBI_0000679>;
+	provone:hasOutProgram cwf:sga_kids
 	.
 	
-:channel_adjust_apgar_scores_sga_kids
-	a provone:Channel;
-	dcterms:identifier "cwf:adjust_apgar_scores_sga_kids"^^dcterms:URI;
+cwf:channel_adjust_apgar_scores_sga_kids
+	a provone:Channel
 	.
  
-:sga_kids
+cwf:sga_kids
 	a provone:Program;
-	dcterms:identifier "cwf:sga_kids"^^dcterms:URI;
-	dcterms:title "SGA Kids"^^xsd:string;
-	provone:hasInProgram :adjust_apgar_scores_dataset;
-	provone:hasOutProgram :generate_parafac_model;
+	rdfs:label "SGA Kids"^^xsd:string;
+	provone:hasInProgram cwf:adjust_apgar_scores_dataset;
+	provone:hasOutProgram cwf:generate_parafac_model;
 	.
 	
-:channel_sga_kids_generate_parafac_model
-	a provone:Channel;
-	dcterms:identifier "cwf:channel_sga_kids_generate_parafac_model"^^dcterms:URI;
+cwf:channel_sga_kids_generate_parafac_model
+	a provone:Channel
 	.
 
-:creating_parafac_model
-
+cwf:creating_parafac_model
 	a provone:Program;
-	dcterms:identifier "cwf:data_processing"^^dcterms:URI;
-	dcterms:title "Data Processing"^^xsd:string;   
+	rdfs:label "Data Processing"^^xsd:string   
 	.	
 
-:creating_parafac_model provone:hasSubProgram :generate_parafac_model .	
+cwf:creating_parafac_model provone:hasSubProgram cwf:generate_parafac_model .	
 	
-:generate_parafac_model
+cwf:generate_parafac_model
 	a provone:Program;
-	dcterms:identifier "cwf:generate_parafac_model"^^dcterms:URI;
-	dcterms:title "Generate PARAFAC Model"^^xsd:string;
-	provone:hasInProgram :sga_kids;
-	provone:hasOutProgram :generate_plots;
+	rdfs:label "Generate PARAFAC Model"^^xsd:string;
+	provone:hasInProgram cwf:sga_kids;
+	provone:hasOutProgram cwf:generate_plots;
 	.
 
-:channel_generate_parafac_model_generate_plots
-	a provone:Channel;
-	dcterms:identifier "cwf:generate_parafac_model_generate_plots"^^dcterms:URI;
+cwf:channel_generate_parafac_model_generate_plots
+	a provone:Channel
 	.
 
-:exploratory_analysis
-
+cwf:exploratory_analysis
 	a provone:Program;
-	dcterms:identifier "cwf:exploratory_analysis"^^dcterms:URI;
-	dcterms:title "Exploratory Analysis"^^xsd:string;   
+	rdfs:label "Exploratory Analysis"^^xsd:string
 	.	
 
-:exploratory_analysis provone:hasSubProgram :generate_plots .
+cwf:exploratory_analysis provone:hasSubProgram cwf:generate_plots .
 	
-:generate_plots
+cwf:generate_plots
 	a provone:Program;
-	dcterms:identifier "cwf:generate_plots"^^dcterms:URI;
-	dcterms:title "Generate Plots"^^xsd:string;
-	provone:hasInProgram :generate_parafac_model;
-	provone:hasOutProgram :fuzzy_c_means_clustering;
+	rdfs:label "Generate Plots"^^xsd:string;
+	provone:hasInProgram cwf:generate_parafac_model;
+	provone:hasOutProgram cwf:fuzzy_c_means_clustering
 	.	
 
-:clustering
-
+cwf:clustering
 	a provone:Program;
 	dcterms:identifier "cwf:clustering"^^dcterms:URI;
-	dcterms:title "Clustering"^^xsd:string;   
+	rdfs:label "Clustering"^^xsd:string   
 	.	
 
-:clustering provone:hasSubProgram :fuzzy_c_means_clustering .	
-:clustering provone:hasSubProgram :create_iq_histogram .	
+cwf:clustering provone:hasSubProgram cwf:fuzzy_c_means_clustering .	
+cwf:clustering provone:hasSubProgram cwf:create_iq_histogram .	
 	
-:channel_generate_plots_fuzzy_c_means_clustering
-	a provone:Channel;
-	dcterms:identifier "cwf:channel_generate_plots_fuzzy_c_means_clustering"^^dcterms:URI;
+cwf:channel_generate_plots_fuzzy_c_means_clustering
+	a provone:Channel
 	.
  
-:fuzzy_c_means_clustering
+cwf:fuzzy_c_means_clustering
 	a provone:Program;
-	dcterms:identifier "cwf:fuzzy_c_means_clustering"^^dcterms:URI;
-	dcterms:title "Fuzzy C Means Clustering"^^xsd:string;
-	provone:hasInProgram :generate_plots;
-	provone:hasOutProgram :create_iq_histogram;
+	rdfs:label "Fuzzy C Means Clustering"^^xsd:string;
+	provone:hasInProgram cwf:generate_plots;
+	provone:hasOutProgram cwf:create_iq_histogram
 	.	
 	
-:channel_fuzzy_c_means_clustering_generate_plots
-	a provone:Channel;
-	dcterms:identifier "cwf:fuzzy_c_means_clustering_generate_plots"^^dcterms:URI;
+cwf:channel_fuzzy_c_means_clustering_generate_plots
+	a provone:Channel
 	.
  
-:create_iq_histogramg
+cwf:create_iq_histogramg
 	a provone:Program;
-	dcterms:identifier "cwf:create_iq_histogram"^^dcterms:URI;
-	dcterms:title "Create IQ Histogram"^^xsd:string;
-	provone:hasInProgram :fuzzy_c_means_clustering;
+	rdfs:label "Create IQ Histogram"^^xsd:string;
+	provone:hasInProgram cwf:fuzzy_c_means_clustering
 	.	
 	
