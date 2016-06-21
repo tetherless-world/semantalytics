@@ -182,6 +182,7 @@ cwf:channel_generate_plots_fuzzy_c_means_clustering
 cwf:fuzzy_c_means_clustering
 	a provone:Program;
 	rdfs:label "Fuzzy C Means Clustering";
+	dcterms:conformsTo <https://en.wikipedia.org/wiki/Fuzzy_clustering#Fuzzy_C-means_Clustering> ;
 	provone:hasInProgram cwf:generate_plots;
 	provone:hasOutProgram cwf:create_iq_histogram
 	.	
