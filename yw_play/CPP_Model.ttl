@@ -114,6 +114,55 @@ cwf:generate_plots
 	a provone:Program;
 	rdfs:label "Generate Plots";
 	provone:hasInProgram cwf:generate_parafac_model;
+	provone:hasVisualization cwf:ea_plot_1 ;
+	provone:hasVisualization cwf:ea_plot_2 ;
+	provone:hasVisualization cwf:ea_plot_3 ;
+	provone:hasVisualization cwf:ea_plot_4 ;
+	provone:hasVisualization cwf:ea_plot_5 ;
+	provone:hasVisualization cwf:ea_plot_6 ;
+	provone:hasVisualization cwf:ea_plot_7 ;
+	.	
+
+cwf:ea_plot_1
+	a provone:Visualization;
+	rdfs:label "Exploratory Analysis Plot 1";
+        rdfs:comment "Create a 3D plot for each time point for the original data, the modeled data, and the residuals" 
+	.	
+
+cwf:ea_plot_2
+	a provone:Visualization;
+	rdfs:label "Exploratory Analysis Plot 2";
+        rdfs:comment "Create a plot of the loadings for each component in each mode to see which features, subjects, and time points are more important in their components and respective modes" 
+	.	
+
+cwf:ea_plot_3
+	a provone:Visualization;
+	rdfs:label "Exploratory Analysis Plot 3";
+        rdfs:comment "Create a plot of the scores for each mode to see where each point falls" 
+	.	
+
+cwf:ea_plot_4
+	a provone:Visualization;
+	rdfs:label "Exploratory Analysis Plot 4";
+        rdfs:comment "Create a gradient for each of the characteristics by their number values on the score plot for subjects" 
+	.	
+
+cwf:ea_plot_5
+	a provone:Visualization;
+	rdfs:label "Exploratory Analysis Plot 5";
+        rdfs:comment "Create a plot of the scores colored by SGA to see where they" 
+	.	
+
+cwf:ea_plot_6
+	a provone:Visualization;
+	rdfs:label "Exploratory Analysis Plot 6";
+        rdfs:comment "Create a heat map for each mode to see where scores in each plot relative to each other" 
+	.	
+
+cwf:ea_plot_7
+	a provone:Visualization;
+	rdfs:label "Exploratory Analysis Plot 7";
+        rdfs:comment "Create a plot that shows the characteristics versus the more important component, depending on the results of the PARAFAC model." 
 	.	
 
 cwf:clustering
