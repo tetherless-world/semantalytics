@@ -32,7 +32,7 @@ cwf:program_cpp provone:hasSubProgram cwf:data_gathering ;
 cwf:data_gathering
 	a provone:Program;
 	rdfs:label "Data Gathering"^^xsd:string   ;
-	provone:hasSubProgram cwf:test_dataset .
+	provone:hasSubProgram cwf:test_dataset
 	.	
 
 cwf:test_dataset 
