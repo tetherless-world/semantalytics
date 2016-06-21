@@ -18,8 +18,6 @@ cwf:workflow_cpp
 
 cwf:program_cpp
 	a provone:Program;
-	dcterms:identifier "cwf:test_dataset"^^dcterms:URI;
-	dcterms:identifier "CPP_Data"^^xsd:string;
 	rdfs:label "CPP_Data"^^xsd:string   
 	.	
 
