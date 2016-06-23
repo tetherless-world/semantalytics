@@ -14,25 +14,19 @@
 cwf:workflow_cpp 
     a provone:Workflow;
     rdfs:label "CPP_Workflow" ;   
-    rdfs:coment "CPP Workflow: Workflow top level" ;
+    rdfs:comment "CPP Workflow: Workflow top level" ;
     prov:hadPlan cwf:gates_recipe ;
-    provone:hasSubProgram cwf:program_cpp
+    provone:hasSubProgram cwf:data_gathering ;
+    provone:hasSubProgram cwf:data_processing ;
+    provone:hasSubProgram cwf:creating_parafac_model ;
+    provone:hasSubProgram cwf:exploratory_analysis ;
+    provone:hasSubProgram cwf:clustering 
     .
 
 cwf:gates_recipe
     a prov:Plan ;
     rdfs:label "Recipe for Gates Data" ;
     rdfs:commment "Based on TensorExplorationPARAFAC.m, YenerTensor.m" 
-    .
-
-cwf:program_cpp
-	a provone:Program;
-	rdfs:label "CPP_Data" ;  
-    provone:hasSubProgram cwf:data_gathering ;
-    provone:hasSubProgram cwf:data_processing ;
-    provone:hasSubProgram cwf:creating_parafac_model ;
-    provone:hasSubProgram cwf:exploratory_analysis ;
-    provone:hasSubProgram cwf:clustering 
     .
 
 cwf:data_gathering
@@ -74,7 +68,6 @@ cwf:adjust_apgar_scores
 	provone:hasOutPort cwf:growth_data;
 	.
 
-
 cwf:channel_test_dataset_adjust_apgar_scores
 	a provone:Channel;
 	rdfs:label "Test Dataset Adjust APGAR Scores Port";
@@ -96,7 +89,7 @@ cwf:channel_adjust_apgar_scores_sga_kids
 cwf:sga_kids
 	a provone:Program;
 	rdfs:label "SGA Kids";
-	rdfs:comments "Identifying subjects that are small for gestational age (SGA)" ;
+	rdfs:comments "Identify subjects that are small for gestational age (SGA)" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Small_for_gestational_age> ;
 	provone:hasInPort cwf:adjust_apgar_scores_dataset;
 	provone:hasOutPort cwf:generate_parafac_model;
@@ -117,6 +110,8 @@ cwf:creating_parafac_model
 cwf:generate_parafac_model
 	a provone:Program;
 	rdfs:label "Generate PARAFAC Model";
+	rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox" ;
+	rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Sections 7 and 8" ;
 	provone:hasInPort cwf:sga_kids;
 	provone:hasOutPort cwf:generate_plots;
 	provone:hasOutPort cwf:fuzzy_c_means_clustering;
@@ -130,14 +125,18 @@ cwf:generate_parafac_model
 cwf:parafac_plot_1
 	a provone:Visualization;
 	rdfs:label "PARAFAC Plot 1";
-    rdfs:comment "Scree-Plot for PARAFAC model" 
+    rdfs:comment "Scree-Plot for PARAFAC model" ;
+    rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox and calculate the sum of squared errors, then plots it for each number of model components versus the sum of squared errors" ;
+    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7"
     .
 
 cwf:parafac_plot_2
 	a provone:Visualization;
 	rdfs:label "PARAFAC Plot 2";
-    rdfs:comment "Core Consistency Plot (CORCONDIA)" ;
-    dcterms:conformsTo <http://wiki.eigenvector.com/index.php?title=Corcondia> ;
+    rdfs:comment "Core Consistency Plot (CORCONDIA)" ; 
+    rdfs:comment "If the CORCONDIA number is high (close to 100%), then PARAFAC model is valid; If the CORCONDIA number is mid-range (around 50%), the PARAFAC model should be reconsidered, perhaps with more constraints; If the CORCONDIA number is low (close to 0%), the PARAFAC model is not valid." ;
+    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7" ;
+    dcterms:conformsTo <http://wiki.eigenvector.com/index.php?title=Corcondia> 
     .
         
 cwf:exploratory_analysis
@@ -171,43 +170,50 @@ cwf:generate_plots
 cwf:ea_plot_1
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 1";
-    rdfs:comment "Create a 3D plot for each time point for the original data, the modeled data, and the residuals" 
+    rdfs:comment "Create a 3D plot for each time point for the original data, the modeled data, and the residuals" ;
+    rdfs:comment "Create mesh plots for each time point based on the original tensor, the modeled data by PARAFAC, and the residual (original data – modeled data), respectively"
 	.	
 
 cwf:ea_plot_2
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 2";
-    rdfs:comment "Create a plot of the loadings for each component in each mode to see which features, subjects, and time points are more important in their components and respective modes" 
+    rdfs:comment "Create a plot of the loadings for each component in each mode to see which features, subjects, and time points are more important in their components and respective modes" ;
+    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 11"
 	.	
 
 cwf:ea_plot_3
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 3";
-    rdfs:comment "Create a plot of the scores for each mode to see where each point falls" 
+    rdfs:comment "Create a plot of the scores for each mode to see where each point falls" ;
+    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 12"
 	.	
 
 cwf:ea_plot_4
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 4";
-    rdfs:comment "Create a gradient for each of the characteristics by their number values on the score plot for subjects" 
+    rdfs:comment "Create a gradient for each of the characteristics by their number values on the score plot for subjects" ;
+    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 13"
 	.	
 
 cwf:ea_plot_5
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 5";
-    rdfs:comment "Create a plot of the scores colored by SGA to see where they" 
+    rdfs:comment "Create a plot of the scores colored by SGA to see where they" ;
+    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 14"
 	.	
 
 cwf:ea_plot_6
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 6";
-        rdfs:comment "Create a heat map for each mode to see where scores in each plot relative to each other" 
+        rdfs:comment "Create a heat map for each mode to see where scores in each plot relative to each other" ;
+        rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 15"
 	.	
 
 cwf:ea_plot_7
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 7";
-    rdfs:comment "Create a plot that shows the characteristics versus the more important component, depending on the results of the PARAFAC model." 
+    rdfs:comment "Create a plot that shows the characteristics versus the more important component, depending on the results of the PARAFAC model." ;
+    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 23"
 	.	
 
 cwf:clustering
@@ -225,11 +231,34 @@ cwf:channel_generate_plots_fuzzy_c_means_clustering
 cwf:fuzzy_c_means_clustering
 	a provone:Program;
 	rdfs:label "Fuzzy C Means Clustering";
+	rdfs:comment "Cluster the subjects by the first mode of the modeled PARAFAC tensor using Fuzzy C-Means clustering" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Fuzzy_clustering#Fuzzy_C-means_Clustering> ;
 	provone:hasInPort cwf:generate_plots;
 	provone:hasOutPort cwf:create_iq_histogram
 	.	
 	
+cwf:clusters_distinct
+	a provone:Program ;
+	rdfs:label "Determine Characteristics of Clusters" ;
+	rdfs:comment "Find the characteristics of each cluster by finding the means for each characteristic and testing whether these results are significant at 95% level" 
+	provone:hasOutPort cwf:parafac_scores ;
+	provone:hasOutPort cwf:create_iq_histogram
+	.
+	
+cwf:parafac_scores
+	a provone:Program;
+	rdfs:label "Create IQ PARAFAC Score Plot";
+	rdfs:comment "PARAFAC scores colored by each cluster to see where each cluster lies" ;
+	provone:hasInPort cwf:clusters_distinct ;
+	cwfo:hasVisualization cwf:clustering_plot_2
+	.	
+
+cwf:clustering_plot_1
+ 	a provone:Visualization ;
+	rdfs:label "PARAFAC Score Plot" ;
+        rdfs:comment "PARAFAC scores colored by each cluster to see where each cluster lies" 
+ 	.
+ 	
 cwf:channel_fuzzy_c_means_clustering_generate_plots
 	a provone:Channel
 	.
@@ -237,6 +266,13 @@ cwf:channel_fuzzy_c_means_clustering_generate_plots
 cwf:create_iq_histogram
 	a provone:Program;
 	rdfs:label "Create IQ Histogram";
-	provone:hasInPort cwf:fuzzy_c_means_clustering
+	rdfs:comment "Create a histogram to look at the distributions of characteristics, especially IQ, for each cluster" ;
+	provone:hasInPort cwf:clusters_distinct ;
+	cwfo:hasVisualization cwf:clustering_plot_2
 	.	
 	
+cwf:clustering_plot_2
+ 	a provone:Visualization ;
+	rdfs:label "IQ Histogram" ;
+        rdfs:comment "Histogram of distributions of characteristics, especially IQ, for each cluster" 
+ 	.
