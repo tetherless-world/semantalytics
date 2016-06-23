@@ -240,7 +240,7 @@ cwf:fuzzy_c_means_clustering
 cwf:clusters_distinct
 	a provone:Program ;
 	rdfs:label "Determine Characteristics of Clusters" ;
-	rdfs:comment "Find the characteristics of each cluster by finding the means for each characteristic and testing whether these results are significant at 95% level" 
+	rdfs:comment "Find the characteristics of each cluster by finding the means for each characteristic and testing whether these results are significant at 95% level" ;
 	provone:hasOutPort cwf:parafac_scores ;
 	provone:hasOutPort cwf:create_iq_histogram
 	.
