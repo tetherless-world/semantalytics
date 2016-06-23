@@ -117,14 +117,14 @@ cwf:exploratory_analysis
 cwf:generate_plots
 	a provone:Program;
 	rdfs:label "Generate Plots";
-	provone:hasinPort cwf:generate_parafac_model;
-	provone:hasVisualization cwf:ea_plot_1 ;
-	provone:hasVisualization cwf:ea_plot_2 ;
-	provone:hasVisualization cwf:ea_plot_3 ;
-	provone:hasVisualization cwf:ea_plot_4 ;
-	provone:hasVisualization cwf:ea_plot_5 ;
-	provone:hasVisualization cwf:ea_plot_6 ;
-	provone:hasVisualization cwf:ea_plot_7 ;
+	cwto:hasinPort cwf:generate_parafac_model;
+	cwto:hasVisualization cwf:ea_plot_1 ;
+	cwto:hasVisualization cwf:ea_plot_2 ;
+	cwto:hasVisualization cwf:ea_plot_3 ;
+	cwto:hasVisualization cwf:ea_plot_4 ;
+	cwto:hasVisualization cwf:ea_plot_5 ;
+	cwto:hasVisualization cwf:ea_plot_6 ;
+	cwto:hasVisualization cwf:ea_plot_7 ;
 	.	
 
 cwf:ea_plot_1
