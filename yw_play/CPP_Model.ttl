@@ -200,13 +200,17 @@ cwf:fuzzy_c_means_clustering
 	provone:hasoutPort cwf:create_iq_histogram
 	.	
 	
-cwf:channel_fuzzy_c_means_clustering_generate_plots
-	a provone:Channel
-	.
- 
 cwf:create_iq_histogram
 	a provone:Program;
 	rdfs:label "Create IQ Histogram";
-	provone:hasinPort cwf:fuzzy_c_means_clustering
+	rdfs:comment "Histograms for the IQs of each cluster" ;
+	provone:hasinPort cwf:fuzzy_c_means_clustering ;
+	cwto:hasVisualization cwt:iq_histogram
 	.	
 	
+cwt:iq_histogram
+        a provone:Visualization;
+	rdfs:label "IQ Histograms";
+	rdfs:comment "Histograms for the IQs of each cluster" ;
+	.	
+        
