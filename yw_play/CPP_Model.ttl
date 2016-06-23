@@ -99,7 +99,7 @@ cwf:significant_data
 cwf:normalization
 	a provone:Progam ;
 	rdfs:label "Normalization" ;
-	rdfs:comment "For growth data, go through each subject and subtract the mean and standard deviation for each growth characteristic to normalize."
+	rdfs:comment "For growth data, go through each subject and subtract the mean and standard deviation for each growth characteristic to normalize." ;
 	rdfs:comment "For characteristic data, go through each column and subtract by the mean and standard deviation of that column." ;
 	provone:hasOutPort cwf:sga_kids
 	.
@@ -111,7 +111,7 @@ cwf:sga_kids
 	rdfs:comment "Gets the SGA status of each unique subject, calculated using birth WAZ in the less than 10th percentile" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Small_for_gestational_age> ;
 	provone:hasInPort cwf:adjust_apgar_scores_dataset;
-	provone:hasOutPort cwf:generate_parafac_model;
+	provone:hasOutPort cwf:generate_parafac_model 
 	.
 	
 cwf:channel_sga_kids_generate_parafac_model
