@@ -74,7 +74,6 @@ cwf:adjusted_apgar_data_port
 cwf:growth_data 
 	a provone:Program;
 	rdfs:label "Growth Data";
-	provone:hasInPort cwf:adjust_apgar_scores_dataset;
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/STATO_0000237>;
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/OBI_0000679>;
         provone:hasInPort cwf:adjusted_apgar_data_port ;
