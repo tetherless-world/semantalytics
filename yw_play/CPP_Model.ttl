@@ -12,22 +12,15 @@
 @prefix cwf:     <http://cwf.tw.rpi.edu/data#> .
 
 cwf:workflow_cpp 
-    a provone:Workflow;
-    rdfs:label "CPP_Workflow" ;   
-    rdfs:coment "CPP Workflow: Workflow top level" ;
-    prov:hadPlan ;
+	a provone:Workflow;
+	rdfs:label "CPP_Workflow" ;   
+	rdfs:coment "CPP Workflow: Workflow top level" ;
     provone:hasSubProgram cwf:program_cpp
-    .
-
-cwf:gates_recipe
-    a prov:Plan ;
-    rdfs:label "Recipe for Gates Data" ;
-    rdfs:commment "Based on TensorExplorationPARAFAC.m, YenerTensor.m" 
-    .
+	.
 
 cwf:program_cpp
-    a provone:Program;
-    rdfs:label "CPP_Data" ;  
+	a provone:Program;
+	rdfs:label "CPP_Data" ;  
     provone:hasSubProgram cwf:data_gathering ;
     provone:hasSubProgram cwf:data_processing ;
     provone:hasSubProgram cwf:creating_parafac_model ;
@@ -42,12 +35,17 @@ cwf:data_gathering
 	provone:hasSubProgram cwf:test_dataset
 	.	
 
+cwf:test_dataset_port
+    a provone:Port;
+	rdfs:label "Test Dataset Port";
+    .	
+	
 cwf:test_dataset 
 	a provone:Program;
 	rdfs:label "Test Dataset (TENSOR)";
-	provone:hasoutPort cwf:adjust_apgar_scores
+	provone:hasOutPort cwf:test_dataset_port
 	.
-
+	
 cwf:data_processing
 	a provone:Program;
 	rdfs:label "Data Processing"   ;
@@ -55,26 +53,33 @@ cwf:data_processing
 	provone:hasSubProgram cwf:adjust_apgar_scores 
 	.	
 
+cwf:adjust_apgar_scores_port
+    a provone:Port;
+	rdfs:label "Test Dataset Port";
+    .
+	
 cwf:adjust_apgar_scores 
 	a provone:Program;
 	rdfs:label "Adjust APGAR Scores";
 	rdfs:comment "Ensure APGAR scores are between 0-10";
 	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
-	provone:hasinPort cwf:test_dataset;
-	provone:hasoutPort cwf:growth_data
+	provone:hasInPort cwf:adjust_apgar_scores_port;
+	provone:hasOutPort cwf:growth_data;
 	.
- 
+
+
 cwf:channel_test_dataset_adjust_apgar_scores
-	a provone:Channel
+	a provone:Channel;
+	rdfs:label "Test Dataset Adjust APGAR Scores Port";
 	.
  
 cwf:growth_data 
 	a provone:Program;
 	rdfs:label "Growth Data";
-	provone:hasinPort cwf:adjust_apgar_scores_dataset;
+	provone:hasInPort cwf:adjust_apgar_scores_dataset;
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/STATO_0000237>;
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/OBI_0000679>;
-	provone:hasoutPort cwf:sga_kids
+	provone:hasOutPort cwf:sga_kids
 	.
 	
 cwf:channel_adjust_apgar_scores_sga_kids
@@ -86,8 +91,8 @@ cwf:sga_kids
 	rdfs:label "SGA Kids";
 	rdfs:comments "Identifying subjects that are small for gestational age (SGA)" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Small_for_gestational_age> ;
-	provone:hasinPort cwf:adjust_apgar_scores_dataset;
-	provone:hasoutPort cwf:generate_parafac_model;
+	provone:hasInPort cwf:adjust_apgar_scores_dataset;
+	provone:hasOutPort cwf:generate_parafac_model;
 	.
 	
 cwf:channel_sga_kids_generate_parafac_model
@@ -99,80 +104,91 @@ cwf:creating_parafac_model
 	rdfs:label "Creating PARAFAC Model" ;
 	rdfs:comment "Workflow Phase 2" ;
 	dcterms:conformsTo <http://en.wikipedia.org/wiki/Tensor_rank_decomposition> ;
-        provone:hasSubProgram cwf:generate_parafac_model 
-        .	
+    provone:hasSubProgram cwf:generate_parafac_model 
+    .	
 	
 cwf:generate_parafac_model
 	a provone:Program;
 	rdfs:label "Generate PARAFAC Model";
+	provone:hasInPort cwf:sga_kids;
+	provone:hasOutPort cwf:generate_plots;
+	provone:hasOutPort cwf:fuzzy_c_means_clustering;
 	provone:hasinPort cwf:sga_kids;
 	provone:hasoutPort cwf:generate_plots;
 	provone:hasoutPort cwf:fuzzy_c_means_clustering ;
-	cwto:hasVisualization cwf:parafac_plot_1 ;
-	cwto:hasVisualization cwf:parafac_plot_2
+	cwfo:hasVisualization cwf:parafac_plot_1 ;
+	cwfo:hasVisualization cwf:parafac_plot_2;
 	.
 
 cwf:parafac_plot_1
 	a provone:Visualization;
 	rdfs:label "PARAFAC Plot 1";
-        rdfs:comment "Scree-Plot for PARAFAC model" 
-        .
+    rdfs:comment "Scree-Plot for PARAFAC model" 
+    .
 
 cwf:parafac_plot_2
 	a provone:Visualization;
 	rdfs:label "PARAFAC Plot 2";
-        rdfs:comment "Core Consistency Plot (CORCONDIA)" ;
-        cdterms:conformsTo <http://wiki.eigenvector.com/index.php?title=Corcondia>
-        .
+    rdfs:comment "Core Consistency Plot (CORCONDIA)" ;
+    dcterms:conformsTo <http://wiki.eigenvector.com/index.php?title=Corcondia> ;
+    .
         
 cwf:exploratory_analysis
 	a provone:Program;
 	rdfs:label "Exploratory Analysis" ;
 	rdfs:comment "Workflow Phase 3" ;
-        provone:hasSubProgram cwf:generate_plots
+    provone:hasSubProgram cwf:generate_plots;
 	. 
 	
 cwf:generate_plots
 	a provone:Program;
 	rdfs:label "Generate Plots";
-	cwto:hasinPort cwf:generate_parafac_model;
-	cwto:hasVisualization cwf:ea_plot_1 ;
-	cwto:hasVisualization cwf:ea_plot_2 ;
-	cwto:hasVisualization cwf:ea_plot_3 ;
-	cwto:hasVisualization cwf:ea_plot_4 ;
-	cwto:hasVisualization cwf:ea_plot_5 ;
-	cwto:hasVisualization cwf:ea_plot_6 ;
-	cwto:hasVisualization cwf:ea_plot_7 ;
+	provone:hasInPort cwf:generate_parafac_model;
+	provone:hasVisualization cwf:ea_plot_1 ;
+	provone:hasVisualization cwf:ea_plot_2 ;
+	provone:hasVisualization cwf:ea_plot_3 ;
+	provone:hasVisualization cwf:ea_plot_4 ;
+	provone:hasVisualization cwf:ea_plot_5 ;
+	provone:hasVisualization cwf:ea_plot_6 ;
+	provone:hasVisualization cwf:ea_plot_7 ;
+	cwfo:hasinPort cwf:generate_parafac_model;
+	cwfo:hasVisualization cwf:ea_plot_1 ;
+	cwfo:hasVisualization cwf:ea_plot_2 ;
+	cwfo:hasVisualization cwf:ea_plot_3 ;
+	cwfo:hasVisualization cwf:ea_plot_4 ;
+	cwfo:hasVisualization cwf:ea_plot_5 ;
+	cwfo:hasVisualization cwf:ea_plot_6 ;
+	cwfo:hasVisualization cwf:ea_plot_7 ;
 	.	
 
 cwf:ea_plot_1
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 1";
-        rdfs:comment "Create a 3D plot for each time point for the original data, the modeled data, and the residuals" 
+    rdfs:comment "Create a 3D plot for each time point for the original data, the modeled data, and the residuals" 
 	.	
 
 cwf:ea_plot_2
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 2";
-        rdfs:comment "Create a plot of the loadings for each component in each mode to see which features, subjects, and time points are more important in their components and respective modes" 
+    rdfs:comment "Create a plot of the loadings for each component in each mode to see which features, subjects, and time points are more important in their components and respective modes" 
 	.	
 
 cwf:ea_plot_3
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 3";
-        rdfs:comment "Create a plot of the scores for each mode to see where each point falls" 
+    rdfs:comment "Create a plot of the scores for each mode to see where each point falls" 
 	.	
 
 cwf:ea_plot_4
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 4";
-        rdfs:comment "Create a gradient for each of the characteristics by their number values on the score plot for subjects" 
+    rdfs:comment "Create a gradient for each of the characteristics by their number values on the score plot for subjects" 
 	.	
 
 cwf:ea_plot_5
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 5";
-        rdfs:comment "Create a plot of the scores colored by SGA to see where they" 
+    rdfs:comment "Create a plot of the scores colored by SGA to see where they" 
 	.	
 
 cwf:ea_plot_6
@@ -184,7 +200,7 @@ cwf:ea_plot_6
 cwf:ea_plot_7
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 7";
-        rdfs:comment "Create a plot that shows the characteristics versus the more important component, depending on the results of the PARAFAC model." 
+    rdfs:comment "Create a plot that shows the characteristics versus the more important component, depending on the results of the PARAFAC model." 
 	.	
 
 cwf:clustering
@@ -203,21 +219,17 @@ cwf:fuzzy_c_means_clustering
 	a provone:Program;
 	rdfs:label "Fuzzy C Means Clustering";
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Fuzzy_clustering#Fuzzy_C-means_Clustering> ;
-	provone:hasinPort cwf:generate_plots;
-	provone:hasoutPort cwf:create_iq_histogram
+	provone:hasInPort cwf:generate_plots;
+	provone:hasOutPort cwf:create_iq_histogram
 	.	
 	
+cwf:channel_fuzzy_c_means_clustering_generate_plots
+	a provone:Channel
+	.
+ 
 cwf:create_iq_histogram
 	a provone:Program;
 	rdfs:label "Create IQ Histogram";
-	rdfs:comment "Histograms for the IQs of each cluster" ;
-	provone:hasinPort cwf:fuzzy_c_means_clustering ;
-	cwto:hasVisualization cwt:iq_histogram
+	provone:hasInPort cwf:fuzzy_c_means_clustering
 	.	
 	
-cwt:iq_histogram
-        a provone:Visualization;
-	rdfs:label "IQ Histograms";
-	rdfs:comment "Histograms for the IQs of each cluster" ;
-	.	
-        
