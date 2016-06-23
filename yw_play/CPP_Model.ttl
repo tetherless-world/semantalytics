@@ -142,15 +142,20 @@ cwf:generate_parafac_model
 	rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox" ;
 	rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Sections 7 and 8" ;
 	provone:hasInPort cwf:sga_kids_data_port;
-	provone:hasOutPort cwf:generate_plots;
-	provone:hasoutPort cwf:fuzzy_c_means_clustering ;
+	provone:hasOutPort cwf:parafac_model_port;
 	cwfo:hasVisualization cwf:parafac_plot_1 ;
 	cwfo:hasVisualization cwf:parafac_plot_2
 	.
 
+cwf:parafac_model_port
+    a provone:Port ;
+    rdfs:label "PARAFAC Model" ;
+    .	
+
 cwf:parafac_plot_1
-	a provone:Visualization;
-	rdfs:label "PARAFAC Plot 1";
+    a provone:Visualization;
+    rdfs:label "PARAFAC Plot 1";
+    provone:hasInPort cwf:parafac_model_port;
     rdfs:comment "Scree-Plot for PARAFAC model" ;
     rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox and calculate the sum of squared errors, then plots it for each number of model components versus the sum of squared errors" ;
     rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7"
@@ -159,6 +164,7 @@ cwf:parafac_plot_1
 cwf:parafac_plot_2
 	a provone:Visualization;
 	rdfs:label "PARAFAC Plot 2";
+    provone:hasInPort cwf:parafac_model_port;
     rdfs:comment "Core Consistency Plot (CORCONDIA)" ; 
     rdfs:comment "If the CORCONDIA number is high (close to 100%), then PARAFAC model is valid; If the CORCONDIA number is mid-range (around 50%), the PARAFAC model should be reconsidered, perhaps with more constraints; If the CORCONDIA number is low (close to 0%), the PARAFAC model is not valid." ;
     rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7" ;
@@ -166,24 +172,17 @@ cwf:parafac_plot_2
     .
         
 cwf:exploratory_analysis
-	a provone:Program;
-	rdfs:label "Exploratory Analysis" ;
-	rdfs:comment "Workflow Phase 3" ;
+    a provone:Program;
+    rdfs:label "Exploratory Analysis" ;
+    rdfs:comment "Workflow Phase 3" ;
     provone:hasSubProgram cwf:generate_plots;
 	. 
 	
 cwf:generate_plots
 	a provone:Program;
 	rdfs:label "Generate Plots";
-	provone:hasInPort cwf:generate_parafac_model;
-	provone:hasVisualization cwf:ea_plot_1 ;
-	provone:hasVisualization cwf:ea_plot_2 ;
-	provone:hasVisualization cwf:ea_plot_3 ;
-	provone:hasVisualization cwf:ea_plot_4 ;
-	provone:hasVisualization cwf:ea_plot_5 ;
-	provone:hasVisualization cwf:ea_plot_6 ;
-	provone:hasVisualization cwf:ea_plot_7 ;
-	cwfo:hasinPort cwf:generate_parafac_model;
+	rdfs:comment "Generate plots for exploratory analysis";
+        provone:hasInPort cwf:parafac_model_port;
 	cwfo:hasVisualization cwf:ea_plot_1 ;
 	cwfo:hasVisualization cwf:ea_plot_2 ;
 	cwfo:hasVisualization cwf:ea_plot_3 ;
@@ -250,32 +249,38 @@ cwf:clustering
 	provone:hasSubProgram cwf:create_iq_histogram
 	.	
 
-cwf:channel_generate_plots_fuzzy_c_means_clustering
-	a provone:Channel
-	.
- 
 cwf:fuzzy_c_means_clustering
 	a provone:Program;
 	rdfs:label "Fuzzy C Means Clustering";
 	rdfs:comment "Cluster the subjects by the first mode of the modeled PARAFAC tensor using Fuzzy C-Means clustering" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Fuzzy_clustering#Fuzzy_C-means_Clustering> ;
-	provone:hasInPort cwf:generate_plots;
-	provone:hasOutPort cwf:create_iq_histogram
+        provone:hasInPort cwf:parafac_model_port;
+	provone:hasOutPort cwf:cluster_results_port
 	.	
+
+cwf:cluster_results_port
+    a provone:Port ;
+    rdfs:label "Cluster results" ;
+    .
 	
 cwf:clusters_distinct
 	a provone:Program ;
 	rdfs:label "Determine Characteristics of Clusters" ;
 	rdfs:comment "Find the characteristics of each cluster by finding the means for each characteristic and testing whether these results are significant at 95% level" ;
-	provone:hasOutPort cwf:parafac_scores ;
-	provone:hasOutPort cwf:create_iq_histogram
+	provone:hasInPort cwf:cluster_results_port ;
+	provone:hasOutPort cwf:cluster_characteristics_port
 	.
+
+cwf:cluster_characteristics_port
+    a provone:Port ;
+    rdfs:label "Cluster characteristics" ;
+    .
 	
 cwf:parafac_scores
 	a provone:Program;
 	rdfs:label "Create IQ PARAFAC Score Plot";
 	rdfs:comment "PARAFAC scores colored by each cluster to see where each cluster lies" ;
-	provone:hasInPort cwf:clusters_distinct ;
+	provone:hasInPort cwf:cluster_characteristics_port ;
 	cwfo:hasVisualization cwf:clustering_plot_2
 	.	
 
@@ -285,15 +290,11 @@ cwf:clustering_plot_1
         rdfs:comment "PARAFAC scores colored by each cluster to see where each cluster lies" 
  	.
  	
-cwf:channel_fuzzy_c_means_clustering_generate_plots
-	a provone:Channel
-	.
- 
 cwf:create_iq_histogram
 	a provone:Program;
 	rdfs:label "Create IQ Histogram";
 	rdfs:comment "Create a histogram to look at the distributions of characteristics, especially IQ, for each cluster" ;
-	provone:hasInPort cwf:clusters_distinct ;
+	provone:hasInPort cwf:cluster_characteristics_port ;
 	cwfo:hasVisualization cwf:clustering_plot_2
 	.	
 	
