@@ -89,14 +89,14 @@ cwf:channel_adjust_apgar_scores_sga_kids
 	a provone:Channel
 	.
 
-csf:significant_data
+cwf:significant_data
 	a provone:Progam ;
 	rdfs:label "Determine significant data" ;
 	rdfs:comment "After running tensor through analysis, use discretion as to which columns of data to include" ;
 	provone:hasOutPort cwf:normalization
 	.
 	
-csf:normalization
+cwf:normalization
 	a provone:Progam ;
 	rdfs:label "Normalization" ;
 	rdfs:comment "For growth data, go through each subject and subtract the mean and standard deviation for each growth characteristic to normalize."
