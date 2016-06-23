@@ -100,13 +100,24 @@ cwf:generate_parafac_model
 	rdfs:label "Generate PARAFAC Model";
 	provone:hasinPort cwf:sga_kids;
 	provone:hasoutPort cwf:generate_plots;
-	provone:hasoutPort cwf:fuzzy_c_means_clustering
+	provone:hasoutPort cwf:fuzzy_c_means_clustering ;
+	cwto:hasVisualization cwf:parafac_plot_1 ;
+	cwto:hasVisualization cwf:parafac_plot_2
 	.
 
-cwf:channel_generate_parafac_model_generate_plots
-	a provone:Channel
-	.
+cwf:parafac_plot_1
+	a provone:Visualization;
+	rdfs:label "PARAFAC Plot 1";
+        rdfs:comment "Scree-Plot for PARAFAC model" 
+        .
 
+cwf:parafac_plot_2
+	a provone:Visualization;
+	rdfs:label "PARAFAC Plot 2";
+        rdfs:comment "Core Consistency Plot (CORCONDIA)" ;
+        cdterms:conformsTo <http://wiki.eigenvector.com/index.php?title=Corcondia>
+        .
+        
 cwf:exploratory_analysis
 	a provone:Program;
 	rdfs:label "Exploratory Analysis" ;
