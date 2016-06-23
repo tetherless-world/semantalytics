@@ -39,7 +39,7 @@ cwf:data_gathering
 
 cwf:test_dataset_port
     a provone:Port;
-	rdfs:label "Test Dataset Port";
+    rdfs:label "Test Dataset";
     .	
 	
 cwf:test_dataset 
@@ -56,53 +56,62 @@ cwf:data_processing
 	provone:hasSubProgram cwf:adjust_apgar_scores 
 	.	
 
-cwf:adjust_apgar_scores_port
-    a provone:Port;
-    rdfs:label "Test Dataset Port";
-    .
-	
 cwf:adjust_apgar_scores 
 	a provone:Program;
 	rdfs:label "Adjust APGAR Scores";
 	rdfs:comment "Ensure APGAR scores are between 0-10";
 	rdfs:comment "MATLAB code: YenerTensor.m, Section 1" ;
 	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
-	provone:hasInPort cwf:adjust_apgar_scores_port;
-	provone:hasOutPort cwf:growth_data;
+	provone:hasInPort cwf:test_dataset_port;
+	provone:hasOutPort cwf:growth_data_port;
 	.
 
-cwf:channel_test_dataset_adjust_apgar_scores
-	a provone:Channel;
-	rdfs:label "Test Dataset Adjust APGAR Scores Port";
-	.
- 
+cwf:adjusted_apgar_data_port
+    a provone:Port;
+    rdfs:label "Adjusted APGAR Data";
+    .	
+
 cwf:growth_data 
 	a provone:Program;
 	rdfs:label "Growth Data";
 	provone:hasInPort cwf:adjust_apgar_scores_dataset;
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/STATO_0000237>;
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/OBI_0000679>;
-	provone:hasOutPort cwf:significant_data
-	.
-	
-cwf:channel_adjust_apgar_scores_sga_kids
-	a provone:Channel
+        provone:hasInPort cwf:adjusted_apgar_data_port ;
+	provone:hasOutPort cwf:growth_data_port 
 	.
 
+cwf:growth_data_port
+    a provone:Port;
+    rdfs:label "Growth Data";
+    .	
+	
 cwf:significant_data
 	a provone:Progam ;
 	rdfs:label "Determine significant data" ;
 	rdfs:comment "After running tensor through analysis, use discretion as to which columns of data to include" ;
-	provone:hasOutPort cwf:normalization
+	provone:hasOutPort cwf:growth_data_port ;
+	provone:hasOutPort cwf:significant_data_port
 	.
-	
+
+cwf:significant_data_port
+    a provone:Port;
+    rdfs:label "Significant Data";
+    .	
+
 cwf:normalization
 	a provone:Progam ;
 	rdfs:label "Normalization" ;
 	rdfs:comment "For growth data, go through each subject and subtract the mean and standard deviation for each growth characteristic to normalize." ;
 	rdfs:comment "For characteristic data, go through each column and subtract by the mean and standard deviation of that column." ;
-	provone:hasOutPort cwf:sga_kids
+	provone:hasInPort cwf:significant_data_port ;
+	provone:hasOutPort cwf:normalization_data_port
 	.
+
+cwf:normalization_data_port
+    a provone:Port;
+    rdfs:label "Significant Data";
+    .	
  
 cwf:sga_kids
 	a provone:Program;
@@ -110,12 +119,13 @@ cwf:sga_kids
 	rdfs:comment "Identify subjects that are small for gestational age (SGA)" ;
 	rdfs:comment "Gets the SGA status of each unique subject, calculated using birth WAZ in the less than 10th percentile" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Small_for_gestational_age> ;
-	provone:hasInPort cwf:adjust_apgar_scores_dataset;
-	provone:hasOutPort cwf:generate_parafac_model 
+	provone:hasInPort cwf:normalization_data_port ;
+	provone:hasOutPort cwf:sga_kids
 	.
 	
-cwf:channel_sga_kids_generate_parafac_model
-	a provone:Channel
+cwf:sga_kids_data_port
+	a provone:Port ;
+	rdfs:label "Identified SGA Kids"
 	.
 
 cwf:creating_parafac_model
@@ -131,14 +141,11 @@ cwf:generate_parafac_model
 	rdfs:label "Generate PARAFAC Model";
 	rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox" ;
 	rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Sections 7 and 8" ;
-	provone:hasInPort cwf:sga_kids;
+	provone:hasInPort cwf:sga_kids_data_port;
 	provone:hasOutPort cwf:generate_plots;
-	provone:hasOutPort cwf:fuzzy_c_means_clustering;
-	provone:hasinPort cwf:sga_kids;
-	provone:hasoutPort cwf:generate_plots;
 	provone:hasoutPort cwf:fuzzy_c_means_clustering ;
 	cwfo:hasVisualization cwf:parafac_plot_1 ;
-	cwfo:hasVisualization cwf:parafac_plot_2;
+	cwfo:hasVisualization cwf:parafac_plot_2
 	.
 
 cwf:parafac_plot_1
