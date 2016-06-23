@@ -12,11 +12,18 @@
 @prefix cwf:     <http://cwf.tw.rpi.edu/data#> .
 
 cwf:workflow_cpp 
-	a provone:Workflow;
-	rdfs:label "CPP_Workflow" ;   
-	rdfs:coment "CPP Workflow: Workflow top level" ;
+    a provone:Workflow;
+    rdfs:label "CPP_Workflow" ;   
+    rdfs:coment "CPP Workflow: Workflow top level" ;
+    prov:hadPlan cwf:gates_recipe ;
     provone:hasSubProgram cwf:program_cpp
-	.
+    .
+
+cwf:gates_recipe
+    a prov:Plan ;
+    rdfs:label "Recipe for Gates Data" ;
+    rdfs:commment "Based on TensorExplorationPARAFAC.m, YenerTensor.m" 
+    .
 
 cwf:program_cpp
 	a provone:Program;
