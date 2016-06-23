@@ -63,7 +63,7 @@ cwf:adjust_apgar_scores
 	rdfs:comment "MATLAB code: YenerTensor.m, Section 1" ;
 	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
 	provone:hasInPort cwf:test_dataset_port;
-	provone:hasOutPort cwf:growth_data_port;
+	provone:hasOutPort cwf:adjusted_apgar_data_port
 	.
 
 cwf:adjusted_apgar_data_port
@@ -120,7 +120,7 @@ cwf:sga_kids
 	rdfs:comment "Gets the SGA status of each unique subject, calculated using birth WAZ in the less than 10th percentile" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Small_for_gestational_age> ;
 	provone:hasInPort cwf:normalization_data_port ;
-	provone:hasOutPort cwf:sga_kids
+	provone:hasOutPort cwf:sga_kids_data_port
 	.
 	
 cwf:sga_kids_data_port
