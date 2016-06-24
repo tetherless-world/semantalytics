@@ -27,6 +27,8 @@ cwf:gates_recipe
     a prov:Plan ;
     rdfs:label "Recipe for Gates Data" ;
     rdfs:commment "Recipe document: Documentation on Recipe for Gates Data" ;
+    rdfs:seeAlso <http://bit.ly/cwf_recipe_fall2015> ;
+    rdfs:seeAlso <http://bit.ly/cpp_workflow_jun2016> ;
     rdfs:commment "MATLAB Code: TensorExplorationPARAFAC.m, YenerTensor.m" 
     .
 
