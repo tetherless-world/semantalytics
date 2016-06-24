@@ -46,8 +46,8 @@ cwf:test_dataset_port
 	
 cwf:test_dataset 
 	a provone:Data;
-	rdfs:label "ANTHAyenerfinalmine.xlsx";
 	rdfs:label "Test Dataset (TENSOR)";
+	skos:altLabel "ANTHAyenerfinalmine.xlsx";
 	rdfs:comment "Loading of initial matrix (output of YenerTensor.m)" ;
 	provone:hasOutPort cwf:test_dataset_port
 	.
