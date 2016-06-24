@@ -284,7 +284,7 @@ cwf:parafac_scores
 	rdfs:label "Create IQ PARAFAC Score Plot";
 	rdfs:comment "PARAFAC scores colored by each cluster to see where each cluster lies" ;
 	provone:hasInPort cwf:cluster_characteristics_port ;
-	cwfo:hasVisualization cwf:clustering_plot_2
+	cwfo:hasVisualization cwf:clustering_plot_1
 	.	
 
 cwf:clustering_plot_1
