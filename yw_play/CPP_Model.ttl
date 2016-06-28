@@ -205,9 +205,15 @@ cwf:generate_parafac_model
 
 cwf:parafac_model_port
     a provone:Port ;
-    rdfs:label "PARAFAC Model" ;
+    rdfs:label "PARAFAC Model"
     .	
 
+cwf:generate_concordia_number
+	a provone:Program;
+	rdfs:label "Generate CONCORDIA Number";
+	provone:hasInPort cwf:parafac_model_port
+	.
+	
 cwf:parafac_plot_1
     a provone:Visualization;
     rdfs:label "PARAFAC Plot 1";
