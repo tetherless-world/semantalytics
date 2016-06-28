@@ -238,7 +238,7 @@ cwf:generate_plots
 	a provone:Program;
 	rdfs:label "Generate Plots";
 	rdfs:comment "Generate plots for exploratory analysis";
-        provone:hasInPort cwf:parafac_model_port;
+    provone:hasInPort cwf:parafac_model_port;
 	cwfo:hasVisualization cwf:ea_plot_1 ;
 	cwfo:hasVisualization cwf:ea_plot_2 ;
 	cwfo:hasVisualization cwf:ea_plot_3 ;
@@ -286,8 +286,8 @@ cwf:ea_plot_5
 cwf:ea_plot_6
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 6";
-        rdfs:comment "Create a heat map for each mode to see where scores in each plot relative to each other" ;
-        rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 15"
+    rdfs:comment "Create a heat map for each mode to see where scores in each plot relative to each other" ;
+    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 15"
 	.	
 
 cwf:ea_plot_7
@@ -310,7 +310,7 @@ cwf:fuzzy_c_means_clustering
 	rdfs:label "Fuzzy C Means Clustering";
 	rdfs:comment "Cluster the subjects by the first mode of the modeled PARAFAC tensor using Fuzzy C-Means clustering" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Fuzzy_clustering#Fuzzy_C-means_Clustering> ;
-        provone:hasInPort cwf:parafac_model_port;
+    provone:hasInPort cwf:parafac_model_port;
 	provone:hasOutPort cwf:cluster_results_port
 	.	
 
@@ -343,7 +343,7 @@ cwf:parafac_scores
 cwf:clustering_plot_1
  	a provone:Visualization ;
 	rdfs:label "PARAFAC Score Plot" ;
-        rdfs:comment "PARAFAC scores colored by each cluster to see where each cluster lies" 
+    rdfs:comment "PARAFAC scores colored by each cluster to see where each cluster lies" 
  	.
  	
 cwf:create_iq_histogram
@@ -357,5 +357,5 @@ cwf:create_iq_histogram
 cwf:clustering_plot_2
  	a provone:Visualization ;
 	rdfs:label "IQ Histogram" ;
-        rdfs:comment "Histogram of distributions of characteristics, especially IQ, for each cluster" 
+    rdfs:comment "Histogram of distributions of characteristics, especially IQ, for each cluster" 
  	.
