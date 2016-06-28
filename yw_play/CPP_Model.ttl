@@ -72,9 +72,19 @@ cwf:adjust_apgar_scores
 
 cwf:adjusted_apgar_data_port
     a provone:Port;
-    rdfs:label "Adjusted APGAR Data";
+    rdfs:label "Adjusted APGAR Data"
     .	
 
+cwf:choose_subjects
+	a provone:Program;
+	rdfs:label "Choose subjects with all five time points";
+	rdfs:comment "Choose only subjects with all five time points";
+	rdfs:comment "MATLAB code: YenerTensor.m, Section 1" ;
+	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
+	provone:hasInPort cwf:adjusted_apgar_data_port;
+	provone:hasOutPort cwf:growth_data_port
+	.	
+	
 cwf:growth_data 
 	a provone:Program;
 	rdfs:label "Growth Data";
@@ -88,6 +98,34 @@ cwf:growth_data_port
     a provone:Port;
     rdfs:label "Growth Data";
     .	
+
+cwf:weights_heights
+	a provone:Program;
+	rdfs:label "Weights, Heights";
+	provone:hasInPort cwf:growth_data_port;
+	provone:hasOutPort cwf:significant_data_port
+	.
+
+cwf:bmi
+	a provone:Program;
+	rdfs:label "BMI";
+	provone:hasInPort cwf:growth_data_port;
+	provone:hasOutPort cwf:significant_data_port
+	.		
+
+cwf:baz_haz_waz
+	a provone:Program;
+	rdfs:label "baz, haz, waz";
+	provone:hasInPort cwf:growth_data_port;
+	provone:hasOutPort cwf:significant_data_port
+	.	
+
+cwf:characteristic_data
+	a provone:Program;
+	rdfs:label "Characteristic Data";
+	provone:hasInPort cwf:growth_data_port;
+	provone:hasOutPort cwf:significant_data_port
+	.	
 	
 cwf:significant_data
 	a provone:Progam ;
