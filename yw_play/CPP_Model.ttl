@@ -57,7 +57,12 @@ cwf:data_processing
 	a provone:Program;
 	rdfs:label "Data Processing"   ;
 	rdfs:comment "Workflow Phase 1" ;
-	provone:hasSubProgram cwf:adjust_apgar_scores 
+	provone:hasSubProgram cwf:adjust_apgar_scores; 
+	provone:hasSubProgram cwf:choose_subjects;
+    provone:hasSubProgram cwf:imputation;	
+	provone:hasSubProgram cwf:significant_data;
+    provone:hasSubProgram cwf:normalization;
+	provone:hasSubProgram cwf:sga_kids
 	.	
 
 cwf:adjust_apgar_scores 
@@ -84,13 +89,23 @@ cwf:choose_subjects
 	provone:hasInPort cwf:adjusted_apgar_data_port;
 	provone:hasOutPort cwf:growth_data_port
 	.	
-	
+
+cwf:imputation
+	a provone:Program;
+	rdfs:label "Imputation";
+	provone:hasSubProgram cwf:growth_data;
+    provone:hasSubProgram cwf:weights_heights;
+    provone:hasSubProgram cwf:bmi;
+	provone:hasSubProgram cwf:baz_haz_waz;
+	provone:hasSubProgram cwf:characteristic_data
+	.
+
 cwf:growth_data 
 	a provone:Program;
 	rdfs:label "Growth Data";
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/STATO_0000237>;
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/OBI_0000679>;
-        provone:hasInPort cwf:adjusted_apgar_data_port ;
+    provone:hasInPort cwf:adjusted_apgar_data_port ;
 	provone:hasOutPort cwf:growth_data_port 
 	.
 
