@@ -37,21 +37,22 @@ cwf:data_gathering
 	a provone:Program;
 	rdfs:label "Data Gathering"   ;
 	rdfs:comment "Workflow Phase 0" ;
-	provone:hasSubProgram cwf:test_dataset
+	provone:hasSubProgram cwf:load_test_dataset
 	.	
 
-cwf:test_dataset_port
-    a provone:Data;
-    rdfs:label "Test Dataset";
-    .	
-	
-cwf:test_dataset 
-	a provone:Data;
-	rdfs:label "Test Dataset (TENSOR)";
+cwf:load_test_dataset 
+	a provone:program;
+	rdfs:label "Load Test Dataset";
 	skos:altLabel "ANTHAyenerfinalmine.xlsx";
 	rdfs:comment "Loading of initial matrix (output of YenerTensor.m)" ;
 	cwfo:hasOutData cwf:test_dataset_port
 	.
+
+cwf:test_dataset_port
+    a provone:Data;
+    rdfs:label "Test Dataset (TENSOR)";
+    rdfs:comment "MATLAB Code: YenerTensor.m" 
+    .	
 	
 cwf:data_processing
 	a provone:Program;
