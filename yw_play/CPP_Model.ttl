@@ -93,6 +93,10 @@ cwf:choose_subjects
 cwf:imputation
 	a provone:Program;
 	rdfs:label "Imputation";
+	rdfs:comment "Impute or remove missing values based on how many are missing";
+	rdfs:comment "Use regression model to impute for one missing time point";
+	rdfs:comment "Use linear fit to impute for two missing_time_points";
+	rdfs:comment "Remove subjects with more than two missing time points";
 	provone:hasSubProgram cwf:growth_data;
     provone:hasSubProgram cwf:weights_heights;
     provone:hasSubProgram cwf:bmi;
@@ -117,6 +121,7 @@ cwf:growth_data_port
 cwf:weights_heights
 	a provone:Program;
 	rdfs:label "Weights, Heights";
+	rdfs:comment "heights for that subject";
 	cwfo:hasInData cwf:growth_data_port;
 	cwfo:hasOutData cwf:significant_data_port
 	.
@@ -124,12 +129,14 @@ cwf:weights_heights
 cwf:bmi
 	a provone:Program;
 	rdfs:label "BMI";
+	rdfs:comment "bmis for that subject";
 	cwfo:hasInData cwf:growth_data_port;
 	cwfo:hasOutData cwf:significant_data_port
 	.		
 
 cwf:baz_haz_waz
 	a provone:Program;
+	rdfs:comment "Count missing heights, BMIs and weights";
 	rdfs:label "baz, haz, waz";
 	cwfo:hasInData cwf:growth_data_port;
 	cwfo:hasOutData cwf:significant_data_port
@@ -211,6 +218,7 @@ cwf:parafac_model_port
 cwf:generate_concordia_number
 	a provone:Program;
 	rdfs:label "Generate CONCORDIA Number";
+	dcterms:conformsTo <http://wiki.eigenvector.com/index.php?title=Corcondia> ;
 	cwfo:hasInData cwf:parafac_model_port
 	.
 	
