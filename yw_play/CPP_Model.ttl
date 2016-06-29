@@ -121,7 +121,8 @@ cwf:growth_data
 cwf:weights_heights
 	a provone:Program;
 	rdfs:label "Weights, Heights";
-	rdfs:comment "heights for that subject";
+	rdfs:comment "Finds how many values are missing: If that is one, then fits a linear and quadratic regression on the remaining data. The fit with the higher R2 is used. If that is two, then fits a linear regression on the remaining data. If that is three, then the subject is removed.";
+	rdfs:comment "MATLAB Code: YenerTensor.m, Section 4";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
 	.
@@ -129,15 +130,17 @@ cwf:weights_heights
 cwf:bmi
 	a provone:Program;
 	rdfs:label "BMI";
-	rdfs:comment "bmis for that subject";
+	rdfs:comment "Calculates BMI from the values for each subject using the formula: http://en.wikipedia.org/wiki/Body_mass_index";
+	rdfs:comment "MATLAB Code: YenerTensor.m, Section 4";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
 	.		
 
 cwf:baz_haz_waz
 	a provone:Program;
-	rdfs:comment "Count missing heights, BMIs and weights";
 	rdfs:label "baz, haz, waz";
+	rdfs:comment "Calculates BAZ, HAZ, and WAZ from the imputed values based on WHO standards
+        rdfs:comment "MATLAB Code: Macros to calculate this using SAS, R, or STATA can be found here: http://www.who.int/childgrowth/software/en/";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
 	.	
@@ -145,6 +148,8 @@ cwf:baz_haz_waz
 cwf:characteristic_data
 	a provone:Program;
 	rdfs:label "Characteristic Data";
+	rdfs:comment "Get either the mean or mode (depending on the type of characteristic data) based on the 10 most similar subjects based on height and weight";
+	rdfs:comment "MATLAB Code: YenerTensor.m, Section 8";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
 	.	
