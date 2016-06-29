@@ -72,10 +72,10 @@ cwf:adjust_apgar_scores
 	rdfs:comment "MATLAB code: YenerTensor.m, Section 1" ;
 	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
 	cwfo:hasInData cwf:test_dataset_port;
-	cwfo:hasOutData cwf:adjusted_apgar_data_port
+	cwfo:hasOutData cwf:adjusted_apgar_data
 	.
 
-cwf:adjusted_apgar_data_port
+cwf:adjusted_apgar_data
     a provone:Data;
     rdfs:label "Adjusted APGAR Data"
     .	
@@ -86,8 +86,8 @@ cwf:choose_subjects
 	rdfs:comment "Choose only subjects with all five time points";
 	rdfs:comment "MATLAB code: YenerTensor.m, Section 1" ;
 	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
-	cwfo:hasInData cwf:adjusted_apgar_data_port;
-	cwfo:hasOutData cwf:growth_data_port
+	cwfo:hasInData cwf:adjusted_apgar_data;
+	cwfo:hasOutData cwf:growth_data
 	.	
 
 cwf:imputation
@@ -109,11 +109,11 @@ cwf:growth_data
 	rdfs:label "Growth Data";
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/STATO_0000237>;
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/OBI_0000679>;
-    cwfo:hasInData cwf:adjusted_apgar_data_port ;
-	cwfo:hasOutData cwf:growth_data_port 
+    cwfo:hasInData cwf:adjusted_apgar_data ;
+	cwfo:hasOutData cwf:growth_data 
 	.
 
-cwf:growth_data_port
+cwf:growth_data
     a provone:Data;
     rdfs:label "Growth Data";
     .	
@@ -122,42 +122,42 @@ cwf:weights_heights
 	a provone:Program;
 	rdfs:label "Weights, Heights";
 	rdfs:comment "heights for that subject";
-	cwfo:hasInData cwf:growth_data_port;
-	cwfo:hasOutData cwf:significant_data_port
+	cwfo:hasInData cwf:growth_data;
+	cwfo:hasOutData cwf:significant_data
 	.
 
 cwf:bmi
 	a provone:Program;
 	rdfs:label "BMI";
 	rdfs:comment "bmis for that subject";
-	cwfo:hasInData cwf:growth_data_port;
-	cwfo:hasOutData cwf:significant_data_port
+	cwfo:hasInData cwf:growth_data;
+	cwfo:hasOutData cwf:significant_data
 	.		
 
 cwf:baz_haz_waz
 	a provone:Program;
 	rdfs:comment "Count missing heights, BMIs and weights";
 	rdfs:label "baz, haz, waz";
-	cwfo:hasInData cwf:growth_data_port;
-	cwfo:hasOutData cwf:significant_data_port
+	cwfo:hasInData cwf:growth_data;
+	cwfo:hasOutData cwf:significant_data
 	.	
 
 cwf:characteristic_data
 	a provone:Program;
 	rdfs:label "Characteristic Data";
-	cwfo:hasInData cwf:growth_data_port;
-	cwfo:hasOutData cwf:significant_data_port
+	cwfo:hasInData cwf:growth_data;
+	cwfo:hasOutData cwf:significant_data
 	.	
 	
 cwf:significant_data
 	a provone:Progam ;
 	rdfs:label "Determine significant data" ;
 	rdfs:comment "After running tensor through analysis, use discretion as to which columns of data to include" ;
-	cwfo:hasOutData cwf:growth_data_port ;
-	cwfo:hasOutData cwf:significant_data_port
+	cwfo:hasOutData cwf:growth_data ;
+	cwfo:hasOutData cwf:significant_data
 	.
 
-cwf:significant_data_port
+cwf:significant_data
     a provone:Data;
     rdfs:label "Significant Data";
     .	
@@ -167,11 +167,11 @@ cwf:normalization
 	rdfs:label "Normalization" ;
 	rdfs:comment "For growth data, go through each subject and subtract the mean and standard deviation for each growth characteristic to normalize." ;
 	rdfs:comment "For characteristic data, go through each column and subtract by the mean and standard deviation of that column." ;
-	cwfo:hasInData cwf:significant_data_port ;
-	cwfo:hasOutData cwf:normalization_data_port
+	cwfo:hasInData cwf:significant_data ;
+	cwfo:hasOutData cwf:normalization_data
 	.
 
-cwf:normalization_data_port
+cwf:normalization_data
     a provone:Data;
     rdfs:label "Significant Data";
     .	
@@ -182,11 +182,11 @@ cwf:sga_kids
 	rdfs:comment "Identify subjects that are small for gestational age (SGA)" ;
 	rdfs:comment "Gets the SGA status of each unique subject, calculated using birth WAZ in the less than 10th percentile" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Small_for_gestational_age> ;
-	cwfo:hasInData cwf:normalization_data_port ;
-	cwfo:hasOutData cwf:sga_kids_data_port
+	cwfo:hasInData cwf:normalization_data ;
+	cwfo:hasOutData cwf:sga_kids_data
 	.
 	
-cwf:sga_kids_data_port
+cwf:sga_kids_data
 	a provone:Data ;
 	rdfs:label "Identified SGA Kids"
 	.
@@ -204,7 +204,7 @@ cwf:generate_parafac_model
 	rdfs:label "Generate PARAFAC Model";
 	rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox" ;
 	rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Sections 7 and 8" ;
-	cwfo:hasInData cwf:sga_kids_data_port;
+	cwfo:hasInData cwf:sga_kids_data;
 	cwfo:hasOutData cwf:parafac_model_port;
 	cwfo:hasVisualization cwf:parafac_plot_1 ;
 	cwfo:hasVisualization cwf:parafac_plot_2
