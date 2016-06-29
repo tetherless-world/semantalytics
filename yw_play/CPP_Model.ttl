@@ -139,7 +139,7 @@ cwf:bmi
 cwf:baz_haz_waz
 	a provone:Program;
 	rdfs:label "baz, haz, waz";
-	rdfs:comment "Calculates BAZ, HAZ, and WAZ from the imputed values based on WHO standards
+	rdfs:comment "Calculates BAZ, HAZ, and WAZ from the imputed values based on WHO standards";
         rdfs:comment "MATLAB Code: Macros to calculate this using SAS, R, or STATA can be found here: http://www.who.int/childgrowth/software/en/";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
