@@ -202,7 +202,8 @@ cwf:creating_parafac_model
 	rdfs:label "Creating PARAFAC Model" ;
 	rdfs:comment "Workflow Phase 2" ;
 	dcterms:conformsTo <http://en.wikipedia.org/wiki/Tensor_rank_decomposition> ;
-    provone:hasSubProgram cwf:generate_parafac_model 
+    provone:hasSubProgram cwf:generate_parafac_model ;
+    provone:hasSubProgram cwf:generate_concordia_number
     .	
 	
 cwf:generate_parafac_model
@@ -322,7 +323,9 @@ cwf:clustering
 	rdfs:label "Clustering";
 	rdfs:comment "Workflow Phase 4" ;
 	provone:hasSubProgram cwf:fuzzy_c_means_clustering ;
-	provone:hasSubProgram cwf:create_iq_histogram
+	provone:hasSubProgram cwf:create_iq_histogram;
+	provone:hasSubProgram cwf:clusters_distinct;
+	provone:hasSubProgram cwf:parafac_scores
 	.	
 
 cwf:fuzzy_c_means_clustering
