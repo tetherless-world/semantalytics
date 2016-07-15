@@ -62,7 +62,7 @@ cwf:data_processing
 	provone:hasSubProgram cwf:adjust_apgar_scores; 
 	provone:hasSubProgram cwf:choose_subjects;
     provone:hasSubProgram cwf:imputation;	
-	provone:hasSubProgram cwf:significant_data;
+	provone:hasSubProgram cwf:generate_significant_data;
     provone:hasSubProgram cwf:normalization;
 	provone:hasSubProgram cwf:sga_kids
 	.	
@@ -104,7 +104,8 @@ cwf:imputation
     provone:hasSubProgram cwf:weights_heights;
     provone:hasSubProgram cwf:bmi;
 	provone:hasSubProgram cwf:baz_haz_waz;
-	provone:hasSubProgram cwf:generate_characteristic_data
+	provone:hasSubProgram cwf:generate_characteristic_data ;
+	provone:hasSubProgram cwf:generate_significant_data
 	.
 
 cwf:generate_growth_data
@@ -185,7 +186,7 @@ cwf:normalization
 
 cwf:normalization_data
     a provone:Data;
-    rdfs:label "Significant Data" ;
+    rdfs:label "Normalization Data" ;
     rdfs:comment "Normalization Data" 
     .	
  
