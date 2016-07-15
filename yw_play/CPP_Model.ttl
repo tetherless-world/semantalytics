@@ -102,7 +102,7 @@ cwf:imputation
     provone:hasSubProgram cwf:weights_heights;
     provone:hasSubProgram cwf:bmi;
 	provone:hasSubProgram cwf:baz_haz_waz;
-	provone:hasSubProgram cwf:characteristic_data
+	provone:hasSubProgram cwf:generate_characteristic_data
 	.
 
 cwf:generate_growth_data
@@ -169,7 +169,7 @@ cwf:significant_data
     .	
 
 cwf:normalization
-	a provone:Progam ;
+	a provone:Program ;
 	rdfs:label "Normalization" ;
 	rdfs:comment "For growth data, go through each subject and subtract the mean and standard deviation for each growth characteristic to normalize." ;
 	rdfs:comment "For characteristic data, go through each column and subtract by the mean and standard deviation of that column." ;
