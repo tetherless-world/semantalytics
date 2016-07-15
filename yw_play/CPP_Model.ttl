@@ -41,14 +41,14 @@ cwf:data_gathering
 	.	
 
 cwf:load_test_dataset 
-	a provone:program;
+	a provone:Program;
 	rdfs:label "Load Test Dataset";
 	skos:altLabel "ANTHAyenerfinalmine.xlsx";
 	rdfs:comment "Loading of initial matrix (output of YenerTensor.m)" ;
-	cwfo:hasOutData cwf:test_dataset_port
+	cwfo:hasOutData cwf:test_dataset_data
 	.
 
-cwf:test_dataset_port
+cwf:test_dataset_data
     a provone:Data;
     rdfs:label "Test Dataset (TENSOR)";
     rdfs:comment "MATLAB Code: YenerTensor.m" 
@@ -98,16 +98,16 @@ cwf:imputation
 	rdfs:comment "Use regression model to impute for one missing time point";
 	rdfs:comment "Use linear fit to impute for two missing_time_points";
 	rdfs:comment "Remove subjects with more than two missing time points";
-	provone:hasSubProgram cwf:growth_data;
+	provone:hasSubProgram cwf:generate_growth_data;
     provone:hasSubProgram cwf:weights_heights;
     provone:hasSubProgram cwf:bmi;
 	provone:hasSubProgram cwf:baz_haz_waz;
 	provone:hasSubProgram cwf:characteristic_data
 	.
 
-cwf:growth_data 
+cwf:generate_growth_data
 	a provone:Program;
-	rdfs:label "Growth Data";
+	rdfs:label "Generate Growth Data";
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/STATO_0000237>;
 	dcterms:conformsTo <http://purl.obolibrary.org/obo/OBI_0000679>;
     cwfo:hasInData cwf:adjusted_apgar_data ;
@@ -130,7 +130,7 @@ cwf:weights_heights
 
 cwf:bmi
 	a provone:Program;
-	rdfs:label "BMI";
+	rdfs:label "Calculate BMI";
 	rdfs:comment "Calculates BMI from the values for each subject using the formula: http://en.wikipedia.org/wiki/Body_mass_index";
 	rdfs:comment "MATLAB Code: YenerTensor.m, Section 4";
 	cwfo:hasInData cwf:growth_data;
@@ -139,24 +139,24 @@ cwf:bmi
 
 cwf:baz_haz_waz
 	a provone:Program;
-	rdfs:label "baz, haz, waz";
+	rdfs:label "Calculate BAZ, HAZ, and WAZ";
 	rdfs:comment "Calculates BAZ, HAZ, and WAZ from the imputed values based on WHO standards";
         rdfs:comment "MATLAB Code: Macros to calculate this using SAS, R, or STATA can be found here: http://www.who.int/childgrowth/software/en/";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
 	.	
 
-cwf:characteristic_data
+cwf:generate_characteristic_data
 	a provone:Program;
-	rdfs:label "Characteristic Data";
+	rdfs:label "Generate Characteristic Data";
 	rdfs:comment "Get either the mean or mode (depending on the type of characteristic data) based on the 10 most similar subjects based on height and weight";
 	rdfs:comment "MATLAB Code: YenerTensor.m, Section 8";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
 	.	
 	
-cwf:significant_data
-	a provone:Progam ;
+cwf:generate_significant_data
+	a provone:Program ;
 	rdfs:label "Determine significant data" ;
 	rdfs:comment "After running tensor through analysis, use discretion as to which columns of data to include" ;
 	cwfo:hasOutData cwf:growth_data ;
