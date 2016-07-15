@@ -15,7 +15,7 @@
 cwf:workflow_cpp 
     a provone:Workflow;
     rdfs:label "CPP_Workflow" ;   
-    rdfs:comment "CPP Workflow: Workflow top level" ;
+    skos:altLabel "CPP Workflow: Workflow top level" ;
     prov:hadPlan cwf:gates_recipe ;
     provone:hasSubProgram cwf:data_gathering ;
     provone:hasSubProgram cwf:data_processing ;
@@ -27,7 +27,7 @@ cwf:workflow_cpp
 cwf:gates_recipe
     a prov:Plan ;
     rdfs:label "Recipe for Gates Data" ;
-    rdfs:commment "Recipe document: Documentation on Recipe for Gates Data" ;
+    skos:altLabel "Recipe document: Documentation on Recipe for Gates Data" ;
     rdfs:seeAlso <http://bit.ly/cwf_recipe_fall2015> ;
     rdfs:seeAlso <http://bit.ly/cpp_workflow_jun2016> ;
     rdfs:commment "MATLAB Code: TensorExplorationPARAFAC.m, YenerTensor.m" 
@@ -36,7 +36,7 @@ cwf:gates_recipe
 cwf:data_gathering
 	a provone:Program;
 	rdfs:label "Data Gathering"   ;
-	rdfs:comment "Workflow Phase 0" ;
+	skos:altLabel "Workflow Phase 0" ;
 	provone:hasSubProgram cwf:load_test_dataset
 	.	
 
@@ -57,7 +57,7 @@ cwf:test_dataset_data
 cwf:data_processing
 	a provone:Program;
 	rdfs:label "Data Processing"   ;
-	rdfs:comment "Workflow Phase 1" ;
+	skos:altLabel "Workflow Phase 1" ;
 	provone:hasSubProgram cwf:adjust_apgar_scores; 
 	provone:hasSubProgram cwf:choose_subjects;
     provone:hasSubProgram cwf:imputation;	
@@ -69,7 +69,7 @@ cwf:data_processing
 cwf:adjust_apgar_scores 
 	a provone:Program;
 	rdfs:label "Adjust APGAR Scores";
-	rdfs:comment "Ensure APGAR scores are between 0-10";
+	skos:altLabel "Ensure APGAR scores are between 0-10";
 	rdfs:comment "MATLAB code: YenerTensor.m, Section 1" ;
 	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
 	cwfo:hasInData cwf:test_dataset_data;
@@ -83,8 +83,8 @@ cwf:adjusted_apgar_data
 
 cwf:choose_subjects
 	a provone:Program;
-	rdfs:label "Choose subjects with all five time points";
-	rdfs:comment "Choose only subjects with all five time points";
+	rdfs:label "Choose Subjects";
+	skos:altLabel "Choose only subjects with all five time points";
 	rdfs:comment "MATLAB code: YenerTensor.m, Section 1" ;
 	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
 	cwfo:hasInData cwf:adjusted_apgar_data;
@@ -94,7 +94,7 @@ cwf:choose_subjects
 cwf:imputation
 	a provone:Program;
 	rdfs:label "Imputation";
-	rdfs:comment "Impute or remove missing values based on how many are missing";
+	skos:altLabel "Impute or remove missing values based on how many are missing";
 	rdfs:comment "Use regression model to impute for one missing time point";
 	rdfs:comment "Use linear fit to impute for two missing_time_points";
 	rdfs:comment "Remove subjects with more than two missing time points";
@@ -122,7 +122,8 @@ cwf:growth_data
 cwf:weights_heights
 	a provone:Program;
 	rdfs:label "Weights, Heights";
-	rdfs:comment "Finds how many values are missing: If that is one, then fits a linear and quadratic regression on the remaining data. The fit with the higher R2 is used. If that is two, then fits a linear regression on the remaining data. If that is three, then the subject is removed.";
+	skos:altLabel "Count missing weights and heights";
+	rdfs:comment "Find how many values are missing: If that is one, then fits a linear and quadratic regression on the remaining data. The fit with the higher R2 is used. If that is two, then fits a linear regression on the remaining data. If that is three, then the subject is removed.";
 	rdfs:comment "MATLAB Code: YenerTensor.m, Section 4";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
@@ -171,6 +172,7 @@ cwf:significant_data
 cwf:normalization
 	a provone:Program ;
 	rdfs:label "Normalization" ;
+	skos:altLabel "Normalize growth and characteristic data" ;
 	rdfs:comment "For growth data, go through each subject and subtract the mean and standard deviation for each growth characteristic to normalize." ;
 	rdfs:comment "For characteristic data, go through each column and subtract by the mean and standard deviation of that column." ;
 	cwfo:hasInData cwf:significant_data ;
@@ -185,7 +187,7 @@ cwf:normalization_data
 cwf:sga_kids
 	a provone:Program;
 	rdfs:label "Flag SGA Kids";
-	rdfs:comment "Identify subjects that are small for gestational age (SGA)" ;
+	skos:altLabel "Identify subjects that are small for gestational age (SGA)" ;
 	rdfs:comment "Gets the SGA status of each unique subject, calculated using birth WAZ in the less than 10th percentile" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Small_for_gestational_age> ;
 	cwfo:hasInData cwf:normalization_data ;
@@ -200,7 +202,7 @@ cwf:sga_kids_data
 cwf:creating_parafac_model
 	a provone:Program;
 	rdfs:label "Creating PARAFAC Model" ;
-	rdfs:comment "Workflow Phase 2" ;
+	skos:altLabel "Workflow Phase 2" ;
 	dcterms:conformsTo <http://en.wikipedia.org/wiki/Tensor_rank_decomposition> ;
     provone:hasSubProgram cwf:generate_parafac_model ;
     provone:hasSubProgram cwf:generate_concordia_number
@@ -209,7 +211,7 @@ cwf:creating_parafac_model
 cwf:generate_parafac_model
 	a provone:Program;
 	rdfs:label "Generate PARAFAC Model";
-	rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox" ;
+	skos:altLabel "Create a PARAFAC model for the data using the N-Way toolbox" ;
 	rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Sections 7 and 8" ;
 	cwfo:hasInData cwf:sga_kids_data;
 	cwfo:hasOutData cwf:parafac_model_data;
@@ -233,7 +235,7 @@ cwf:parafac_plot_1
     a provone:Visualization;
     rdfs:label "PARAFAC Plot 1";
     cwfo:hasInData cwf:parafac_model_data;
-    rdfs:comment "Scree-Plot for PARAFAC model" ;
+   skos:altLabel "Scree-Plot for PARAFAC model" ;
     rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox and calculate the sum of squared errors, then plots it for each number of model components versus the sum of squared errors" ;
     rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7"
     .
@@ -242,7 +244,7 @@ cwf:parafac_plot_2
 	a provone:Visualization;
 	rdfs:label "PARAFAC Plot 2";
     cwfo:hasInData cwf:parafac_model_data;
-    rdfs:comment "Core Consistency Plot (CORCONDIA)" ; 
+    skos:altLabel "Core Consistency Plot (CORCONDIA)" ; 
     rdfs:comment "If the CORCONDIA number is high (close to 100%), then PARAFAC model is valid; If the CORCONDIA number is mid-range (around 50%), the PARAFAC model should be reconsidered, perhaps with more constraints; If the CORCONDIA number is low (close to 0%), the PARAFAC model is not valid." ;
     rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7" ;
     dcterms:conformsTo <http://wiki.eigenvector.com/index.php?title=Corcondia> 
@@ -251,14 +253,14 @@ cwf:parafac_plot_2
 cwf:exploratory_analysis
     a provone:Program;
     rdfs:label "Exploratory Analysis" ;
-    rdfs:comment "Workflow Phase 3" ;
+    skos:altLabel "Workflow Phase 3" ;
     provone:hasSubProgram cwf:generate_plots;
 	. 
 	
 cwf:generate_plots
 	a provone:Program;
 	rdfs:label "Generate Plots";
-	rdfs:comment "Generate plots for exploratory analysis";
+	skos:altLabel "Generate plots for exploratory analysis";
     cwfo:hasInData cwf:parafac_model_data;
 	cwfo:hasVisualization cwf:ea_plot_1 ;
 	cwfo:hasVisualization cwf:ea_plot_2 ;
@@ -272,6 +274,7 @@ cwf:generate_plots
 cwf:ea_plot_1
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 1";
+	skos:altLabel "Create 3D and mesh plots"; 
     rdfs:comment "Create a 3D plot for each time point for the original data, the modeled data, and the residuals" ;
     rdfs:comment "Create mesh plots for each time point based on the original tensor, the modeled data by PARAFAC, and the residual (original data – modeled data), respectively"
 	.	
@@ -321,7 +324,7 @@ cwf:ea_plot_7
 cwf:clustering
 	a provone:Program;
 	rdfs:label "Clustering";
-	rdfs:comment "Workflow Phase 4" ;
+	skos:altLabel "Workflow Phase 4" ;
 	provone:hasSubProgram cwf:fuzzy_c_means_clustering ;
 	provone:hasSubProgram cwf:create_iq_histogram;
 	provone:hasSubProgram cwf:clusters_distinct;
@@ -331,6 +334,7 @@ cwf:clustering
 cwf:fuzzy_c_means_clustering
 	a provone:Program;
 	rdfs:label "Fuzzy C Means Clustering";
+	skos:altLabel "Cluster the subjects based on PARAFAC";
 	rdfs:comment "Cluster the subjects by the first mode of the modeled PARAFAC tensor using Fuzzy C-Means clustering" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Fuzzy_clustering#Fuzzy_C-means_Clustering> ;
     cwfo:hasInData cwf:parafac_model_data;
