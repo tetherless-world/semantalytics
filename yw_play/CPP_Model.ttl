@@ -30,7 +30,7 @@ cwf:gates_recipe
     skos:altLabel "Recipe document: Documentation on Recipe for Gates Data" ;
     rdfs:seeAlso <http://bit.ly/cwf_recipe_fall2015> ;
     rdfs:seeAlso <http://bit.ly/cpp_workflow_jun2016> ;
-    rdfs:commment "MATLAB Code: TensorExplorationPARAFAC.m, YenerTensor.m" 
+    cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, YenerTensor.m" 
     .
 
 cwf:data_gathering
@@ -51,7 +51,7 @@ cwf:load_test_dataset
 cwf:test_dataset_data
     a provone:Data;
     rdfs:label "Test Dataset (TENSOR)";
-    rdfs:comment "MATLAB Code: YenerTensor.m" 
+    cwfo:hasCode "MATLAB: YenerTensor.m" 
     .	
 	
 cwf:data_processing
@@ -133,7 +133,7 @@ cwf:bmi
 	a provone:Program;
 	rdfs:label "Calculate BMI";
 	rdfs:comment "Calculates BMI from the values for each subject using the formula: http://en.wikipedia.org/wiki/Body_mass_index";
-	rdfs:comment "MATLAB Code: YenerTensor.m, Section 4";
+	cwfo:hasCode "MATLAB: YenerTensor.m, Section 4";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
 	.		
@@ -142,7 +142,7 @@ cwf:baz_haz_waz
 	a provone:Program;
 	rdfs:label "Calculate BAZ, HAZ, and WAZ";
 	rdfs:comment "Calculates BAZ, HAZ, and WAZ from the imputed values based on WHO standards";
-        rdfs:comment "MATLAB Code: Macros to calculate this using SAS, R, or STATA can be found here: http://www.who.int/childgrowth/software/en/";
+        cwfo:hasCode "MATLAB: Macros to calculate this using SAS, R, or STATA can be found here: http://www.who.int/childgrowth/software/en/";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
 	.	
@@ -151,7 +151,7 @@ cwf:generate_characteristic_data
 	a provone:Program;
 	rdfs:label "Generate Characteristic Data";
 	rdfs:comment "Get either the mean or mode (depending on the type of characteristic data) based on the 10 most similar subjects based on height and weight";
-	rdfs:comment "MATLAB Code: YenerTensor.m, Section 8";
+	cwfo:hasCode "MATLAB: YenerTensor.m, Section 8";
 	cwfo:hasInData cwf:growth_data;
 	cwfo:hasOutData cwf:significant_data
 	.	
@@ -212,7 +212,7 @@ cwf:generate_parafac_model
 	a provone:Program;
 	rdfs:label "Generate PARAFAC Model";
 	skos:altLabel "Create a PARAFAC model for the data using the N-Way toolbox" ;
-	rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Sections 7 and 8" ;
+	cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, Sections 7 and 8" ;
 	cwfo:hasInData cwf:sga_kids_data;
 	cwfo:hasOutData cwf:parafac_model_data;
 	cwfo:hasVisualization cwf:parafac_plot_1 ;
@@ -237,7 +237,7 @@ cwf:parafac_plot_1
     cwfo:hasInData cwf:parafac_model_data;
    skos:altLabel "Scree-Plot for PARAFAC model" ;
     rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox and calculate the sum of squared errors, then plots it for each number of model components versus the sum of squared errors" ;
-    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7"
+    cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, Section 7"
     .
 
 cwf:parafac_plot_2
@@ -246,7 +246,7 @@ cwf:parafac_plot_2
     cwfo:hasInData cwf:parafac_model_data;
     skos:altLabel "Core Consistency Plot (CORCONDIA)" ; 
     rdfs:comment "If the CORCONDIA number is high (close to 100%), then PARAFAC model is valid; If the CORCONDIA number is mid-range (around 50%), the PARAFAC model should be reconsidered, perhaps with more constraints; If the CORCONDIA number is low (close to 0%), the PARAFAC model is not valid." ;
-    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7" ;
+    cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, Section 7" ;
     dcterms:conformsTo <http://wiki.eigenvector.com/index.php?title=Corcondia> 
     .
         
@@ -283,42 +283,42 @@ cwf:ea_plot_2
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 2";
     rdfs:comment "Create a plot of the loadings for each component in each mode to see which features, subjects, and time points are more important in their components and respective modes" ;
-    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 11"
+    cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, Section 11"
 	.	
 
 cwf:ea_plot_3
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 3";
     rdfs:comment "Create a plot of the scores for each mode to see where each point falls" ;
-    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 12"
+    cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, Section 12"
 	.	
 
 cwf:ea_plot_4
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 4";
     rdfs:comment "Create a gradient for each of the characteristics by their number values on the score plot for subjects" ;
-    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 13"
+    cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, Section 13"
 	.	
 
 cwf:ea_plot_5
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 5";
     rdfs:comment "Create a plot of the scores colored by SGA to see where they" ;
-    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 14"
+    cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, Section 14"
 	.	
 
 cwf:ea_plot_6
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 6";
     rdfs:comment "Create a heat map for each mode to see where scores in each plot relative to each other" ;
-    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 15"
+    cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, Section 15"
 	.	
 
 cwf:ea_plot_7
 	a provone:Visualization;
 	rdfs:label "Exploratory Analysis Plot 7";
     rdfs:comment "Create a plot that shows the characteristics versus the more important component, depending on the results of the PARAFAC model." ;
-    rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 23"
+    cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, Section 23"
 	.	
 
 cwf:clustering
