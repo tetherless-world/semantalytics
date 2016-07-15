@@ -51,6 +51,7 @@ cwf:load_test_dataset
 cwf:test_dataset_data
     a provone:Data;
     rdfs:label "Test Dataset (TENSOR)";
+    rdfs:comment "Test Dataset";
     cwfo:hasCode "MATLAB: YenerTensor.m" 
     .	
 	
@@ -78,7 +79,8 @@ cwf:adjust_apgar_scores
 
 cwf:adjusted_apgar_data
     a provone:Data;
-    rdfs:label "Adjusted APGAR Data"
+    rdfs:label "Adjusted APGAR Data" ;
+    rdfs:comment "Adjusted APGAR Data"
     .	
 
 cwf:choose_subjects
@@ -117,6 +119,7 @@ cwf:generate_growth_data
 cwf:growth_data
     a provone:Data;
     rdfs:label "Growth Data";
+    rdfs:comment "Growth Data" 
     .	
 
 cwf:weights_heights
@@ -166,7 +169,8 @@ cwf:generate_significant_data
 
 cwf:significant_data
     a provone:Data;
-    rdfs:label "Significant Data";
+    rdfs:label "Significant Data" ;
+    rdfs:comment "Significant Data"
     .	
 
 cwf:normalization
@@ -181,7 +185,8 @@ cwf:normalization
 
 cwf:normalization_data
     a provone:Data;
-    rdfs:label "Significant Data";
+    rdfs:label "Significant Data" ;
+    rdfs:comment "Normalization Data" 
     .	
  
 cwf:sga_kids
@@ -196,7 +201,8 @@ cwf:sga_kids
 	
 cwf:sga_kids_data
 	a provone:Data ;
-	rdfs:label "Identified SGA Kids"
+	rdfs:label "Identified SGA Kids";
+	rdfs:comment "Identified SGA Kids" 
 	.
 
 cwf:creating_parafac_model
@@ -221,7 +227,8 @@ cwf:generate_parafac_model
 
 cwf:parafac_model_data
     a provone:Data ;
-    rdfs:label "PARAFAC Model"
+    rdfs:label "PARAFAC Model" ;
+    rdfs:comment "PARAFAC Model"
     .	
 
 cwf:generate_concordia_number
@@ -344,6 +351,7 @@ cwf:fuzzy_c_means_clustering
 cwf:cluster_results_data
     a provone:Data ;
     rdfs:label "Cluster results" ;
+    rdfs:comment "Cluster results" 
     .
 	
 cwf:clusters_distinct
@@ -357,6 +365,7 @@ cwf:clusters_distinct
 cwf:cluster_characteristics_data
     a provone:Data ;
     rdfs:label "Cluster characteristics" ;
+    rdfs:comment "Cluster characteristics"
     .
 	
 cwf:parafac_scores
