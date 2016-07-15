@@ -72,7 +72,7 @@ cwf:adjust_apgar_scores
 	rdfs:comment "Ensure APGAR scores are between 0-10";
 	rdfs:comment "MATLAB code: YenerTensor.m, Section 1" ;
 	dcterms:conformsTo <https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm> ;
-	cwfo:hasInData cwf:test_dataset_port;
+	cwfo:hasInData cwf:test_dataset_data;
 	cwfo:hasOutData cwf:adjusted_apgar_data
 	.
 
@@ -212,12 +212,12 @@ cwf:generate_parafac_model
 	rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox" ;
 	rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Sections 7 and 8" ;
 	cwfo:hasInData cwf:sga_kids_data;
-	cwfo:hasOutData cwf:parafac_model_port;
+	cwfo:hasOutData cwf:parafac_model_data;
 	cwfo:hasVisualization cwf:parafac_plot_1 ;
 	cwfo:hasVisualization cwf:parafac_plot_2
 	.
 
-cwf:parafac_model_port
+cwf:parafac_model_data
     a provone:Data ;
     rdfs:label "PARAFAC Model"
     .	
@@ -226,13 +226,13 @@ cwf:generate_concordia_number
 	a provone:Program;
 	rdfs:label "Generate CONCORDIA Number";
 	dcterms:conformsTo <http://wiki.eigenvector.com/index.php?title=Corcondia> ;
-	cwfo:hasInData cwf:parafac_model_port
+	cwfo:hasInData cwf:parafac_model_data
 	.
 	
 cwf:parafac_plot_1
     a provone:Visualization;
     rdfs:label "PARAFAC Plot 1";
-    cwfo:hasInData cwf:parafac_model_port;
+    cwfo:hasInData cwf:parafac_model_data;
     rdfs:comment "Scree-Plot for PARAFAC model" ;
     rdfs:comment "Create a PARAFAC model for the data using the N-Way toolbox and calculate the sum of squared errors, then plots it for each number of model components versus the sum of squared errors" ;
     rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7"
@@ -241,7 +241,7 @@ cwf:parafac_plot_1
 cwf:parafac_plot_2
 	a provone:Visualization;
 	rdfs:label "PARAFAC Plot 2";
-    cwfo:hasInData cwf:parafac_model_port;
+    cwfo:hasInData cwf:parafac_model_data;
     rdfs:comment "Core Consistency Plot (CORCONDIA)" ; 
     rdfs:comment "If the CORCONDIA number is high (close to 100%), then PARAFAC model is valid; If the CORCONDIA number is mid-range (around 50%), the PARAFAC model should be reconsidered, perhaps with more constraints; If the CORCONDIA number is low (close to 0%), the PARAFAC model is not valid." ;
     rdfs:comment "MATLAB code: TensorExplorationPARAFAC.m, Section 7" ;
@@ -259,7 +259,7 @@ cwf:generate_plots
 	a provone:Program;
 	rdfs:label "Generate Plots";
 	rdfs:comment "Generate plots for exploratory analysis";
-    cwfo:hasInData cwf:parafac_model_port;
+    cwfo:hasInData cwf:parafac_model_data;
 	cwfo:hasVisualization cwf:ea_plot_1 ;
 	cwfo:hasVisualization cwf:ea_plot_2 ;
 	cwfo:hasVisualization cwf:ea_plot_3 ;
@@ -333,11 +333,11 @@ cwf:fuzzy_c_means_clustering
 	rdfs:label "Fuzzy C Means Clustering";
 	rdfs:comment "Cluster the subjects by the first mode of the modeled PARAFAC tensor using Fuzzy C-Means clustering" ;
 	dcterms:conformsTo <https://en.wikipedia.org/wiki/Fuzzy_clustering#Fuzzy_C-means_Clustering> ;
-    cwfo:hasInData cwf:parafac_model_port;
-	cwfo:hasOutData cwf:cluster_results_port
+    cwfo:hasInData cwf:parafac_model_data;
+	cwfo:hasOutData cwf:cluster_results_data
 	.	
 
-cwf:cluster_results_port
+cwf:cluster_results_data
     a provone:Data ;
     rdfs:label "Cluster results" ;
     .
@@ -346,11 +346,11 @@ cwf:clusters_distinct
 	a provone:Program ;
 	rdfs:label "Determine Characteristics of Clusters" ;
 	rdfs:comment "Find the characteristics of each cluster by finding the means for each characteristic and testing whether these results are significant at 95% level" ;
-	cwfo:hasInData cwf:cluster_results_port ;
-	cwfo:hasOutData cwf:cluster_characteristics_port
+	cwfo:hasInData cwf:cluster_results_data;
+	cwfo:hasOutData cwf:cluster_characteristics_data
 	.
 
-cwf:cluster_characteristics_port
+cwf:cluster_characteristics_data
     a provone:Data ;
     rdfs:label "Cluster characteristics" ;
     .
@@ -359,7 +359,7 @@ cwf:parafac_scores
 	a provone:Program;
 	rdfs:label "Create IQ PARAFAC Score Plot";
 	rdfs:comment "PARAFAC scores colored by each cluster to see where each cluster lies" ;
-	cwfo:hasInData cwf:cluster_characteristics_port ;
+	cwfo:hasInData cwf:cluster_characteristics_data;
 	cwfo:hasVisualization cwf:clustering_plot_1
 	.	
 
@@ -373,7 +373,7 @@ cwf:create_iq_histogram
 	a provone:Program;
 	rdfs:label "Create IQ Histogram";
 	rdfs:comment "Create a histogram to look at the distributions of characteristics, especially IQ, for each cluster" ;
-	cwfo:hasInData cwf:cluster_characteristics_port ;
+	cwfo:hasInData cwf:cluster_characteristics_data ;
 	cwfo:hasVisualization cwf:clustering_plot_2
 	.	
 	
