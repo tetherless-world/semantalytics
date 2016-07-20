@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:prov="http://www.w3.org/ns/prov#"
+         xmlns:ns0="http://dataone.org/ns/provone#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:ns1="http://cwf.tw.rpi.edu/vocab#"
+         xmlns:dc="http://purl.org/dc/terms/">
+
+  <rdf:Description rdf:about="http://cwf.tw.rpi.edu/data#workflow_cpp">
+    <rdf:type rdf:resource="http://dataone.org/ns/provone#Workflow"/>
+    <rdfs:label>CPP_Workflow</rdfs:label>
+    <rdfs:comment>CPP Workflow: Workflow top level</rdfs:comment>
+    <prov:hadPlan>
+      <prov:Plan rdf:about="http://cwf.tw.rpi.edu/data#gates_recipe">
+        <rdfs:label>Recipe for Gates Data</rdfs:label>
+        <rdfs:commment>Recipe document: Documentation on Recipe for Gates Data</rdfs:commment>
+        <rdfs:commment>MATLAB Code: TensorExplorationPARAFAC.m, YenerTensor.m</rdfs:commment>
+        <rdfs:seeAlso rdf:resource="http://bit.ly/cwf_recipe_fall2015"/>
+        <rdfs:seeAlso rdf:resource="http://bit.ly/cpp_workflow_jun2016"/>
+      </prov:Plan>
+    </prov:hadPlan>
+
+    <ns0:hasSubProgram>
+      <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#data_gathering">
+        <rdfs:label>Data Gathering</rdfs:label>
+        <rdfs:comment>Workflow Phase 0</rdfs:comment>
+        <ns0:hasSubProgram>
+          <ns0:program rdf:about="http://cwf.tw.rpi.edu/data#load_test_dataset">
+            <rdfs:label>Load Test Dataset</rdfs:label>
+            <skos:altLabel>ANTHAyenerfinalmine.xlsx</skos:altLabel>
+            <rdfs:comment>Loading of initial matrix (output of YenerTensor.m)</rdfs:comment>
+            <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#test_dataset_port"/>
+          </ns0:program>
+        </ns0:hasSubProgram>
+
+      </ns0:Program>
+    </ns0:hasSubProgram>
+
+    <ns0:hasSubProgram>
+      <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#data_processing">
+        <rdfs:label>Data Processing</rdfs:label>
+        <rdfs:comment>Workflow Phase 1</rdfs:comment>
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#adjust_apgar_scores">
+            <rdfs:label>Adjust APGAR Scores</rdfs:label>
+            <rdfs:comment>Ensure APGAR scores are between 0-10</rdfs:comment>
+            <rdfs:comment>MATLAB code: YenerTensor.m, Section 1</rdfs:comment>
+            <dc:conformsTo rdf:resource="https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm"/>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#test_dataset_port"/>
+            <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#adjusted_apgar_data"/>
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#choose_subjects">
+            <rdfs:label>Choose subjects with all five time points</rdfs:label>
+            <rdfs:comment>Choose only subjects with all five time points</rdfs:comment>
+            <rdfs:comment>MATLAB code: YenerTensor.m, Section 1</rdfs:comment>
+            <dc:conformsTo rdf:resource="https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm"/>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#adjusted_apgar_data"/>
+            <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#growth_data"/>
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#imputation">
+            <rdfs:label>Imputation</rdfs:label>
+            <rdfs:comment>Impute or remove missing values based on how many are missing</rdfs:comment>
+            <rdfs:comment>Use regression model to impute for one missing time point</rdfs:comment>
+            <rdfs:comment>Use linear fit to impute for two missing_time_points</rdfs:comment>
+            <rdfs:comment>Remove subjects with more than two missing time points</rdfs:comment>
+            <ns0:hasSubProgram rdf:resource="http://cwf.tw.rpi.edu/data#growth_data"/>
+            <ns0:hasSubProgram>
+              <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#weights_heights">
+                <rdfs:label>Weights, Heights</rdfs:label>
+                <rdfs:comment>Finds how many values are missing: If that is one, then fits a linear and quadratic regression on the remaining data. The fit with the higher R2 is used. If that is two, then fits a linear regression on the remaining data. If that is three, then the subject is removed.</rdfs:comment>
+                <rdfs:comment>MATLAB Code: YenerTensor.m, Section 4</rdfs:comment>
+                <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#growth_data"/>
+                <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#significant_data"/>
+              </ns0:Program>
+            </ns0:hasSubProgram>
+
+            <ns0:hasSubProgram>
+              <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#bmi">
+                <rdfs:label>BMI</rdfs:label>
+                <rdfs:comment>Calculates BMI from the values for each subject using the formula: http://en.wikipedia.org/wiki/Body_mass_index</rdfs:comment>
+                <rdfs:comment>MATLAB Code: YenerTensor.m, Section 4</rdfs:comment>
+                <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#growth_data"/>
+                <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#significant_data"/>
+              </ns0:Program>
+            </ns0:hasSubProgram>
+
+            <ns0:hasSubProgram>
+              <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#baz_haz_waz">
+                <rdfs:label>baz, haz, waz</rdfs:label>
+                <rdfs:comment>Calculates BAZ, HAZ, and WAZ from the imputed values based on WHO standards</rdfs:comment>
+                <rdfs:comment>MATLAB Code: Macros to calculate this using SAS, R, or STATA can be found here: http://www.who.int/childgrowth/software/en/</rdfs:comment>
+                <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#growth_data"/>
+                <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#significant_data"/>
+              </ns0:Program>
+            </ns0:hasSubProgram>
+
+            <ns0:hasSubProgram>
+              <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#characteristic_data">
+                <rdfs:label>Characteristic Data</rdfs:label>
+                <rdfs:comment>Get either the mean or mode (depending on the type of characteristic data) based on the 10 most similar subjects based on height and weight</rdfs:comment>
+                <rdfs:comment>MATLAB Code: YenerTensor.m, Section 8</rdfs:comment>
+                <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#growth_data"/>
+                <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#significant_data"/>
+              </ns0:Program>
+            </ns0:hasSubProgram>
+
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+        <ns0:hasSubProgram rdf:resource="http://cwf.tw.rpi.edu/data#significant_data"/>
+        <ns0:hasSubProgram>
+          <ns0:Progam rdf:about="http://cwf.tw.rpi.edu/data#normalization">
+            <rdfs:label>Normalization</rdfs:label>
+            <rdfs:comment>For growth data, go through each subject and subtract the mean and standard deviation for each growth characteristic to normalize.</rdfs:comment>
+            <rdfs:comment>For characteristic data, go through each column and subtract by the mean and standard deviation of that column.</rdfs:comment>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#significant_data"/>
+            <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#normalization_data"/>
+          </ns0:Progam>
+        </ns0:hasSubProgram>
+
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#sga_kids">
+            <rdfs:label>Flag SGA Kids</rdfs:label>
+            <rdfs:comment>Identify subjects that are small for gestational age (SGA)</rdfs:comment>
+            <rdfs:comment>Gets the SGA status of each unique subject, calculated using birth WAZ in the less than 10th percentile</rdfs:comment>
+            <dc:conformsTo rdf:resource="https://en.wikipedia.org/wiki/Small_for_gestational_age"/>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#normalization_data"/>
+            <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#sga_kids_data"/>
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+      </ns0:Program>
+    </ns0:hasSubProgram>
+
+    <ns0:hasSubProgram>
+      <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#creating_parafac_model">
+        <rdfs:label>Creating PARAFAC Model</rdfs:label>
+        <rdfs:comment>Workflow Phase 2</rdfs:comment>
+        <dc:conformsTo rdf:resource="http://en.wikipedia.org/wiki/Tensor_rank_decomposition"/>
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#generate_parafac_model">
+            <rdfs:label>Generate PARAFAC Model</rdfs:label>
+            <rdfs:comment>Create a PARAFAC model for the data using the N-Way toolbox</rdfs:comment>
+            <rdfs:comment>MATLAB code: TensorExplorationPARAFAC.m, Sections 7 and 8</rdfs:comment>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#sga_kids_data"/>
+            <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#parafac_model_port"/>
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#parafac_plot_1">
+                <rdfs:label>PARAFAC Plot 1</rdfs:label>
+                <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#parafac_model_port"/>
+                <rdfs:comment>Scree-Plot for PARAFAC model</rdfs:comment>
+                <rdfs:comment>Create a PARAFAC model for the data using the N-Way toolbox and calculate the sum of squared errors, then plots it for each number of model components versus the sum of squared errors</rdfs:comment>
+                <rdfs:comment>MATLAB code: TensorExplorationPARAFAC.m, Section 7</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#parafac_plot_2">
+                <rdfs:label>PARAFAC Plot 2</rdfs:label>
+                <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#parafac_model_port"/>
+                <rdfs:comment>Core Consistency Plot (CORCONDIA)</rdfs:comment>
+                <rdfs:comment>If the CORCONDIA number is high (close to 100%), then PARAFAC model is valid; If the CORCONDIA number is mid-range (around 50%), the PARAFAC model should be reconsidered, perhaps with more constraints; If the CORCONDIA number is low (close to 0%), the PARAFAC model is not valid.</rdfs:comment>
+                <rdfs:comment>MATLAB code: TensorExplorationPARAFAC.m, Section 7</rdfs:comment>
+                <dc:conformsTo rdf:resource="http://wiki.eigenvector.com/index.php?title=Corcondia"/>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#generate_concordia_number">
+            <rdfs:label>Generate CONCORDIA Number</rdfs:label>
+            <dc:conformsTo rdf:resource="http://wiki.eigenvector.com/index.php?title=Corcondia"/>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#parafac_model_port"/>
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+      </ns0:Program>
+    </ns0:hasSubProgram>
+
+    <ns0:hasSubProgram>
+      <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#exploratory_analysis">
+        <rdfs:label>Exploratory Analysis</rdfs:label>
+        <rdfs:comment>Workflow Phase 3</rdfs:comment>
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#generate_plots">
+            <rdfs:label>Generate Plots</rdfs:label>
+            <rdfs:comment>Generate plots for exploratory analysis</rdfs:comment>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#parafac_model_port"/>
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#ea_plot_1">
+                <rdfs:label>Exploratory Analysis Plot 1</rdfs:label>
+                <rdfs:comment>Create a 3D plot for each time point for the original data, the modeled data, and the residuals</rdfs:comment>
+                <rdfs:comment>Create mesh plots for each time point based on the original tensor, the modeled data by PARAFAC, and the residual (original data – modeled data), respectively</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#ea_plot_2">
+                <rdfs:label>Exploratory Analysis Plot 2</rdfs:label>
+                <rdfs:comment>Create a plot of the loadings for each component in each mode to see which features, subjects, and time points are more important in their components and respective modes</rdfs:comment>
+                <rdfs:comment>MATLAB code: TensorExplorationPARAFAC.m, Section 11</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#ea_plot_3">
+                <rdfs:label>Exploratory Analysis Plot 3</rdfs:label>
+                <rdfs:comment>Create a plot of the scores for each mode to see where each point falls</rdfs:comment>
+                <rdfs:comment>MATLAB code: TensorExplorationPARAFAC.m, Section 12</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#ea_plot_4">
+                <rdfs:label>Exploratory Analysis Plot 4</rdfs:label>
+                <rdfs:comment>Create a gradient for each of the characteristics by their number values on the score plot for subjects</rdfs:comment>
+                <rdfs:comment>MATLAB code: TensorExplorationPARAFAC.m, Section 13</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#ea_plot_5">
+                <rdfs:label>Exploratory Analysis Plot 5</rdfs:label>
+                <rdfs:comment>Create a plot of the scores colored by SGA to see where they</rdfs:comment>
+                <rdfs:comment>MATLAB code: TensorExplorationPARAFAC.m, Section 14</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#ea_plot_6">
+                <rdfs:label>Exploratory Analysis Plot 6</rdfs:label>
+                <rdfs:comment>Create a heat map for each mode to see where scores in each plot relative to each other</rdfs:comment>
+                <rdfs:comment>MATLAB code: TensorExplorationPARAFAC.m, Section 15</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#ea_plot_7">
+                <rdfs:label>Exploratory Analysis Plot 7</rdfs:label>
+                <rdfs:comment>Create a plot that shows the characteristics versus the more important component, depending on the results of the PARAFAC model.</rdfs:comment>
+                <rdfs:comment>MATLAB code: TensorExplorationPARAFAC.m, Section 23</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+      </ns0:Program>
+    </ns0:hasSubProgram>
+
+    <ns0:hasSubProgram>
+      <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#clustering">
+        <rdfs:label>Clustering</rdfs:label>
+        <rdfs:comment>Workflow Phase 4</rdfs:comment>
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#fuzzy_c_means_clustering">
+            <rdfs:label>Fuzzy C Means Clustering</rdfs:label>
+            <rdfs:comment>Cluster the subjects by the first mode of the modeled PARAFAC tensor using Fuzzy C-Means clustering</rdfs:comment>
+            <dc:conformsTo rdf:resource="https://en.wikipedia.org/wiki/Fuzzy_clustering#Fuzzy_C-means_Clustering"/>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#parafac_model_port"/>
+            <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#cluster_results_port"/>
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#create_iq_histogram">
+            <rdfs:label>Create IQ Histogram</rdfs:label>
+            <rdfs:comment>Create a histogram to look at the distributions of characteristics, especially IQ, for each cluster</rdfs:comment>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#cluster_characteristics_port"/>
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#clustering_plot_2">
+                <rdfs:label>IQ Histogram</rdfs:label>
+                <rdfs:comment>Histogram of distributions of characteristics, especially IQ, for each cluster</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#clusters_distinct">
+            <rdfs:label>Determine Characteristics of Clusters</rdfs:label>
+            <rdfs:comment>Find the characteristics of each cluster by finding the means for each characteristic and testing whether these results are significant at 95% level</rdfs:comment>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#cluster_results_port"/>
+            <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#cluster_characteristics_port"/>
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+        <ns0:hasSubProgram>
+          <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#parafac_scores">
+            <rdfs:label>Create IQ PARAFAC Score Plot</rdfs:label>
+            <rdfs:comment>PARAFAC scores colored by each cluster to see where each cluster lies</rdfs:comment>
+            <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#cluster_characteristics_port"/>
+            <ns1:hasVisualization>
+              <ns0:Visualization rdf:about="http://cwf.tw.rpi.edu/data#clustering_plot_1">
+                <rdfs:label>PARAFAC Score Plot</rdfs:label>
+                <rdfs:comment>PARAFAC scores colored by each cluster to see where each cluster lies</rdfs:comment>
+              </ns0:Visualization>
+            </ns1:hasVisualization>
+
+          </ns0:Program>
+        </ns0:hasSubProgram>
+
+      </ns0:Program>
+    </ns0:hasSubProgram>
+
+  </rdf:Description>
+
+  <ns0:Data rdf:about="http://cwf.tw.rpi.edu/data#test_dataset_port">
+    <rdfs:label>Test Dataset (TENSOR)</rdfs:label>
+    <rdfs:comment>MATLAB Code: YenerTensor.m</rdfs:comment>
+  </ns0:Data>
+
+  <ns0:Data rdf:about="http://cwf.tw.rpi.edu/data#adjusted_apgar_data">
+    <rdfs:label>Adjusted APGAR Data</rdfs:label>
+  </ns0:Data>
+
+  <ns0:Program rdf:about="http://cwf.tw.rpi.edu/data#growth_data">
+    <rdf:type rdf:resource="http://dataone.org/ns/provone#Data"/>
+    <rdfs:label>Growth Data</rdfs:label>
+    <dc:conformsTo rdf:resource="http://purl.obolibrary.org/obo/STATO_0000237"/>
+    <dc:conformsTo rdf:resource="http://purl.obolibrary.org/obo/OBI_0000679"/>
+    <ns1:hasInData rdf:resource="http://cwf.tw.rpi.edu/data#adjusted_apgar_data"/>
+    <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#growth_data"/>
+  </ns0:Program>
+
+  <ns0:Progam rdf:about="http://cwf.tw.rpi.edu/data#significant_data">
+    <rdf:type rdf:resource="http://dataone.org/ns/provone#Data"/>
+    <rdfs:label>Determine significant data</rdfs:label>
+    <rdfs:label>Significant Data</rdfs:label>
+    <rdfs:comment>After running tensor through analysis, use discretion as to which columns of data to include</rdfs:comment>
+    <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#growth_data"/>
+    <ns1:hasOutData rdf:resource="http://cwf.tw.rpi.edu/data#significant_data"/>
+  </ns0:Progam>
+
+  <ns0:Data rdf:about="http://cwf.tw.rpi.edu/data#normalization_data">
+    <rdfs:label>Significant Data</rdfs:label>
+  </ns0:Data>
+
+  <ns0:Data rdf:about="http://cwf.tw.rpi.edu/data#sga_kids_data">
+    <rdfs:label>Identified SGA Kids</rdfs:label>
+  </ns0:Data>
+
+  <ns0:Data rdf:about="http://cwf.tw.rpi.edu/data#parafac_model_port">
+    <rdfs:label>PARAFAC Model</rdfs:label>
+  </ns0:Data>
+
+  <ns0:Data rdf:about="http://cwf.tw.rpi.edu/data#cluster_results_port">
+    <rdfs:label>Cluster results</rdfs:label>
+  </ns0:Data>
+
+  <ns0:Data rdf:about="http://cwf.tw.rpi.edu/data#cluster_characteristics_port">
+    <rdfs:label>Cluster characteristics</rdfs:label>
+  </ns0:Data>
+
+</rdf:RDF>
