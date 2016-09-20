@@ -1,0 +1,56 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix provone: <http://purl.org/provone> .
+@prefix wfms:    <http://www.wfms.org/registry.xsd> .
+@prefix rdf:  	 <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix provone: <http://dataone.org/ns/provone#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix yw:   	 <http://yesworkflow.org/ns/yesworkflow#> .
+@prefix tbwfo:    <http://tbwf.tw.rpi.edu/vocab#> . 
+@prefix tbwf:     <http://tbwf.tw.rpi.edu/data#> .
+
+tbwf:workflow_tb_drugome 
+    a provone:Workflow;
+    rdfs:label "TB Drugome Workflow" ;   
+    skos:altLabel "Quantifying Reproducibility in Computational Biology: The Case of the Tuberculosis Drugome" ;
+    prov:hadPlan tbwf:tb_drugome_recipe ;
+    .
+
+tbwf:drugome_recipe
+    a prov:Plan ;
+    rdfs:label "Recipe for TB Drugome Workflow" ;
+    .
+
+tbwf:drugome_start 
+	a provone:Program;
+	rdfs:label "M.Tb Structures and homology models";
+	.
+
+tbwf:structural_coverage_mtb_protome
+    a provone:Data;
+    rdfs:label "Structural coverage of the M.tb protome";
+    rdfs:comment "Structural coverage of the M.tb protome";
+    .	
+	
+tbwf:ligand_binding_comparison
+	a provone:Program;
+	rdfs:label "Comparison of ligand binding sites using SMAP"   ;
+	.	
+
+tbwf:network_visualization
+    a provone:Visualization;
+    rdfs:label "Network visualization (result)";
+    .
+
+tbwf:critical_proteins_visualization
+	a provone:Visualization;
+    .
+	
+tbwf:heatmap_visualization
+	a provone:Visualization;
+	rdfs:label "Heatmap visualization (result)";
+    .
+        
