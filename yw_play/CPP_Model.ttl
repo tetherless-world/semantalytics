@@ -3,7 +3,6 @@
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix prov:    <http://www.w3.org/ns/prov#> .
-@prefix provone: <http://purl.org/provone> .
 @prefix wfms:    <http://www.wfms.org/registry.xsd> .
 @prefix rdf:  	 <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix provone: <http://dataone.org/ns/provone#> .
