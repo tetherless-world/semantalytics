@@ -25,8 +25,8 @@ cwf:workflow_cpp
 
 cwf:gates_recipe
     a prov:Plan ;
-    rdfs:label "Recipe for Gates Data" ;
-    skos:altLabel "Recipe document: Documentation on Recipe for Gates Data" ;
+    rdfs:label "Recipe for CPP Data" ;
+    skos:altLabel "Recipe document: Documentation on Recipe for CPP Data" ;
     rdfs:seeAlso <http://bit.ly/cwf_recipe_fall2015> ;
     rdfs:seeAlso <http://bit.ly/cpp_workflow_jun2016> ;
     cwfo:hasCode "MATLAB: TensorExplorationPARAFAC.m, YenerTensor.m" 
